@@ -3,31 +3,46 @@
 @plugin "tailwindcss-animate";
 
 :root {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
-  --chart-1: 220 70% 50%;
+  /* Luxury Gold/Amber Theme - Hospital Luxury Aesthetic */
+  --background: 45 40% 96%;
+  /* Cream white background */
+  --foreground: 30 10% 20%;
+  /* Dark charcoal for text */
+  --card: 0 0% 100%;
+  /* Pure white cards */
+  --card-foreground: 30 10% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 30 10% 20%;
+  --primary: 43 74% 49%;
+  /* Gold/Amber primary */
+  --primary-foreground: 0 0% 100%;
+  /* White text on gold */
+  --secondary: 45 30% 90%;
+  /* Light cream secondary */
+  --secondary-foreground: 30 10% 20%;
+  --muted: 45 20% 92%;
+  /* Very light cream */
+  --muted-foreground: 30 8% 45%;
+  /* Muted gray */
+  --accent: 43 74% 49%;
+  /* Gold accent */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  /* Red for stop button */
+  --destructive-foreground: 0 0% 100%;
+  --border: 45 15% 85%;
+  /* Subtle cream border */
+  --input: 45 20% 92%;
+  /* Light cream input bg */
+  --ring: 43 74% 49%;
+  /* Gold focus ring */
+  --chart-1: 43 74% 49%;
   --chart-2: 160 60% 45%;
   --chart-3: 30 80% 55%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
-  --radius: 0.5rem;
+  --radius: 0.75rem;
+  /* Slightly rounded for luxury feel */
 }
 
 @theme inline {

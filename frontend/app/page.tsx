@@ -1,335 +1,166 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import {
-  Menu,
-  Plus,
-  MessageSquare,
-  Send,
-  Save,
-  User,
-  Bot,
-  Loader2
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Folder, Sparkles, Clock, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
-interface Project {
-  id: number;
-  name: string;
-  prompt: string;
-  content: string;
-  created_at: string;
-}
+// Mock Data for Projects
+const MOCK_PROJECTS = [
+  {
+    id: 1,
+    name: "E-Commerce Dashboard",
+    prompt: "Create a modern dashboard for an e-commerce store with sales charts.",
+    created_at: "2024-01-12T10:00:00Z",
+    stars: 5
+  },
+  {
+    id: 2,
+    name: "Portfolio Website",
+    prompt: "A minimalist portfolio site with a gallery and contact form.",
+    created_at: "2024-01-14T14:30:00Z",
+    stars: 4
+  },
+  {
+    id: 3,
+    name: "Task Management App",
+    prompt: "A Kanban board application with drag and drop functionality.",
+    created_at: "2024-01-15T09:15:00Z",
+    stars: 5
+  }
+];
 
-export default function Home() {
-  const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+export default function LandingPage() {
+  const [input, setInput] = useState("");
+  const router = useRouter();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const res = await fetch("http://localhost:4000/api/projects");
-      const data = await res.json();
-      setProjects(data);
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-    }
-  };
-
-  // Add a new state for the full streamed content
-  const [streamedContent, setStreamedContent] = useState("");
-
-  // Use a ref to track the current index being displayed
-  const indexRef = useRef(0);
-
-  useEffect(() => {
-    if (streamedContent.length > response.length) {
-      const timeout = setTimeout(() => {
-        setResponse((prev) => prev + streamedContent.slice(prev.length, prev.length + 1)); // Reveal 1 char at a time
-      }, 20); // 20ms interval for visible typing effect
-      return () => clearTimeout(timeout);
-    }
-  }, [streamedContent, response]);
-
-  const askModel = async () => {
-    if (!prompt.trim()) return;
-    setLoading(true);
-    setResponse("");
-    setStreamedContent("");
-    indexRef.current = 0;
-
-    try {
-      const res = await fetch("http://localhost:4000/api/ask-model", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-      });
-
-      if (!res.body) throw new Error("No response body");
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const text = decoder.decode(value, { stream: true });
-        setStreamedContent((prev) => prev + text);
-      }
-
-    } catch (error) {
-      console.error("Error fetching model response:", error);
-      setResponse("Error: Failed to get response from the model.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const saveProject = async () => {
-    if (!response) return;
-    setSaving(true);
-    try {
-      await fetch("http://localhost:4000/api/project", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: prompt.substring(0, 30) + (prompt.length > 30 ? "..." : ""),
-          prompt,
-          content: response,
-        }),
-      });
-      await fetchProjects();
-      // Could add toast here
-    } catch (error) {
-      console.error("Error saving project:", error);
-    } finally {
-      setSaving(false);
-    }
+  const handleStartProject = () => {
+    if (!input.trim()) return;
+    // In a real app, this would create a project first.
+    // For now, we redirect to a "new" project ID or a mock ID.
+    router.push(`/project/new?prompt=${encodeURIComponent(input)}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      askModel();
+      handleStartProject();
     }
   };
 
-  const loadProject = (project: Project) => {
-    setSelectedProject(project);
-    setPrompt(project.prompt);
-    setResponse(project.content);
-  };
-
-  const startNewChat = () => {
-    setSelectedProject(null);
-    setPrompt("");
-    setResponse("");
-  };
-
-  const SidebarContent = () => (
-    <div className="flex h-full flex-col gap-4">
-      <div className="p-4 pb-0">
-        <Button
-          onClick={startNewChat}
-          className="w-full justify-start gap-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20"
-          variant="ghost"
-        >
-          <Plus className="h-4 w-4" />
-          New Project
-        </Button>
-      </div>
-
-      <ScrollArea className="flex-1 px-2">
-        <div className="space-y-2 p-2">
-          <h3 className="text-xs font-semibold text-muted-foreground px-2 mb-2 uppercase tracking-wider">Recent</h3>
-          {projects.map((project) => (
-            <Button
-              key={project.id}
-              variant={selectedProject?.id === project.id ? "secondary" : "ghost"}
-              className={cn(
-                "w-full justify-start text-sm font-normal truncate",
-                selectedProject?.id === project.id ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"
-              )}
-              onClick={() => loadProject(project)}
-            >
-              <MessageSquare className="mr-2 h-4 w-4 opacity-70" />
-              <span className="truncate">{project.name || "Untitled Project"}</span>
-            </Button>
-          ))}
-        </div>
-      </ScrollArea>
-
-      <div className="p-4 border-t border-border/40 mt-auto">
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-primary/20 text-primary">U</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col">
-            <span className="font-medium text-foreground">User</span>
-            <span className="text-xs">Pro Plan</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
-      {/* Desktop Sidebar */}
-      <aside className="hidden w-64 flex-col border-r border-border/40 bg-muted/10 backdrop-blur-xl md:flex">
-        <SidebarContent />
-      </aside>
+    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+      {/* Navbar / Header */}
+      <header className="py-6 px-8 flex justify-between items-center border-b border-border/40 bg-card/10 backdrop-blur-md sticky top-0 z-10">
+        <div className="flex items-center gap-2">
+          <div className="bg-primary/20 p-2 rounded-lg">
+            <Sparkles className="text-primary w-6 h-6" />
+          </div>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Akili AI
+          </h1>
+        </div>
+        <div className="text-sm text-muted-foreground">
+          v1.0.0
+        </div>
+      </header>
 
       {/* Main Content */}
-      <main className="flex flex-1 flex-col relative h-full">
-        {/* Mobile Header */}
-        <header className="flex items-center p-4 md:hidden border-b border-border/40 bg-background/80 backdrop-blur-md sticky top-0 z-10">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="-ml-2">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-64 p-0 bg-background/95 backdrop-blur-xl border-r-border/40">
-              <SidebarContent />
-            </SheetContent>
-          </Sheet>
-          <span className="font-semibold ml-2">Akili</span>
-          <Button variant="ghost" size="icon" className="ml-auto" onClick={startNewChat}>
-            <Plus className="h-5 w-5" />
-          </Button>
-        </header>
+      <main className="flex-1 flex flex-col items-center p-8 w-full max-w-7xl mx-auto overflow-y-auto">
 
-        {/* Chat Area */}
-        <ScrollArea className="flex-1 p-4 md:p-8">
-          <div className="max-w-3xl mx-auto pb-32 space-y-8">
-            {!response && !loading && (
-              <div className="flex flex-col items-center justify-center text-center space-y-6 mt-20 opacity-80">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center ring-1 ring-primary/20 shadow-lg shadow-primary/5">
-                  <Bot className="w-10 h-10 text-primary" />
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight">How can I help you today?</h2>
-              </div>
-            )}
+        {/* Hero Section */}
+        <section className="w-full max-w-3xl text-center space-y-8 mt-12 mb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
+          <h2 className="text-5xl font-extrabold tracking-tight">
+            What will you <span className="text-primary underline decoration-primary/30 underline-offset-8">build</span> today?
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Turn your ideas into production-ready code with the power of Akili AI.
+            Describe your vision, and watch it come to life.
+          </p>
 
-            {/* User Message */}
-            {(response || loading) && prompt && (
-              <div className="flex gap-4">
-                <Avatar className="h-8 w-8 mt-1">
-                  <AvatarFallback className="bg-muted text-muted-foreground">U</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 space-y-2">
-                  <div className="font-semibold text-sm text-muted-foreground">You</div>
-                  <div className="text-foreground leading-relaxed whitespace-pre-wrap">{prompt}</div>
-                </div>
-              </div>
-            )}
-
-            {/* AI Response */}
-            {(response || loading) && (
-              <div className="flex gap-4">
-                <Avatar className="h-8 w-8 mt-1 border border-primary/20">
-                  <AvatarFallback className="bg-primary/10 text-primary">AI</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 space-y-2 min-w-0">
-                  <div className="font-semibold text-sm text-muted-foreground">Akili</div>
-                  {loading && !response ? (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Thinking...
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      <div className="prose prose-invert max-w-none bg-muted/30 p-4 rounded-lg border border-border/50">
-                        <pre className="text-sm font-mono whitespace-pre-wrap bg-transparent p-0 m-0 overflow-x-auto">
-                          {response}
-                          {loading && <span className="inline-block w-2 h-4 ml-1 bg-primary animate-pulse" />}
-                        </pre>
-                      </div>
-                      <div className="flex justify-end">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={saveProject}
-                          disabled={saving}
-                          className="gap-2 border-primary/20 hover:bg-primary/10 hover:text-primary"
-                        >
-                          {saving ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />}
-                          {saving ? "Saving..." : "Save Project"}
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </ScrollArea>
-
-        {/* Input Area */}
-        <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-background via-background/90 to-transparent pt-10">
-          <div className="max-w-3xl mx-auto relative">
-            <div className="glass rounded-xl p-2 shadow-2xl ring-1 ring-white/10">
-              <Textarea
-                ref={textareaRef}
-                rows={1}
-                className="min-h-[50px] max-h-[200px] w-full resize-none border-0 bg-transparent px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
-                placeholder="Message Akili..."
-                value={prompt}
-                onChange={(e) => {
-                  setPrompt(e.target.value);
-                  e.target.style.height = 'auto';
-                  e.target.style.height = e.target.scrollHeight + 'px';
-                }}
+          <div className="relative w-full max-w-2xl mx-auto transform hover:scale-[1.01] transition-transform duration-300">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 to-accent/50 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <div className="relative flex items-center">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
+                placeholder="Describe your project (e.g., 'A login page with glassmorphism')..."
+                className="w-full h-16 pl-8 pr-16 text-lg rounded-full shadow-2xl border-primary/20 focus:ring-2 focus:ring-primary/50 bg-card/90 backdrop-blur-xl"
+                autoFocus
               />
-              <div className="flex justify-between items-center px-2 pb-1 pt-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-foreground h-8 w-8"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-                <Button
-                  onClick={askModel}
-                  disabled={loading || !prompt.trim()}
-                  size="icon"
-                  className={cn(
-                    "h-8 w-8 transition-all duration-200",
-                    loading || !prompt.trim()
-                      ? "bg-muted text-muted-foreground opacity-50"
-                      : "bg-primary text-primary-foreground hover:bg-primary/90"
-                  )}
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-            <div className="text-center mt-3">
-              <p className="text-xs text-muted-foreground/60">
-                Akili can make mistakes. Consider checking important information.
-              </p>
+              <Button
+                onClick={handleStartProject}
+                disabled={!input.trim()}
+                className="absolute right-2 top-2 bottom-2 rounded-full w-12 h-12 p-0 bg-primary hover:bg-primary/90 shadow-lg transition-all"
+              >
+                <ArrowRight size={24} />
+              </Button>
             </div>
           </div>
-        </div>
+        </section>
+
+        {/* Recent Projects Grid */}
+        <section className="w-full animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-100">
+          <div className="flex items-center justify-between mb-6 border-b border-border/50 pb-4">
+            <h3 className="text-2xl font-semibold flex items-center gap-2">
+              <Clock className="text-primary w-5 h-5" />
+              Recent Projects
+            </h3>
+            <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+              View All
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* New Project Card */}
+            <Card
+              className="bg-primary/5 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center p-8 cursor-pointer hover:bg-primary/10 transition-colors h-64 group"
+              onClick={() => router.push('/project/new')}
+            >
+              <div className="bg-primary/20 p-4 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                <Folder className="w-8 h-8 text-primary" />
+              </div>
+              <p className="text-lg font-medium text-primary">Start New Project</p>
+            </Card>
+
+            {/* Mock Projects */}
+            {MOCK_PROJECTS.map((project) => (
+              <Card
+                key={project.id}
+                className="group hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden border-border/50 bg-card hover:border-primary/50"
+                onClick={() => router.push(`/project/${project.id}`)}
+              >
+                <CardHeader className="pb-3 bg-secondary/30">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                      {project.name}
+                    </CardTitle>
+                    <div className="bg-background/80 p-1.5 rounded-full shadow-sm">
+                      <Folder size={16} className="text-muted-foreground" />
+                    </div>
+                  </div>
+                  <CardDescription className="text-xs flex items-center gap-1 mt-1">
+                    <Clock size={12} /> {new Date(project.created_at).toLocaleDateString()}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
+                    {project.prompt}
+                  </p>
+                  <div className="flex gap-1">
+                    {[...Array(project.stars)].map((_, i) => (
+                      <Star key={i} size={14} className="fill-primary text-primary" />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );
 }
-

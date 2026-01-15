@@ -1,0 +1,14 @@
+
+CREATE TABLE IF NOT EXISTS chats (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL DEFAULT 'New Chat',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+    id SERIAL PRIMARY KEY,
+    chat_id INTEGER REFERENCES chats(id) ON DELETE CASCADE,
+    role TEXT NOT NULL, -- 'user' or 'assistant'
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,10 @@
+
+CREATE TABLE IF NOT EXISTS projects (
+    id SERIAL PRIMARY KEY,
+    name TEXT DEFAULT 'Untitled Project',
+    prompt TEXT,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE chats ADD COLUMN IF NOT EXISTS project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE;
