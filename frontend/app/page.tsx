@@ -1,46 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Folder, Sparkles, Clock, Star } from "lucide-react";
+import { ArrowRight, Folder, Sparkles, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
-// Mock Data for Projects
-const MOCK_PROJECTS = [
-  {
-    id: 1,
-    name: "E-Commerce Dashboard",
-    prompt: "Create a modern dashboard for an e-commerce store with sales charts.",
-    created_at: "2024-01-12T10:00:00Z",
-    stars: 5
-  },
-  {
-    id: 2,
-    name: "Portfolio Website",
-    prompt: "A minimalist portfolio site with a gallery and contact form.",
-    created_at: "2024-01-14T14:30:00Z",
-    stars: 4
-  },
-  {
-    id: 3,
-    name: "Task Management App",
-    prompt: "A Kanban board application with drag and drop functionality.",
-    created_at: "2024-01-15T09:15:00Z",
-    stars: 5
-  }
-];
+interface Project {
+  id: number;
+  name: string;
+  prompt: string;
+  created_at: string;
+}
 
 export default function LandingPage() {
   const [input, setInput] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
   const router = useRouter();
 
-  const handleStartProject = () => {
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/api/projects");
+        if (!res.ok) return;
+        const data = await res.json();
+        setProjects(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Failed to fetch projects:", err);
+      }
+    };
+    loadProjects();
+  }, []);
+
+  const handleStartProject = async () => {
     if (!input.trim()) return;
-    // In a real app, this would create a project first.
-    // For now, we redirect to a "new" project ID or a mock ID.
-    router.push(`/project/new?prompt=${encodeURIComponent(input)}`);
+    try {
+      const chatRes = await fetch("http://localhost:4000/api/chats", { method: "POST" });
+      if (!chatRes.ok) return;
+      const chat = await chatRes.json();
+      router.push(`/project/${chat.id}?prompt=${encodeURIComponent(input)}`);
+    } catch (err) {
+      console.error("Failed to create chat:", err);
+    }
+  };
+
+  const handleCreateEmptyProject = async () => {
+    try {
+      const chatRes = await fetch("http://localhost:4000/api/chats", { method: "POST" });
+      if (!chatRes.ok) return;
+      const chat = await chatRes.json();
+      router.push(`/project/${chat.id}`);
+    } catch (err) {
+      console.error("Failed to create chat:", err);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -118,7 +131,7 @@ export default function LandingPage() {
             {/* New Project Card */}
             <Card
               className="bg-primary/5 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center p-8 cursor-pointer hover:bg-primary/10 transition-colors h-64 group"
-              onClick={() => router.push('/project/new')}
+              onClick={handleCreateEmptyProject}
             >
               <div className="bg-primary/20 p-4 rounded-full mb-4 group-hover:scale-110 transition-transform">
                 <Folder className="w-8 h-8 text-primary" />
@@ -126,8 +139,7 @@ export default function LandingPage() {
               <p className="text-lg font-medium text-primary">Start New Project</p>
             </Card>
 
-            {/* Mock Projects */}
-            {MOCK_PROJECTS.map((project) => (
+            {projects.map((project) => (
               <Card
                 key={project.id}
                 className="group hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden border-border/50 bg-card hover:border-primary/50"
@@ -150,11 +162,6 @@ export default function LandingPage() {
                   <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
                     {project.prompt}
                   </p>
-                  <div className="flex gap-1">
-                    {[...Array(project.stars)].map((_, i) => (
-                      <Star key={i} size={14} className="fill-primary text-primary" />
-                    ))}
-                  </div>
                 </CardContent>
               </Card>
             ))}
