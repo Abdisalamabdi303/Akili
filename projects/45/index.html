@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="script.js" defer></script>
+</head>
+<body class="bg-slate-950 text-white">
+
+    <!-- Navbar -->
+    <nav class="navbar bg-base-100 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <a href="#" class="btn btn-ghost normal-case text-xl">Pet Store</a>
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img src="https://images.unsplash.com/photo-1528896174941-bab211c9a33b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                    </div>
+                </label>
+                <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero min-h-screen bg-base-100">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <img src="https://images.unsplash.com/photo-1564728939-7e6c8a2b8dcb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="max-w-sm rounded-lg shadow-2xl" alt="Pet Image">
+            <div class="hero-content text-center text-slate-900">
+                <h1 class="text-5xl font-bold">Welcome to Your Pet's Paradise</h1>
+                <p class="py-6">Find the perfect companion for your furry friend with our wide range of products.</p>
+                <button class="btn btn-primary">Shop Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center">Featured Categories</h2>
+            <div class="grid grid-cols-4 gap-4">
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Dog Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Dogs</h2>
+                        <p>High-quality dog food and accessories.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Cat Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Cats</h2>
+                        <p>Top-notch cat food and accessories.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Bird Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Birds</h2>
+                        <p>Healthy bird food and toys.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Accessories Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Accessories</h2>
+                        <p>Everything your pet needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="py-12 bg-slate-800">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center">Best Sellers</h2>
+            <div class="grid grid-cols-4 gap-4">
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Product Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Product 1</h2>
+                        <p>$29.99</p>
+                        <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Product Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Product 2</h2>
+                        <p>$19.99</p>
+                        <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Product Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Product 3</h2>
+                        <p>$14.99</p>
+                        <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <figure><img src="https://images.unsplash.com/photo-1528769221234-eabf3e2b6aaf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1kb2dzfGVufDB8MHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Product Image"></figure>
+                    <div class="card-body">
+                        <h2 class="card-title">Product 4</h2>
+                        <p>$19.99</p>
+                        <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-12 bg-slate-700">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center">Why Choose Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">High-Quality Products</h2>
+                        <p>We offer only the best products for your pet.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">Fast Shipping</h2>
+                        <p>Enjoy fast and reliable shipping.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">Customer Support</h2>
+                        <p>Get assistance with any questions or concerns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-12 bg-slate-600">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center">Testimonials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <div class="card-body">
+                        <p>"Great products and excellent service. Highly recommend!"</p>
+                        <h2 class="card-title">John Doe</h2>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <div class="card-body">
+                        <p>"Fast shipping and top-notch products. Thank you!"</p>
+                        <h2 class="card-title">Jane Smith</h2>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <div class="card-body">
+                        <p>"Excellent customer service and great value for money."</p>
+                        <h2 class="card-title">Mike Johnson</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 bg-slate-500 text-center">
+        <p>&copy; 2023 Pet Paradise. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

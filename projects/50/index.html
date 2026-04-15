@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to-tr, #6ee7b7, #4ade80);
+            color: white;
+        }
+        .hero-overlay {
+            backdrop-filter: blur(5px);
+        }
+        .card {
+            border-radius: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-base-900 text-white">
+    <div class="navbar bg-base-800 shadow-lg backdrop-blur-lg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex-none">
+                <img src="https://placehold.co/50x50" alt="Logo" class="w-12 h-12 rounded-full" />
+            </div>
+            <div class="flex-1">
+                <a href="#" class="btn btn-ghost normal-case text-xl">Fitness Tracker</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero min-h-screen bg-base-900 hero-overlay">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+            <div class="hero-content text-center">
+                <h1 class="text-5xl font-bold">Welcome to Your Fitness Tracker</h1>
+                <p class="py-6">Track your daily activities, monitor your progress, and stay on top of your fitness goals.</p>
+                <a href="#features" class="btn btn-primary rounded-full shadow-lg hover:shadow-xl">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="features" class="py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-8">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Activity Tracker</h3>
+                        <p>Track your steps, distance, and calories burned with real-time updates.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Sleep Analysis</h3>
+                        <p>Analyze your sleep patterns, duration, and quality to improve your rest.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Nutrition Tracker</h3>
+                        <p>Log your meals, track macros, and get personalized nutrition advice.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Workout Planner</h3>
+                        <p>Create and track your workout routines, set reminders, and stay motivated.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Progress Charts</h3>
+                        <p>Visualize your progress over time with detailed charts and graphs.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Community Support</h3>
+                        <p>Connect with other fitness enthusiasts and share tips, challenges, and achievements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-16 bg-base-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-8">Pricing</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Free Plan</h3>
+                        <p>Unlimited access to basic features.</p>
+                        <ul class="list-disc pl-4">
+                            <li>Activity Tracker</li>
+                            <li>Sleep Analysis</li>
+                            <li>Nutrition Tracker (Basic)</li>
+                            <li>Workout Planner</li>
+                            <li>Progress Charts</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary rounded-full shadow-lg hover:shadow-xl">Sign Up Free</a>
+                    </div>
+                </div>
+                <div class="card bg-base-900 shadow-lg backdrop-blur-lg">
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold">Premium Plan</h3>
+                        <p>Unlimited access to all features.</p>
+                        <ul class="list-disc pl-4">
+                            <li>All Free Features</li>
+                            <li>Nutrition Tracker (Advanced)</li>
+                            <li>Community Support</li>
+                            <li>Dedicated Customer Support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary rounded-full shadow-lg hover:shadow-xl">Upgrade to Premium</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-16 bg-base-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold mb-8">Testimonials</h2>
+            <div class="carousel carousel-center max-w-screen-lg mx-auto">
+                <div class="carousel-item bg-base-900 shadow-lg backdrop-blur-lg p-6 rounded-2xl">
+                    <p class="text-xl">"I've been using this app for a few months now, and it's really helped me stay on track with my fitness goals."</p>
+                    <h3 class="mt-4 text-lg font-bold">John Doe</h3>
+                </div>
+                <div class="carousel-item bg-base-900 shadow-lg backdrop-blur-lg p-6 rounded-2xl">
+                    <p class="text-xl">"The community support is amazing! I've made so many new friends and feel more motivated to stay active."</p>
+                    <h3 class="mt-4 text-lg font-bold">Jane Smith</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-base-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+                <a href="#" class="text-xl font-bold">Fitness Tracker</a>
+                <ul class="list-none flex space-x-4">
+                    <li><a href="#features" class="hover:text-primary">Features</a></li>
+                    <li><a href="#pricing" class="hover:text-primary">Pricing</a></li>
+                    <li><a href="#testimonials" class="hover:text-primary">Testimonials</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

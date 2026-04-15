@@ -1,0 +1,30 @@
+/* Custom global styles */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#products .product-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#products .product-image {
+  width: 100%;
+  height: auto;
+}
+
+#products .product-name {
+  font-size: 1.2rem;
+  margin-top: 8px;
+}
+
+#products .product-price {
+  font-size: 1rem;
+  color: #6b7280;
+}

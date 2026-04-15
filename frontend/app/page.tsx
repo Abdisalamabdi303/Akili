@@ -9,8 +9,7 @@ import { useRouter } from "next/navigation";
 
 interface Project {
   id: number;
-  name: string;
-  prompt: string;
+  title: string;
   created_at: string;
 }
 
@@ -22,7 +21,7 @@ export default function LandingPage() {
   useEffect(() => {
     const loadProjects = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/projects");
+        const res = await fetch("http://localhost:4000/api/chats");
         if (!res.ok) return;
         const data = await res.json();
         setProjects(Array.isArray(data) ? data : []);
@@ -66,58 +65,66 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
       {/* Navbar / Header */}
-      <header className="py-6 px-8 flex justify-between items-center border-b border-border/40 bg-card/10 backdrop-blur-md sticky top-0 z-10">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary/20 p-2 rounded-lg">
-            <Sparkles className="text-primary w-6 h-6" />
+      <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3">
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-primary/35 bg-gradient-to-br from-primary/30 via-primary/15 to-accent/30 shadow-[0_0_24px_rgba(34,211,238,0.35)] sm:h-10 sm:w-10">
+              <span className="text-sm font-extrabold text-primary-foreground sm:text-base">A</span>
+              <Sparkles className="absolute -right-1 -top-1 h-3.5 w-3.5 text-primary" />
+            </div>
+            <h1 className="bg-gradient-to-r from-primary via-cyan-300 to-accent bg-clip-text text-xl font-bold tracking-tight text-transparent sm:text-2xl">
+              Akili AI
+            </h1>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Akili AI
-          </h1>
-        </div>
-        <div className="text-sm text-muted-foreground">
-          v1.0.0
+          <div className="rounded-full border border-border/70 bg-card/60 px-3 py-1 text-xs text-muted-foreground sm:text-sm">
+            v1.0.0
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center p-8 w-full max-w-7xl mx-auto overflow-y-auto">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col overflow-y-auto px-4 sm:px-6 lg:px-8">
 
         {/* Hero Section */}
-        <section className="w-full max-w-3xl text-center space-y-8 mt-12 mb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
-          <h2 className="text-5xl font-extrabold tracking-tight">
-            What will you <span className="text-primary underline decoration-primary/30 underline-offset-8">build</span> today?
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Turn your ideas into production-ready code with the power of Akili AI.
-            Describe your vision, and watch it come to life.
-          </p>
+        <section className="w-full py-10 text-center md:py-16 lg:pt-16 lg:pb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
+          <div className="mx-auto max-w-4xl rounded-3xl border border-border/70 bg-card/45 px-5 py-10 shadow-[0_24px_80px_rgba(3,7,18,0.65)] backdrop-blur-xl sm:px-8 sm:py-12">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+              <Sparkles className="h-3.5 w-3.5" />
+              AI Product Studio
+            </div>
+            <h2 className="mx-auto max-w-4xl text-4xl font-extrabold tracking-tight leading-tight md:text-5xl">
+              Build from idea to deploy-ready in one <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">flow</span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              Describe your product once. Akili plans, designs, and generates code with a modern stack and clean project structure.
+            </p>
 
-          <div className="relative w-full max-w-2xl mx-auto transform hover:scale-[1.01] transition-transform duration-300">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 to-accent/50 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative flex items-center">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Describe your project (e.g., 'A login page with glassmorphism')..."
-                className="w-full h-16 pl-8 pr-16 text-lg rounded-full shadow-2xl border-primary/20 focus:ring-2 focus:ring-primary/50 bg-card/90 backdrop-blur-xl"
-                autoFocus
-              />
-              <Button
-                onClick={handleStartProject}
-                disabled={!input.trim()}
-                className="absolute right-2 top-2 bottom-2 rounded-full w-12 h-12 p-0 bg-primary hover:bg-primary/90 shadow-lg transition-all"
-              >
-                <ArrowRight size={24} />
-              </Button>
+            <div className="group relative mx-auto mt-8 w-full max-w-2xl transform transition-transform duration-300 hover:scale-[1.01]">
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary/45 via-cyan-400/35 to-accent/45 blur-md opacity-70 transition duration-500 group-hover:opacity-100"></div>
+              <div className="relative flex items-center">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Describe your project (e.g., 'A login page with glassmorphism')..."
+                  className="h-14 w-full rounded-full border-border/80 bg-background/90 pl-6 pr-16 text-base shadow-2xl backdrop-blur-xl focus:ring-2 focus:ring-primary/60 md:h-16 md:pl-8 md:text-lg"
+                  autoFocus
+                />
+                <Button
+                  onClick={handleStartProject}
+                  disabled={!input.trim()}
+                  className="absolute bottom-1.5 right-1.5 top-1.5 h-11 w-11 rounded-full bg-gradient-to-br from-primary to-accent p-0 text-primary-foreground shadow-lg transition-all hover:brightness-110 md:bottom-2 md:right-2 md:top-2 md:h-12 md:w-12"
+                >
+                  <ArrowRight size={24} />
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Recent Projects Grid */}
         <section className="w-full animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-100">
-          <div className="flex items-center justify-between mb-6 border-b border-border/50 pb-4">
+          <div className="mb-6 flex items-center justify-between border-b border-border/70 pb-4">
             <h3 className="text-2xl font-semibold flex items-center gap-2">
               <Clock className="text-primary w-5 h-5" />
               Recent Projects
@@ -130,10 +137,10 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* New Project Card */}
             <Card
-              className="bg-primary/5 border-2 border-dashed border-primary/20 flex flex-col items-center justify-center p-8 cursor-pointer hover:bg-primary/10 transition-colors h-64 group"
+              className="group h-64 cursor-pointer border border-primary/35 bg-gradient-to-br from-primary/15 to-accent/10 p-8 transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_18px_45px_rgba(14,165,233,0.22)] flex flex-col items-center justify-center"
               onClick={handleCreateEmptyProject}
             >
-              <div className="bg-primary/20 p-4 rounded-full mb-4 group-hover:scale-110 transition-transform">
+              <div className="mb-4 rounded-full border border-primary/40 bg-primary/20 p-4 transition-transform group-hover:scale-110">
                 <Folder className="w-8 h-8 text-primary" />
               </div>
               <p className="text-lg font-medium text-primary">Start New Project</p>
@@ -142,15 +149,15 @@ export default function LandingPage() {
             {projects.map((project) => (
               <Card
                 key={project.id}
-                className="group hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden border-border/50 bg-card hover:border-primary/50"
+                className="group cursor-pointer overflow-hidden border border-border/80 bg-card/65 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_20px_55px_rgba(15,23,42,0.55)]"
                 onClick={() => router.push(`/project/${project.id}`)}
               >
-                <CardHeader className="pb-3 bg-secondary/30">
+                <CardHeader className="pb-3 bg-secondary/25">
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                      {project.name}
+                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors truncate">
+                      {project.title || "Untitled Project"}
                     </CardTitle>
-                    <div className="bg-background/80 p-1.5 rounded-full shadow-sm">
+                    <div className="rounded-full border border-border/70 bg-background/80 p-1.5 shadow-sm">
                       <Folder size={16} className="text-muted-foreground" />
                     </div>
                   </div>
@@ -159,8 +166,8 @@ export default function LandingPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-4">
-                  <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-                    {project.prompt}
+                  <p className="text-sm text-muted-foreground line-clamp-2 italic">
+                    Project ID: {project.id}
                   </p>
                 </CardContent>
               </Card>

@@ -18,8 +18,8 @@ interface FileExplorerProps {
 
 export function FileExplorer({ tree, onFileSelect, selectedFile }: FileExplorerProps) {
     return (
-        <div className="h-full bg-card border-r border-border overflow-auto">
-            <div className="p-3 border-b border-border bg-muted/30">
+        <div className="h-full bg-card/40 overflow-auto">
+            <div className="p-3 border-b border-border/70 bg-card/30 backdrop-blur-sm">
                 <h3 className="text-sm font-semibold text-foreground">Files</h3>
             </div>
             <div className="p-2">
@@ -52,7 +52,7 @@ function TreeNode({ node, onFileSelect, selectedFile, level }: TreeNodeProps) {
         return (
             <button
                 onClick={() => onFileSelect(node.path)}
-                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover:bg-muted/50 transition-colors ${isSelected ? "bg-primary/10 text-primary font-medium" : "text-foreground"
+                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover:bg-muted/50 transition-colors ${isSelected ? "bg-primary/15 text-primary font-medium border border-primary/30" : "text-foreground"
                     }`}
                 style={{ paddingLeft: `${level * 12 + 8}px` }}
             >

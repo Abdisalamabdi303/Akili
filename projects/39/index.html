@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AhmWet - Software Developer</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-mono">
+    <header class="p-4 bg-gray-800">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl">AhmWet</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#about" class="hover:text-gray-300">About</a></li>
+                    <li><a href="#projects" class="hover:text-gray-300">Projects</a></li>
+                    <li><a href="#contact" class="hover:text-gray-300">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="about" class="py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">About Me</h2>
+            <p class="text-lg mb-8">I am a passionate software developer with expertise in building modern web applications.</p>
+            <img src="https://via.placeholder.com/150" alt="AhmWet" class="rounded-full mx-auto">
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 bg-gray-800">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Projects</h2>
+            <p class="text-lg mb-8">Here are some of my recent projects:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2">Project 1</h3>
+                    <p class="text-sm mb-4">Description of Project 1.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-700">View Project</a>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2">Project 2</h3>
+                    <p class="text-sm mb-4">Description of Project 2.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-700">View Project</a>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2">Project 3</h3>
+                    <p class="text-sm mb-4">Description of Project 3.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-700">View Project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Contact Me</h2>
+            <p class="text-lg mb-8">Feel free to reach out if you have any questions or want to collaborate.</p>
+            <form action="#" method="post" class="flex flex-col space-y-4">
+                <input type="email" name="email" placeholder="Email" required class="bg-gray-700 p-2 rounded-lg text-white">
+                <textarea name="message" placeholder="Message" required class="bg-gray-700 p-2 rounded-lg text-white"></textarea>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-4 bg-gray-800">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2023 AhmWet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>

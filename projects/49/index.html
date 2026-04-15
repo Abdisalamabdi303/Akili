@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Store Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #008080;
+        }
+        .hero-overlay {
+            backdrop-filter: blur(5px);
+        }
+        .btn-primary {
+            background-color: #008080;
+            border-color: #008080;
+        }
+        .btn-primary:hover {
+            background-color: #006b6b;
+            border-color: #006b6b;
+        }
+    </style>
+</head>
+<body class="bg-base-100 text-slate-950">
+    <header class="navbar bg-base-100 shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex-none">
+                <a href="#" class="btn btn-primary">Pet Store</a>
+            </div>
+            <div class="flex-1">
+                <ul class="menu menu-horizontal p-0">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero min-h-screen bg-base-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 hero-overlay">
+            <div class="hero-content text-center">
+                <h1 class="text-5xl font-extrabold">Welcome to Our Pet Store</h1>
+                <p class="py-6">Find the perfect companion for your family.</p>
+                <a href="#" class="btn btn-primary btn-lg">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-3xl font-bold mb-6">Featured Products</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card bg-base-100 shadow-xl">
+                <figure><img src="https://picsum.photos/seed/pet1/800/600" alt="Pet Product 1"></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Product Name</h2>
+                    <p>Description of the product.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-xl">
+                <figure><img src="https://picsum.photos/seed/pet2/800/600" alt="Pet Product 2"></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Product Name</h2>
+                    <p>Description of the product.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-xl">
+                <figure><img src="https://picsum.photos/seed/pet3/800/600" alt="Pet Product 3"></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Product Name</h2>
+                    <p>Description of the product.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-base-100 text-slate-950 py-6">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <p>&copy; 2023 Pet Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+/* Custom global styles */
+body {
+    background: linear-gradient(to-tr, #60a5fa 0%, #90cdf4 100%);
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+.glass-card {
+    backdrop-filter: blur(10px);
+    border-radius: 2rem;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.input input-bordered {
+    color: white !important;
+}

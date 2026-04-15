@@ -1,0 +1,91 @@
+[dotenv@17.2.3] injecting env (7) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+Orchestrator running on port 4000
+📌 Connected to PostgreSQL
+🔥 Pre-warming model gemma4:e2b...
+✅ Model gemma4:e2b is warm and ready!
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 1, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: updateFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: updateFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: updateFile
+🤖 [Loop 3] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 1, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 1, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 1, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 1, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🤖 [Loop 1] Phase 2, model: gemma4:e2b
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🛠️ Executing tool: createFile
+🤖 [Loop 2] Phase 2, model: gemma4:e2b
+LLM Handler Error: [TypeError: fetch failed] {
+  [cause]: HeadersTimeoutError: Headers Timeout Error
+      at FastTimer.onParserTimeout [as _onTimeout] (node:internal/deps/undici/undici:7529:32)
+      at Timeout.onTick [as _onTimeout] (node:internal/deps/undici/undici:692:17)
+      at listOnTimeout (node:internal/timers:605:17)
+      at process.processTimers (node:internal/timers:541:7) {
+    code: 'UND_ERR_HEADERS_TIMEOUT'
+  }
+}
+LLM Handler Error: [TypeError: fetch failed] {
+  [cause]: HeadersTimeoutError: Headers Timeout Error
+      at FastTimer.onParserTimeout [as _onTimeout] (node:internal/deps/undici/undici:7529:32)
+      at Timeout.onTick [as _onTimeout] (node:internal/deps/undici/undici:692:17)
+      at listOnTimeout (node:internal/timers:605:17)
+      at process.processTimers (node:internal/timers:541:7) {
+    code: 'UND_ERR_HEADERS_TIMEOUT'
+  }
+}
+LLM Handler Error: [TypeError: fetch failed] {
+  [cause]: HeadersTimeoutError: Headers Timeout Error
+      at FastTimer.onParserTimeout [as _onTimeout] (node:internal/deps/undici/undici:7529:32)
+      at Timeout.onTick [as _onTimeout] (node:internal/deps/undici/undici:692:17)
+      at listOnTimeout (node:internal/timers:605:17)
+      at process.processTimers (node:internal/timers:541:7) {
+    code: 'UND_ERR_HEADERS_TIMEOUT'
+  }
+}
+LLM Handler Error: [TypeError: fetch failed] {
+  [cause]: HeadersTimeoutError: Headers Timeout Error
+      at FastTimer.onParserTimeout [as _onTimeout] (node:internal/deps/undici/undici:7529:32)
+      at Timeout.onTick [as _onTimeout] (node:internal/deps/undici/undici:692:17)
+      at listOnTimeout (node:internal/timers:605:17)
+      at process.processTimers (node:internal/timers:541:7) {
+    code: 'UND_ERR_HEADERS_TIMEOUT'
+  }
+}

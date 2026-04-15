@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.7.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(to-tr, #60a5fa 0%, #90cdf4 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        .glass-card {
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="glass-card max-w-md w-full p-8 rounded-3xl shadow-lg">
+        <h1 class="text-4xl font-extrabold mb-6">To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a new task..." class="input input-bordered w-full bg-base-200 text-black rounded-3xl mb-4">
+        <button id="addTaskBtn" class="btn btn-primary rounded-3xl">Add Task</button>
+        <ul id="taskList" class="mt-6"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

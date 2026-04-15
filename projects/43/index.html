@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Clinic</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <style>
+        .glass {
+            backdrop-filter: blur(20px);
+            border-radius: 1rem;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white font-sans">
+    <header class="p-8 flex justify-center items-center bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold">Welcome to Our Dental Clinic</h1>
+            <p class="mt-2 text-lg">Experience the best dental care in town.</p>
+        </div>
+    </header>
+
+    <section class="p-8 flex justify-center items-center">
+        <div class="glass max-w-md mx-auto p-6 rounded-3xl shadow-2xl shadow-indigo-500/20">
+            <h2 class="text-2xl font-bold mb-4">Why Choose Us?</h2>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Experienced Dentists</li>
+                <li>Advanced Treatment Options</li>
+                <li>Patient Testimonials</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="p-8 flex justify-center items-center bg-slate-900">
+        <div class="glass max-w-md mx-auto p-6 rounded-3xl shadow-2xl shadow-indigo-500/20">
+            <h2 class="text-2xl font-bold mb-4">Book an Appointment</h2>
+            <form id="appointmentForm" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium">Name</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium">Email</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium">Phone</label>
+                    <input type="tel" id="phone" name="phone" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white font-bold py-2 rounded-md hover:bg-opacity-90">Book Now</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="p-8 flex justify-center items-center bg-slate-900">
+        <div class="text-center">
+            <p>&copy; 2023 Dental Clinic. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

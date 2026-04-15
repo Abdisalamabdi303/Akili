@@ -1,0 +1,12 @@
+/* Custom global styles */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.hero-content h1 {
+    color: #000000;
+}
+
+.card-title {
+    color: #000000;
+}

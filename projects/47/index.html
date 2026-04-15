@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.4.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #6d28d9;
+            --secondary: #facc15;
+        }
+        .glassmorphism {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white">
+    <header class="navbar glassmorphism p-4 shadow-lg backdrop-blur-lg">
+        <div class="flex-1">
+            <a href="/" class="btn btn-ghost normal-case">PetStore</a>
+        </div>
+        <div class="flex-none gap-2">
+            <button class="btn btn-square btn-ghost" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.4-5.4"></path>
+                </svg>
+            </button>
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"></path>
+                    </svg>
+                </label>
+                <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a>Home</a></li>
+                    <li><a>Shop</a></li>
+                    <li><a>About</a></li>
+                    <li><a>Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero min-h-screen bg-base-100">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <img src="https://images.unsplash.com/photo-1586342798479-6e6c5d3a8b0f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" class="max-w-sm rounded-lg shadow-2xl" />
+            <div>
+                <h1 class="text-5xl font-bold">Welcome to PetStore</h1>
+                <p class="py-6">Find the perfect companion for your home.</p>
+                <button class="btn btn-primary normal-case">Shop Now</button>
+                <button class="btn btn-secondary normal-case ml-4">Explore</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <h2 class="text-center text-3xl font-bold mb-8">Featured Categories</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <figure><img src="https://images.unsplash.com/photo-1618791460241-6e5b9c9d2a2f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Dogs</h2>
+                    <p>Explore our wide range of dog products.</p>
+                </div>
+            </div>
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <figure><img src="https://images.unsplash.com/photo-1618791460241-6e5b9c9d2a2f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Cats</h2>
+                    <p>Find the perfect cat products for your feline friend.</p>
+                </div>
+            </div>
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <figure><img src="https://images.unsplash.com/photo-1618791460241-6e5b9c9d2a2f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Birds</h2>
+                    <p>Bring a touch of nature to your home with our bird products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-base-200">
+        <h2 class="text-center text-3xl font-bold mb-8">Best Sellers</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <figure><img src="https://images.unsplash.com/photo-1618791460241-6e5b9c9d2a2f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Product 1</h2>
+                    <p>$9.99</p>
+                    <button class="btn btn-primary normal-case">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <figure><img src="https://images.unsplash.com/photo-1618791460241-6e5b9c9d2a2f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Product 2</h2>
+                    <p>$19.99</p>
+                    <button class="btn btn-primary normal-case">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <figure><img src="https://images.unsplash.com/photo-1618791460241-6e5b9c9d2a2f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBldC1zdHlsZXxlbnwwfHwwfHw=" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Product 3</h2>
+                    <p>$29.99</p>
+                    <button class="btn btn-primary normal-case">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-base-100">
+        <h2 class="text-center text-3xl font-bold mb-8">Why Choose Us?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <div class="card-body">
+                    <h2 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3m-2 4h4m7-8v4"></path></svg> Quality</h2>
+                    <p>We only sell the best products.</p>
+                </div>
+            </div>
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <div class="card-body">
+                    <h2 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3m-2 4h4m7-8v4"></path></svg> Fast Shipping</h2>
+                    <p>Get your pets what they need quickly.</p>
+                </div>
+            </div>
+            <div class="card glassmorphism shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <div class="card-body">
+                    <h2 class="card-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3m-2 4h4m7-8v4"></path></svg> Customer Support</h2>
+                    <p>We're always here to help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-6 bg-base-100 text-center">
+        <p>&copy; 2023 PetStore. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>
