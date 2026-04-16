@@ -112,79 +112,58 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const SYSTEM_PROMPT = `You are Akili, an autonomous Senior Product Manager and exceptional UI/UX Developer built by an expert software engineer and AI developer, Abdisalam Abdi Shakul.
-Your goal is to build breathtaking, modern web applications from scratch incredibly fast using Vanilla HTML, Javascript, and Tailwind CSS.
+const SYSTEM_PROMPT = `You are Akili, an elite autonomous UI/UX engineer and product architect built by Abdisalam Abdi Shakul.
+You build stunning, fully-featured Vanilla web applications using HTML, JavaScript, Tailwind CSS, and DaisyUI.
 
-AUTONOMOUS PRODUCT MANAGEMENT:
-- If the user provides a brief or vague request (e.g., "Build a meditation app"), DO NOT output a minimal skeleton and DO NOT ask basic clarification questions.
-- You must independently invent rich features, comprehensive sections (e.g. Hero, Features, Pricing, Testimonials, Dashboards), and insert highly realistic placeholder data.
-- Build the ULTIMATE, fully-featured version of whatever they request.
+## CORE BEHAVIOR
+- Act autonomously. Never ask clarifying questions for simple requests.
+- For any request, invent rich features, realistic content, and production-quality design.
+- Build the best possible version of what the user describes.
 
-DESIGN STRICT GUIDELINES:
-- **DaisyUI Framework**: You have DaisyUI installed via CDN! You MUST utilize DaisyUI component classes (e.g., \`btn btn-primary\`, \`card bg-base-100 shadow-xl\`, \`hero\`, \`navbar\`, \`badge\`, \`mockup-browser\`) rather than stacking raw Tailwind utilities for major components. This guarantees premium aesthetics effortlessly.
-- **NAVBAR & HERO PROPORTIONALITY**: Navbars and hero sections MUST feel balanced as one system, not oversized isolated sections.
-    - **Shared Container Rule**: Navbar and hero content MUST use the same container width and horizontal padding (e.g. \`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\`).
-    - **Navbar**: Use a \`navbar\` with stable height (\`h-14 sm:h-16\`) and balanced left/right groups. Prefer \`sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-white/10\` over oversized bars.
-    - **Hero Height & Spacing**: Default to proportional spacing (\`pt-10 md:pt-16 pb-12 md:pb-20\`) instead of always forcing \`min-h-screen\`. Only use full-screen heroes when the user explicitly requests it.
-    - **Shared Container Rule**: Navbar and hero content MUST use the same container width and horizontal padding (e.g. 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8').
-    - **Navbar**: Use a 'navbar' with stable height ('h-14 sm:h-16') and balanced left/right groups. Prefer 'sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-white/10' over oversized bars.
-    - **Hero Height & Spacing**: Default to proportional spacing ('pt-10 md:pt-16 pb-12 md:pb-20') instead of always forcing 'min-h-screen'. Only use full-screen heroes when the user explicitly requests it.
-    - **Hero Typography**: Keep headline powerful but controlled ('text-4xl md:text-5xl font-extrabold' by default). Use larger scales only when explicitly requested.
-    - **Hero Content Alignment (Critical)**: Hero text/buttons must be vertically stacked, centered, and readable. Use '<div class="hero-content text-center">' with an inner wrapper like 'max-w-3xl flex flex-col items-center gap-6'. NEVER place hero heading/subtext/CTA in a horizontal row.
-    - **Pollination Backgrounds (Correct Usage)**: If using Pollination images, always URL-encode prompt keywords and use this format: 'https://pollinations.ai/prompt/${encodeURIComponent('descriptive scene keywords')}?width=1920&height=1080&nologo=true'. Use 'bg-cover bg-center bg-no-repeat' on hero, and always add an overlay (e.g. 'hero-overlay bg-opacity-50' to 'bg-opacity-70') for readability.
-    - **Hero Background Fallback (Mandatory)**: If a generated Pollination URL might fail or look weak, include a fallback visual style in CSS (gradient background) so hero never looks blank.
-    - **Vertical Rhythm**: Use consistent spacing tokens (multiples of 4/8) between headline, subtext, and CTAs. Avoid arbitrary or excessive gaps.
-- LAYOUT & SPACING: Exploit generous whitespace (p-4 md:p-8), clear visual hierarchies, and modern flex/grid. Use dark mode by default (bg-slate-950 text-white) for a sleek look unless specified.
-- MOBILE-FIRST RESPONSIVENESS (MANDATORY): The default view is a narrow mobile preview. You MUST build mobile-first. Always use 'flex-col' and stack grid items ('grid-cols-1') on mobile, and apply 'md:flex-row' and 'md:grid-cols-3' for desktop.
-- MODERN TOUCHES: Implement glassmorphism (bg-white/10 border border-white/20 backdrop-blur-lg), prominent rounded corners (rounded-2xl, rounded-3xl), and soft glowing shadows (shadow-2xl shadow-indigo-500/20).
-- JAVASCRIPT INTEGRATION: You must explicitly generate a <tool name="createFile"><filePath>script.js</filePath>... file to handle functionality. Use 'document.addEventListener("DOMContentLoaded")' to query elements and add event listeners (e.g., interactive tabs, counters, modals).
-- INTERACTIVITY: Guarantee smooth CSS micro-interactions on all clickable elements (transition-all duration-300 hover:scale-105 active:scale-95).
-- **PRODUCT CONTENT QUALITY (MANDATORY)**: Never use placeholder copy such as "product description", "lorem ipsum", "sample text", or empty fields.
-    - For each product/service card, generate: a realistic product name, 1-2 sentence meaningful description, price or value signal, and 2-4 concrete bullet features.
-    - Descriptions must be specific to the user domain (e.g. fitness, fintech, education) and not generic marketing filler.
-- **IMAGE RELEVANCE (MANDATORY)**: Never use random unrelated images for core products.
-    - Build image prompts/URLs from each item's name + category keywords so visuals match content.
-    - Prefer deterministic seeds based on item names, not random seeds.
-    - If no good relevant image is available, use polished icon/illustration blocks instead of random photos.
-- **ICONS (MANDATORY WHEN USEFUL)**: Use relevant icons for feature cards, stats, and navigation affordances.
-    - Prefer inline SVG icons or a CDN icon library in \`index.html\` (e.g. Lucide via CDN) when needed.
-    - Choose icons that semantically match content (heart for health, chart for analytics, shield for security).
-    - Never use generic placeholder logo images when a text/SVG logo mark is more appropriate.
+## TECHNOLOGY
+- Stack: Plain HTML + Vanilla JS + Tailwind CSS (CDN) + DaisyUI (CDN)
+- DO NOT use React, Vue, or any JS framework
+- index.html MUST include: Tailwind CDN script + DaisyUI CDN link
+- All logic goes in script.js. NEVER wrap your code in \`DOMContentLoaded\` because the bundler executes JS dynamically AFTER the DOM is ready. Run logic directly in the global scope or call your init function immediately.
+- Custom CSS goes in styles.css
 
-To create files, output this exact XML format and STOP immediately after the closing tag:
-<tool name="createFile">
-    <filePath>index.html</filePath>
-    <content>YOUR CODE HERE</content>
-</tool>
+## DESIGN STANDARDS
+- Use DaisyUI components (\`btn\`, \`card\`, \`navbar\`, \`hero\`, \`badge\`, \`modal\`, etc.)
+- Mobile-first: \`flex-col\`, \`grid-cols-1\` by default → \`md:flex-row\`, \`md:grid-cols-3\` for desktop
+- Hero sections: use \`<div class="hero-content text-center flex flex-col items-center">\` — NEVER horizontal layouts
+- Navbar: \`sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10\`
+- Images: Pollinations.ai → \`https://image.pollinations.ai/prompt/your-description-here?width=800&height=600&nologo=true\` (Use hyphens. NO URL encoding the \`?\`). AI images take 10-15 seconds to load! ALWAYS apply a background placeholder class (e.g., \`bg-base-300 animate-pulse\` or wrap in a DaisyUI \`skeleton\`) so the UI looks great while waiting.
+- Always add a CSS gradient fallback on hero in case images fail to load
+- Use Lucide icons via CDN when appropriate
+- Micro-animations: \`transition-all duration-300 hover:scale-105 active:scale-95\` on interactive elements
+- Glassmorphism: \`bg-white/10 border border-white/20 backdrop-blur-lg\`
+- Real content only — no lorem ipsum, no "Product Name", no placeholder text
 
-CRITICAL WORKFLOW (Follow these exact steps):
-1. **Architecture**: You are building a Vanilla web application. Do NOT use React, Vue, or any frameworks. Just standard DOM APIs. Tailwind CSS and DaisyUI are available via CDN.
-2. **Files required**:
-   - 'index.html' - The main entry point (MUST include the DaisyUI CDN link and Tailwind CDN script)
-   - 'styles.css' - Any custom global styles not covered by Tailwind
-   - 'script.js' - All your Javascript logic
-3. **Strict Formatting Penalties**: 
-   - DO NOT nest XML tags. You MUST securely close </content></tool> before starting a new file!
-   - DO NOT write multiple versions of 'index.html'. Write it EXACTLY ONCE.
-   - If you write code, you MUST wrap it inside the tool format. NEVER output raw HTML or JS outside of the <content> tag.
-4. **Execution Loop**: After each tool call, STOP. The system runs the tool and hands control back to you.
-5. **Finishing**: When you have completed all files, DO NOT USE ANY TOOL TAGS. Simply write a short final message explaining the features you invented and built.
+## FILE OUTPUT FORMAT
+Output each file using this EXACT XML format. Close each tool tag completely before opening the next:
 
-CORRECT XML FORMAT:
-
+\`\`\`
 <tool name="createFile">
     <filePath>index.html</filePath>
     <content>
-<!-- Your actual FULL HTML code here including tailwind script -->
+<!-- full content -->
     </content>
 </tool>
+\`\`\`
 
-<tool name="createFile">
-    <filePath>script.js</filePath>
-    <content>
-// Your actual JavaScript logic here
-    </content>
-</tool>
+## CRITICAL WORKFLOW RULES
+1. You MUST generate BOTH index.html and script.js in your very first response. Never output one file and wait.
+2. Write index.html EXACTLY ONCE.
+3. Write script.js EXACTLY ONCE.
+4. After all required files are created, respond with a plain text summary (NO tool tags).
+5. NEVER output raw code outside of <content> tags.
+6. DO NOT nest XML tags.
+7. Only use DOM manipulation in script.js. Do not rely on external JS libraries except Tailwind/DaisyUI.
+
+## COMPLETION SIGNAL
+When ALL files have been created and confirmed saved, write a plain-text message like:
+"✅ Done! Here's what I built: [brief summary of features]"
+Do NOT output any more <tool> tags after this.
 
 Available Tools:
 ${JSON.stringify(toolDefinitions, null, 2)} `;
@@ -249,50 +228,21 @@ function validateIndexHtmlQuality(content) {
     const issues = [];
     const html = content || "";
 
-    const hasHero = /<(section|div)[^>]*class="[^"]*\bhero\b[^"]*"/i.test(html);
-    if (hasHero) {
-        if (!/pollinations\.ai\/prompt\//i.test(html)) {
-            issues.push("Hero section is missing a Pollinations background image URL.");
-        }
-
-        if (!/\bbg-cover\b/i.test(html) || !/\bbg-center\b/i.test(html)) {
-            issues.push("Hero background must include `bg-cover bg-center` for proper composition.");
-        }
-
-        const heroContentClassMatch = /class="[^"]*\bhero-content\b[^"]*"/i.exec(html);
-        if (heroContentClassMatch) {
-            const classText = heroContentClassMatch[0];
-            if (!/\btext-center\b/i.test(classText)) {
-                issues.push("Hero content must include `text-center`.");
-            }
-            if (!/\bflex\b/i.test(classText) || !/\bflex-col\b/i.test(classText) || !/\bitems-center\b/i.test(classText)) {
-                issues.push("Hero content must include `flex flex-col items-center` to avoid horizontal alignment.");
-            }
-        } else {
-            issues.push("Hero content container is missing required `hero-content` structure.");
-        }
+    // Only flag genuinely bad placeholder copy
+    if (/\b(lorem ipsum|sample text|product description goes here)\b/i.test(html)) {
+        issues.push("Generic placeholder copy detected. Use realistic, domain-specific content.");
     }
 
-    if (/\b(product name|description of the product|product description|lorem ipsum|sample text)\b/i.test(html)) {
-        issues.push("Generic placeholder product copy detected. Product cards need specific names and meaningful descriptions.");
-    }
-
-    if (/picsum\.photos\/seed\/\$\{?Math\.floor|\bpicsum\.photos\/seed\/pet\d+\b/i.test(html)) {
-        issues.push("Random placeholder product images detected. Use domain-relevant deterministic image prompts/keywords.");
-    }
-
-    if (/placehold\.co\/50x50|placeholder/i.test(html)) {
-        issues.push("Placeholder branding/assets detected. Use a styled text or SVG logo instead of placeholder images.");
-    }
-
+    // Flag invalid DaisyUI surface tokens
     if (/\bbg-base-(800|900)\b/i.test(html)) {
-        issues.push("Invalid DaisyUI surface classes detected (`bg-base-800/900`). Use valid theme tokens like `bg-base-100`, `bg-base-200`, or explicit Tailwind slate/zinc classes.");
+        issues.push("Invalid DaisyUI class `bg-base-800/900` detected. Use `bg-base-100`, `bg-base-200`, or Tailwind slate/zinc classes.");
     }
 
-    const scriptMatches = html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi);
+    // Flag inline JS in HTML (must go in script.js)
+    const scriptMatches = html.matchAll(/<script(?![^>]*src)[^>]*>([\s\S]*?)<\/script>/gi);
     for (const match of scriptMatches) {
-        if (match[1] && match[1].trim().length > 5) {
-            issues.push("INLINE JAVASCRIPT DETECTED: You wrote JS logic inside <script> tags in index.html! This is STRICTLY FORBIDDEN. You must completely remove it from index.html and output it exactly inside a separate <tool name='createFile'><filePath>script.js</filePath> block.");
+        if (match[1] && match[1].trim().length > 20) {
+            issues.push("Inline JS detected in index.html. Move all logic to script.js.");
             break;
         }
     }
@@ -427,7 +377,7 @@ app.post("/api/chats/:id/messages", async (req, res) => {
 
             // Extract the workspace context (files already created)
             const fileTreeResult = tools.getFileTree(id);
-            let workspaceContext = "[System Data: Current files in workspace: ";
+            let workspaceContext = "[System Data: Current files in workspace:\n";
             if (!fileTreeResult.error && fileTreeResult.tree) {
                 const extractPaths = (nodes, basePath = "") => {
                     let paths = [];
@@ -439,9 +389,20 @@ app.post("/api/chats/:id/messages", async (req, res) => {
                     return paths;
                 };
                 const paths = extractPaths(fileTreeResult.tree);
-                workspaceContext += paths.length > 0 ? paths.join(", ") : "None";
+                if (paths.length > 0) {
+                    for (const p of paths) {
+                        const fileData = tools.readFile(id, p);
+                        if (!fileData.error) {
+                            workspaceContext += `\n=== ${p} ===\n\`\`\`\n${fileData.content}\n\`\`\`\n`;
+                        } else {
+                            workspaceContext += `${p} (Error reading file)\n`;
+                        }
+                    }
+                } else {
+                    workspaceContext += "None\n";
+                }
             } else {
-                workspaceContext += "None";
+                workspaceContext += "None\n";
             }
             workspaceContext += "]\n\n";
 
@@ -449,9 +410,9 @@ app.post("/api/chats/:id/messages", async (req, res) => {
             let fullPrompt = workspaceContext;
 
             // Context Truncation to optimize Time-To-First-Token (TTFT)
-            const recentMessages = history.rows.slice(-4);
-            if (history.rows.length > 4) {
-                fullPrompt += "[SYSTEM: Older chat history truncated for performance]\n\n";
+            const recentMessages = history.rows.slice(-6);
+            if (history.rows.length > 6) {
+                fullPrompt += `[SYSTEM: Older chat history truncated. Original project requirement:]\nUser: ${history.rows[0].content}\n\n`;
             }
 
             recentMessages.forEach(msg => {
@@ -521,6 +482,7 @@ app.post("/api/chats/:id/messages", async (req, res) => {
 
             const toolCalls = parseToolCalls(accumulatedResponse);
             if (toolCalls.length > 0) {
+                // Quality gate: only run on createFile/updateFile for index.html
                 const qualityIssues = [];
                 toolCalls.forEach((toolCall) => {
                     if ((toolCall.name === "createFile" || toolCall.name === "updateFile") && toolCall.args?.filePath) {
@@ -532,32 +494,103 @@ app.post("/api/chats/:id/messages", async (req, res) => {
                     }
                 });
 
-                if (qualityIssues.length > 0) {
+                if (qualityIssues.length > 0 && qualityGateFailures < MAX_QUALITY_GATE_FAILURES) {
                     const uniqueIssues = [...new Set(qualityIssues)];
                     qualityGateFailures += 1;
-
-                    if (qualityGateFailures > MAX_QUALITY_GATE_FAILURES) {
-                        console.warn(`⚠️ Quality gate exceeded retry budget for chat ${id}. Proceeding to avoid loop.`);
-                    } else {
-                        const feedback = `[SYSTEM: Quality Gate Failed]
-Your proposed index.html failed required quality checks:
+                    console.warn(`⚠️ Quality gate failure #${qualityGateFailures} for chat ${id}:`, uniqueIssues);
+                    const feedback = `[SYSTEM: Quality Gate Failed]
+Your index.html has issues that must be fixed:
 ${uniqueIssues.map(issue => `- ${issue}`).join("\n")}
 
-Fix all issues now.
-Return exactly ONE tool call for index.html only.
-Use createFile if index.html does not exist yet, otherwise use updateFile.
-Do not include any explanation text outside the tool tag.`;
-                        await pool.query("INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)", [id, "user", feedback]);
-                        continue;
-                    }
+Fix only the listed issues. Output the corrected index.html once using createFile or updateFile.
+Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
+                    await pool.query("INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)", [id, "user", feedback]);
+                    continue;
                 }
 
+                // Execute all tool calls
+                let allSucceeded = true;
                 let allResults = "";
                 for (const toolCall of toolCalls) {
                     toolCall.args.projectId = id;
                     const result = await executeToolCall(toolCall);
-                    allResults += `Tool '${toolCall.name}' Output:\n${JSON.stringify(result, null, 2)}\n\n`;
+                    allResults += `Tool '${toolCall.name}' (${toolCall.args.filePath || ''}) → ${result.success ? 'saved ✓' : 'FAILED: ' + JSON.stringify(result.error)}\n`;
+                    if (!result.success) allSucceeded = false;
                 }
+
+                console.log(`🗂️ Tool results:\n${allResults}`);
+
+                // Check if the model has created all expected files (index.html + script.js)
+                const fileTreeAfter = tools.getFileTree(id);
+                const createdFiles = [];
+                if (!fileTreeAfter.error && fileTreeAfter.tree) {
+                    const extractPaths = (nodes) => {
+                        let paths = [];
+                        nodes.forEach(node => {
+                            if (node.type === "file") paths.push(node.name);
+                            else if (node.children) paths = paths.concat(extractPaths(node.children));
+                        });
+                        return paths;
+                    };
+                    createdFiles.push(...extractPaths(fileTreeAfter.tree));
+                }
+
+                const hasIndex = createdFiles.includes('index.html');
+                const hasScript = createdFiles.includes('script.js');
+
+                if (allSucceeded && hasIndex && hasScript) {
+                    // All required files are in place — signal completion and break
+                    console.log(`✅ All files created for chat ${id}. Stopping loop.`);
+                    await pool.query(
+                        "INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)",
+                        [id, 'user', '[SYSTEM: All files saved successfully. Your task is complete. Do not create any more files. Write a brief plain-text summary of what you built.]']
+                    );
+                    // Do one final loop to get the summary message from the model, then break
+                    const finalResponse = await (async () => {
+                        const finalHistory = await pool.query("SELECT role, content FROM messages WHERE chat_id = $1 ORDER BY created_at ASC", [id]);
+                        let finalPrompt = "";
+                        finalHistory.rows.slice(-3).forEach(msg => {
+                            let c = msg.content;
+                            if (msg.role === 'assistant') c = c.replace(/<content>[\s\S]*?<\/content>/g, '<content>... [omitted] ...</content>');
+                            finalPrompt += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${c}\n`;
+                        });
+                        finalPrompt += "Assistant: ";
+                        const fr = await fetch(`http://${process.env.JOB_ENDPOINT || 'localhost'}:11434/api/generate`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                model: process.env.LLM_MODEL || 'gemma4:e2b',
+                                prompt: finalPrompt,
+                                system: SYSTEM_PROMPT,
+                                stream: true,
+                                keep_alive: "30m",
+                                options: { num_predict: 512, temperature: 0.3 }
+                            })
+                        });
+                        if (!fr.ok) return '';
+                        const reader2 = fr.body.getReader();
+                        const decoder2 = new TextDecoder();
+                        let summary = ''; let buf2 = '';
+                        while (true) {
+                            const { done, value } = await reader2.read();
+                            if (done) break;
+                            buf2 += decoder2.decode(value, { stream: true });
+                            const lines2 = buf2.split('\n');
+                            buf2 = lines2.pop() || '';
+                            for (const line of lines2) {
+                                if (!line.trim()) continue;
+                                try { const j = JSON.parse(line); if (j.response) { res.write(j.response); summary += j.response; } } catch(e) {}
+                            }
+                        }
+                        return summary;
+                    })();
+                    if (finalResponse) {
+                        await pool.query("INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)", [id, 'assistant', finalResponse]);
+                    }
+                    break;
+                }
+
+                // Files not complete yet — feed tool results back and continue
                 await pool.query("INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)", [id, 'user', allResults]);
                 continue;
             }

@@ -472,10 +472,11 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 </body>
 </html>`,
         "/styles.css": `/* Global styles */
-* { box-sizing: border-box; margin: 0; padding: 0; }`,
-        "/script.js": `document.addEventListener('DOMContentLoaded', () => {
-    // App Logic Here
-});`,
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: transparent !important; color: inherit !important; }`,
+        "/script.js": `// App Logic Here
+// Note: Sandpack executes JS after page load, so do NOT use DOMContentLoaded.
+console.log("App loaded");`,
         "/index.js": `import "./styles.css";\nimport "./script.js";`
     }), []);
 

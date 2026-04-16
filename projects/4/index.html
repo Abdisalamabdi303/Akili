@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paws & Whiskers | Your Trusted Pet Store</title>
+    <meta name="description" content="Premium pet supplies, grooming services, and expert advice for your furry friends">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-base-100">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-200 rounded-box z-50 mt-3 w-52 p-2 shadow">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <a href="#home" class="btn btn-ghost text-xl gap-2">
+                <i class="fas fa-paw text-primary"></i> Paws & Whiskers
+            </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1 gap-2">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <a href="#cart" class="btn btn-ghost btn-circle">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span class="badge badge-primary badge-xs">2</span>
+            </a>
+            <a href="#login" class="btn btn-primary">Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero min-h-[80vh] bg-base-200 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20"></div>
+        <div class="hero-content flex-col lg:flex-row-reverse items-center px-4">
+            <div class="max-w-lg text-center lg:text-left">
+                <h1 class="text-5xl lg:text-7xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    Your Pet's Happy Place
+                </h1>
+                <p class="py-6 text-lg">
+                    Premium pet supplies, expert care, and loving attention for your furry friends. 
+                    We're committed to keeping your pets healthy, happy, and loved.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#products" class="btn btn-primary btn-lg">
+                        <i class="fas fa-shopping-bag mr-2"></i> Shop Now
+                    </a>
+                    <a href="#services" class="btn btn-outline btn-lg">
+                        <i class="fas fa-heart mr-2"></i> Our Services
+                    </a>
+                </div>
+            </div>
+            <div class="max-w-sm rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <img src="https://image.pollinations.ai/prompt/dog-and-cat-playing-together-in-a-garden-happy-pets?width=800&height=600&nologo=true" alt="Happy pets" class="w-full">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-base-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Paws & Whiskers?</h2>
+                <p class="text-lg max-w-2xl mx-auto">We provide the best care and products for your beloved pets, ensuring they live their happiest lives.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <div class="card-body items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-star text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Premium Quality</h3>
+                        <p class="text-base">Only the best products for your pets - organic food, safe toys, and premium grooming supplies.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <div class="card-body items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-heart text-3xl text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Expert Care</h3>
+                        <p class="text-base">Our team of pet specialists provides professional grooming, training, and health advice.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <div class="card-body items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                            <i class="fas fa-truck text-3xl text-accent"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Fast Delivery</h3>
+                        <p class="text-base">Same-day delivery for orders placed before 2 PM. We deliver happiness right to your door.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16 bg-base-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2">Our Products</h2>
+                    <p class="text-lg">Everything your pet needs for a happy, healthy life.</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <a href="#" class="btn btn-outline btn-sm">View All Products</a>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <figure class="relative h-48">
+                        <img src="https://image.pollinations.ai/prompt/dog-food-high-quality-natural-ingredients?width=400&height=300&nologo=true" alt="Premium Dog Food" class="w-full h-full object-cover">
+                        <span class="absolute top-2 right-2 badge badge-primary">Best Seller</span>
+                    </figure>
+                    <div class="card-body">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="card-title text-lg font-bold">Premium Natural Dog Food</h3>
+                                <p class="text-sm text-gray-500">For adult dogs - 15kg bag</p>
+                            </div>
+                            <span class="badge badge-outline badge-primary">$49.99</span>
+                        </div>
+                        <div class="card-actions justify-between items-center mt-4">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-yellow-400" />
+                            </div>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <figure class="relative h-48">
+                        <img src="https://image.pollinations.ai/prompt/cat-toys-interactive-pet-play?width=400&height=300&nologo=true" alt="Interactive Cat Toy" class="w-full h-full object-cover">
+                        <span class="absolute top-2 right-2 badge badge-secondary">New</span>
+                    </figure>
+                    <div class="card-body">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="card-title text-lg font-bold">Interactive Laser Cat Toy</h3>
+                                <p class="text-sm text-gray-500">Automatic with 4 play modes</p>
+                            </div>
+                            <span class="badge badge-outline badge-secondary">$29.99</span>
+                        </div>
+                        <div class="card-actions justify-between items-center mt-4">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-400" />
+                            </div>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <figure class="relative h-48">
+                        <img src="https://image.pollinations.ai/prompt/dog-grooming-kit-natural-products?width=400&height=300&nologo=true" alt="Pet Grooming Kit" class="w-full h-full object-cover">
+                        <span class="absolute top-2 right-2 badge badge-accent">Sale</span>
+                    </figure>
+                    <div class="card-body">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="card-title text-lg font-bold">Natural Pet Grooming Kit</h3>
+                                <p class="text-sm text-gray-500">Shampoo, brush, and nail clippers</p>
+                            </div>
+                            <span class="badge badge-outline badge-accent">$39.99</span>
+                        </div>
+                        <div class="card-actions justify-between items-center mt-4">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-yellow-400" />
+                            </div>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <figure class="relative h-48">
+                        <img src="https://image.pollinations.ai/prompt/small-animal-cage-hamster?width=400&height=300&nologo=true" alt="Small Animal Cage" class="w-full h-full object-cover">
+                    </figure>
+                    <div class="card-body">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="card-title text-lg font-bold">Premium Hamster Habitat</h3>
+                                <p class="text-sm text-gray-500">Multi-level with tunnels</p>
+                            </div>
+                            <span class="badge badge-outline">$44.99</span>
+                        </div>
+                        <div class="card-actions justify-between items-center mt-4">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-yellow-400" checked />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-yellow-400" />
+                            </div>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-shopping-cart mr-1"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-base-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+                <p class="text-lg max-w-2xl mx-auto">Professional care and grooming services to keep your pets looking and feeling their best.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <div class="card-body">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mr-4">
+                                <i class="fas fa-scissors text-2xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Professional Grooming</h3>
+                                <p class="text-sm text-gray-600 mb-3">Bathing, hair trimming, nail clipping, and ear cleaning by certified groomers.</p>
+                                <div class="flex items-center text-sm">
+                                    <span class="badge badge-primary mr-2">60 min</span>
+                                    <span class="badge badge-outline badge-primary">$45+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <div class="card-body">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center mr-4">
+                                <i class="fas fa-paw text-2xl text-secondary"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Pet Training</h3>
+                                <p class="text-sm text-gray-600 mb-3">Obedience training, behavior modification, and puppy socialization classes.</p>
+                                <div class="flex items-center text-sm">
+                                    <span class="badge badge-secondary mr-2">Group & Private</span>
+                                    <span class="badge badge-outline badge-secondary">$30/session</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                    <div class="card-body">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mr-4">
+                                <i class="fas fa-stethoscope text-2xl text-accent"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Health Consultations</h3>
+                                <p class="text-sm text-gray-600 mb-3">Nutritional advice, parasite prevention, and general health checkups.</p>
+                                <div class="flex items-center text-sm">
+                                    <span class="badge badge-accent mr-2">30 min</span>
+                                    <span class="badge badge-outline badge-accent">$25</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-base-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/20 rounded-full"></div>
+                        <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary/20 rounded-full"></div>
+                        <img src="https://image.pollinations.ai/prompt/veterinarian-with-dog-and-cat-clinic?width=600&height=400&nologo=true" alt="Our Team" class="rounded-xl shadow-2xl w-full">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">About Paws & Whiskers</h2>
+                    <p class="text-lg mb-6">Founded in 2015, Paws & Whiskers has been serving the community with passion and dedication. We believe that pets are family, and we treat every animal with the love and care they deserve.</p>
+                    <p class="text-lg mb-8">Our mission is to improve the lives of pets and their owners by providing high-quality products, expert services, and invaluable knowledge about pet care.</p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-primary"></i>
+                            </div>
+                            <span>100% Satisfaction Guarantee</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-secondary"></i>
+                            </div>
+                            <span>Expert Staff</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-accent"></i>
+                            </div>
+                            <span>Premium Products</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-primary"></i>
+                            </div>
+                            <span>Fast Delivery</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-base-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
+                <p class="text-lg">Real stories from real pet lovers.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <div class="rating rating-sm mb-4">
+                            <input type="radio" name="rating-5" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-5" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-5" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-5" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-5" class="mask mask-star-2 bg-yellow-400" checked />
+                        </div>
+                        <p class="italic mb-4">"My golden retriever loves the grooming services here! The staff is amazing and so patient with him. Highly recommend!"</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-primary/30 flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Sarah Johnson</h4>
+                                <p class="text-sm text-gray-500">Dog mom to Max</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <div class="rating rating-sm mb-4">
+                            <input type="radio" name="rating-6" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-6" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-6" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-6" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-6" class="mask mask-star-2 bg-yellow-400" checked />
+                        </div>
+                        <p class="italic mb-4">"The best pet store in town! They have everything I need for my two cats, and the grooming service is top-notch."</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-secondary/30 flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-secondary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Michael Chen</h4>
+                                <p class="text-sm text-gray-500">Cat dad to Luna & Simba</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <div class="rating rating-sm mb-4">
+                            <input type="radio" name="rating-7" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-7" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-7" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-7" class="mask mask-star-2 bg-yellow-400" checked />
+                            <input type="radio" name="rating-7" class="mask mask-star-2 bg-yellow-400" />
+                        </div>
+                        <p class="italic mb-4">"Great products and knowledgeable staff. My rabbit loves the new habitat, and the training class helped so much with his behavior."</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-accent/30 flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Emily Rodriguez</h4>
+                                <p class="text-sm text-gray-500">Rabbit enthusiast</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-base-200">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
+                <p class="text-lg">We'd love to hear from you! Reach out with any questions about our products or services.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="bg-base-100 p-8 rounded-xl shadow-xl">
+                    <h3 class="text-xl font-bold mb-6">Get in Touch</h3>
+                    <form>
+                        <div class="form-control mb-4">
+                            <label class="label">
+                                <span class="label-text">Name</span>
+                            </label>
+                            <input type="text" placeholder="Your name" class="input input-bordered">
+                        </div>
+                        <div class="form-control mb-4">
+                            <label class="label">
+                                <span class="label-text">Email</span>
+                            </label>
+                            <input type="email" placeholder="your@email.com" class="input input-bordered">
+                        </div>
+                        <div class="form-control mb-4">
+                            <label class="label">
+                                <span class="label-text">Message</span>
+                            </label>
+                            <textarea placeholder="How can we help?" class="textarea textarea-bordered h-32"></textarea>
+                        </div>
+                        <button class="btn btn-primary w-full">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="card bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-2xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold mb-1">Visit Our Store</h3>
+                                    <p class="text-sm text-gray-600">123 Pet Street, Animal City, AC 90210</p>
+                                    <p class="text-sm text-gray-600">Open Mon-Sat: 9am-8pm</p>
+                                    <p class="text-sm text-gray-600">Sun: 10am-6pm</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-secondary/20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-2xl text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold mb-1">Call Us</h3>
+                                    <p class="text-sm text-gray-600">+1 (555) 123-4567</p>
+                                    <p class="text-sm text-gray-600">+1 (555) 987-6543</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-2xl text-accent"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold mb-1">Email Us</h3>
+                                    <p class="text-sm text-gray-600">hello@pawsandwhiskers.com</p>
+                                    <p class="text-sm text-gray-600">support@pawsandwhiskers.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-base-200 text-base-content p-10">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-paw text-primary text-2xl"></i>
+                        <span class="font-bold text-xl">Paws & Whiskers</span>
+                    </div>
+                    <p class="text-sm">Premium pet supplies and care services for your furry friends. We care about your pets as much as you do.</p>
+                </div>
+                
+                <div>
+                    <h6 class="font-bold mb-4">Quick Links</h6>
+                    <ul class="link link-hover">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h6 class="font-bold mb-4">Services</h6>
+                    <ul class="link link-hover">
+                        <li><a href="#">Grooming</a></li>
+                        <li><a href="#">Training</a></li>
+                        <li><a href="#">Health Consultations</a></li>
+                        <li><a href="#">Pet Sitting</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h6 class="font-bold mb-4">Connect With Us</h6>
+                    <div class="flex space-x-4">
+                        <a href="#" class="btn btn-ghost btn-circle">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-circle">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-circle">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-circle">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                    <p class="mt-4 text-sm">Subscribe to our newsletter for pet care tips and special offers!</p>
+                    <div class="form-control mt-3">
+                        <div class="input-group">
+                            <input type="email" placeholder="Enter email" class="input input-bordered w-full">
+                            <button class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="text-center">
+                <p>Copyright © 2023 Paws & Whiskers Pet Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

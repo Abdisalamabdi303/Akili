@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Tasks - Interactive To-Do List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10 shadow-lg">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-center">
+            <a class="btn btn-ghost text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                <i data-lucide="check-square" class="mr-2"></i>Bright Tasks
+            </a>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-ghost btn-circle">
+                <i data-lucide="settings" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="hero min-h-[60vh]">
+        <div class="hero-content text-center flex flex-col items-center">
+            <div class="mb-6">
+                <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 animate-pulse">
+                    Organize Your Day
+                </h1>
+                <p class="text-lg mb-8 text-base-content/70 max-w-2xl">
+                    Create, track, and complete your tasks with our intuitive to-do list. Stay productive and achieve your goals!
+                </p>
+            </div>
+
+            <div class="card w-full max-w-2xl bg-white shadow-2xl border border-base-200 rounded-2xl overflow-hidden">
+                <div class="card-body p-6">
+                    <div class="form-control mb-4">
+                        <div class="input-group">
+                            <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-bordered w-full rounded-full" />
+                            <button id="addBtn" class="btn btn-primary rounded-full">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                        <div class="flex gap-2">
+                            <button id="filterAll" class="btn btn-sm btn-outline active rounded-full">All</button>
+                            <button id="filterActive" class="btn btn-sm btn-outline rounded-full">Active</button>
+                            <button id="filterCompleted" class="btn btn-sm btn-outline rounded-full">Completed</button>
+                        </div>
+                        <span id="itemsLeft" class="text-sm font-medium text-base-content/60 bg-base-200 px-3 py-1 rounded-full">
+                            0 items left
+                        </span>
+                    </div>
+
+                    <div class="divider my-3"></div>
+
+                    <div class="space-y-3 max-h-[50vh] overflow-y-auto custom-scrollbar">
+                        <div id="taskList" class="space-y-3">
+                            <!-- Tasks will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="card-actions justify-end mt-6">
+                        <button id="clearCompleted" class="btn btn-ghost btn-sm text-error hover:text-error hover:bg-error/10 rounded-full">
+                            Clear Completed
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer p-4 bg-base-100 text-base-content border-t border-base-content/10">
+        <div class="footer-content">
+            <p>© 2024 Bright Tasks • Stay productive!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

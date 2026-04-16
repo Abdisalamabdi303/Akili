@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhishek's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-base-100 text-base-content">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost md:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-ghost text-xl font-bold" href="#">Abhishek</a>
+        </div>
+        <div class="navbar-center hidden md:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <a class="btn btn-primary" href="#contact">Let's Talk</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero min-h-screen bg-base-200">
+        <div class="hero-content text-center flex flex-col items-center">
+            <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Abhishek<br />Full Stack Developer
+            </h1>
+            <p class="py-6 text-lg md:text-xl max-w-2xl">
+                Building modern, responsive web applications with clean code and intuitive design.
+            </p>
+            <div class="flex gap-4">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-base-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-xl transform rotate-3"></div>
+                    <div class="relative bg-base-200 rounded-xl p-6 h-64 flex items-center justify-center">
+                        <img src="https://image.pollinations.ai/prompt/Professional%20headshot%20of%20a%20developer%20with%20a%20laptop%20and%20code%20on%20screen%2C%20modern%20office%20background%2C%20high%20quality%2C%20realistic%20lighting%2C%20smiling%2C%20business%20casual%20attire%3Fwidth=800&height=600&nologo=true" alt="Abhishek" class="rounded-xl shadow-xl w-full h-full object-cover" />
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Passionate Developer</h3>
+                    <p class="mb-6 text-lg">
+                        I'm Abhishek, a dedicated full stack developer with over 5 years of experience in building web applications. I specialize in creating responsive, user-friendly interfaces and robust backend systems.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="card bg-base-200 p-4 rounded-xl">
+                            <div class="text-3xl font-bold text-primary">5+</div>
+                            <div class="text-sm">Years Experience</div>
+                        </div>
+                        <div class="card bg-base-200 p-4 rounded-xl">
+                            <div class="text-3xl font-bold text-secondary">50+</div>
+                            <div class="text-sm">Projects Completed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-base-200">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">My Projects</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card bg-base-100 shadow-xl">
+                    <figure>
+                        <img src="https://image.pollinations.ai/prompt/E-commerce%20website%20with%20modern%20design%2C%20product%20grid%2C%20shopping%20cart%2C%20responsive%20layout%2C%20clean%20UI%2C%20mobile-friendly%2C%20dark%20mode%20toggle%3Fwidth=800&height=600&nologo=true" alt="Project 1" />
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-xl">E-Commerce Platform</h3>
+                        <p>A fully functional e-commerce website with product catalog, shopping cart, and secure checkout.</p>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl">
+                    <figure>
+                        <img src="https://image.pollinations.ai/prompt/Task%20management%20dashboard%20with%20Kanban%20board%2C%20drag%20and%20drop%20functionality%2C%20team%20collaboration%2C%20real-time%20updates%2C%20modern%20design%2C%20dark%20mode%20support%3Fwidth=800&height=600&nologo=true" alt="Project 2" />
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-xl">Task Manager</h3>
+                        <p>A collaborative task management tool with Kanban boards, team features, and real-time updates.</p>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl">
+                    <figure>
+                        <img src="https://image.pollinations.ai/prompt/Portfolio%20website%20for%20a%20photographer%2C%20image%20gallery%2C%20lightbox%20view%2C%20responsive%20layout%2C%20elegant%20design%2C%20dark%20theme%2C%20smooth%20animations%3Fwidth=800&height=600&nologo=true" alt="Project 3" />
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-xl">Photography Portfolio</h3>
+                        <p>An elegant portfolio website for a professional photographer with image gallery and lightbox features.</p>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-base-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Get In Touch</h2>
+            <div class="max-w-3xl mx-auto">
+                <form class="space-y-6">
+                    <div class="form-control">
+                        <label class="label" for="name">
+                            <span class="label-text">Name</span>
+                        </label>
+                        <input type="text" id="name" placeholder="Your Name" class="input input-bordered w-full" required />
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="email">
+                            <span class="label-text">Email</span>
+                        </label>
+                        <input type="email" id="email" placeholder="your.email@example.com" class="input input-bordered w-full" required />
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="message">
+                            <span class="label-text">Message</span>
+                        </label>
+                        <textarea id="message" placeholder="Your Message" class="textarea textarea-bordered w-full" rows="5" required></textarea>
+                    </div>
+                    <div class="form-control">
+                        <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer p-10 bg-base-200 text-base-content">
+        <div>
+            <span class="footer-title">Abhishek</span>
+            <p>Building digital experiences with passion and precision.</p>
+        </div>
+        <div>
+            <span class="footer-title">Connect</span>
+            <div class="flex gap-4">
+                <a href="#" class="link link-hover">GitHub</a>
+                <a href="#" class="link link-hover">LinkedIn</a>
+                <a href="#" class="link link-hover">Twitter</a>
+            </div>
+        </div>
+        <div>
+            <span class="footer-title">Contact</span>
+            <p>abhishek@example.com</p>
+            <p>+1 (555) 123-4567</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

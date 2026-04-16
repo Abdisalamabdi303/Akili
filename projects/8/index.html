@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Interactive Todo List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    <div class="navbar sticky top-0 z-50 backdrop-blur-lg bg-white/90 border-b border-base-content/10 shadow-sm">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+                <i data-lucide="list-checks" class="w-6 h-6 mr-2"></i>
+                TaskMaster
+            </a>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <input type="text" placeholder="Search tasks..." class="input input-bordered w-full md:w-auto" id="searchInput">
+            </div>
+        </div>
+    </div>
+
+    <div class="hero min-h-[50vh] bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
+        <div class="hero-content text-center flex flex-col items-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-md">Your Daily Tasks</h1>
+            <p class="text-lg md:text-xl text-white/95 max-w-2xl drop-shadow-sm">Stay organized and productive with our interactive todo list. Add, edit, and track your tasks effortlessly.</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="card bg-white shadow-xl mb-8 rounded-2xl border border-indigo-100">
+            <div class="card-body">
+                <div class="form-control">
+                    <div class="input-group">
+                        <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-bordered w-full shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
+                        <button class="btn btn-primary shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" id="addTaskBtn">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                            Add Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mb-6 justify-center">
+            <button class="btn btn-outline btn-sm" id="filterAll">All</button>
+            <button class="btn btn-outline btn-sm" id="filterActive">Active</button>
+            <button class="btn btn-outline btn-sm" id="filterCompleted">Completed</button>
+        </div>
+
+        <div class="card bg-white shadow-xl rounded-2xl border border-indigo-100">
+            <div class="card-body p-0">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr class="bg-gradient-to-r from-indigo-50 to-purple-50">
+                                <th class="font-semibold text-indigo-700">Status</th>
+                                <th class="font-semibold text-indigo-700">Task</th>
+                                <th class="font-semibold text-indigo-700">Created</th>
+                                <th class="font-semibold text-indigo-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taskList" class="divide-y divide-gray-100">
+                            <!-- Tasks will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <div class="badge badge-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md" id="taskCount">0 tasks pending</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .task-item {
+            transition: all 0.3s ease;
+        }
+        .task-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        .task-item:not(.completed):hover {
+            transform: translateX(5px);
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .empty-state {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-base-200 min-h-screen">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <i class="fas fa-list-check mr-2 text-primary"></i> TaskMaster
+            </a>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <input type="text" placeholder="Search tasks..." id="searchInput" class="input input-bordered w-24 md:w-auto input-sm" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero py-10 bg-gradient-to-br from-primary/10 to-secondary/10">
+        <div class="hero-content text-center">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
+                    Organize Your Tasks
+                </h1>
+                <p class="text-lg mb-8 text-base-content/70">
+                    Manage your daily tasks efficiently with our powerful todo list application.
+                    Track progress, set priorities, and stay productive.
+                </p>
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="stat bg-base-100 rounded-box shadow border border-base-content/10">
+                        <div class="stat-title">Total Tasks</div>
+                        <div class="stat-value text-primary" id="totalTasks">0</div>
+                        <div class="stat-desc">All tasks created</div>
+                    </div>
+                    <div class="stat bg-base-100 rounded-box shadow border border-base-content/10">
+                        <div class="stat-title">Pending</div>
+                        <div class="stat-value text-secondary" id="pendingTasks">0</div>
+                        <div class="stat-desc">Tasks to complete</div>
+                    </div>
+                    <div class="stat bg-base-100 rounded-box shadow border border-base-content/10">
+                        <div class="stat-title">Completed</div>
+                        <div class="stat-value text-success" id="completedTasks">0</div>
+                        <div class="stat-desc">Tasks finished</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 max-w-4xl">
+        <!-- Add Task Form -->
+        <div class="card bg-base-100 shadow-xl mb-6">
+            <div class="card-body">
+                <h2 class="card-title text-xl mb-4">
+                    <i class="fas fa-plus-circle mr-2 text-primary"></i> Add New Task
+                </h2>
+                <form id="taskForm" class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-bordered w-full" required />
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="prioritySelect" class="select select-bordered">
+                            <option value="high">High Priority</option>
+                            <option value="medium" selected>Medium Priority</option>
+                            <option value="low">Low Priority</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus mr-2"></i> Add Task
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+            <div class="flex gap-2">
+                <button class="btn btn-sm btn-active btn-primary filter-btn" data-filter="all">
+                    <i class="fas fa-list mr-2"></i> All
+                </button>
+                <button class="btn btn-sm filter-btn" data-filter="pending">
+                    <i class="fas fa-clock mr-2"></i> Pending
+                </button>
+                <button class="btn btn-sm filter-btn" data-filter="completed">
+                    <i class="fas fa-check-circle mr-2"></i> Completed
+                </button>
+            </div>
+            
+            <div class="flex gap-2">
+                <select id="sortSelect" class="select select-sm select-bordered">
+                    <option value="date-desc">Newest First</option>
+                    <option value="date-asc">Oldest First</option>
+                    <option value="priority">Priority</option>
+                </select>
+                <button id="clearCompletedBtn" class="btn btn-sm btn-outline btn-error hidden">
+                    <i class="fas fa-trash mr-2"></i> Clear Completed
+                </button>
+            </div>
+        </div>
+
+        <!-- Task List -->
+        <div class="bg-base-100 rounded-box shadow-xl overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold mb-4">
+                    <i class="fas fa-clipboard-list mr-2 text-primary"></i> Your Tasks
+                </h2>
+                
+                <!-- Empty State -->
+                <div id="emptyState" class="text-center py-12 fade-in">
+                    <div class="empty-state rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-clipboard text-white text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">No Tasks Yet</h3>
+                    <p class="text-white/80">Add your first task above to get started!</p>
+                </div>
+
+                <!-- Task List Container -->
+                <ul id="taskList" class="space-y-3">
+                    <!-- Tasks will be added here dynamically -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer p-4 bg-base-200 text-base-content mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">
+                <i class="fas fa-copyright mr-2"></i> 2024 TaskMaster. Built with Vanilla JS, Tailwind CSS, and DaisyUI.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

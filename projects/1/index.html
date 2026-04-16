@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawHaven | Premium Pet Supplies</title>
+    <meta name="description" content="Everything your pets need - premium food, toys, grooming supplies, and more.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        .cyan-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #e0f7ff 50%, #00e5ff 100%);
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 255, 0.85) 100%);
+        }
+        
+        .pet-card {
+            transition: all 0.3s ease;
+        }
+        
+        .pet-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 229, 255, 0.2);
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .btn-cyan {
+            background: linear-gradient(135deg, #00b8e6 0%, #00e5ff 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+        }
+        
+        .btn-cyan:hover {
+            background: linear-gradient(135deg, #00a0cc 0%, #00d1e6 100%);
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+        }
+        
+        .btn-outline-cyan {
+            border: 2px solid #00e5ff;
+            color: #0093b5;
+        }
+        
+        .btn-outline-cyan:hover {
+            background: #00e5ff;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-white/10 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4a1 1 0 011 1v6a1 1 0 01-1 1h-4m-6 0h4a1 1 0 011 1v6a1 1 0 01-1 1h-4m-6 0h4a1 1 0 011 1v6a1 1 0 01-1 1h-4" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l3.75 2.25m-7.5-4.5l3.75-2.25m0 0l3.75 2.25m-7.5-4.5l3.75 2.25" />
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-blue-600">
+                        PawHaven
+                    </span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Home</a>
+                    <a href="#products" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Products</a>
+                    <a href="#services" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Services</a>
+                    <a href="#about" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">About</a>
+                    <a href="#contact" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Contact</a>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center">
+                    <a href="#shop" class="btn btn-cyan rounded-full px-6 py-2 font-medium">
+                        Shop Now
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button class="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero pt-10 md:pt-16 pb-12 md:pb-20 relative overflow-hidden">
+        <!-- Background with overlay -->
+        <div class="absolute inset-0 hero-overlay z-0"></div>
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat hero-overlay" 
+             style="background-image: url('https://pollinations.ai/prompt/cute%20dogs%20and%20cats%20playing%20together%20in%20a%20pet%20store?width=1920&height=600&nologo=true');">
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="hero-content text-center">
+                <div class="max-w-3xl flex flex-col items-center gap-6">
+                    <div class="badge badge-lg bg-cyan-100 text-cyan-800 font-semibold rounded-full mb-4">
+                        <span class="mr-2">✨</span> New Arrivals This Week
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
+                        Everything Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Pets</span> Need
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-700 max-w-2xl">
+                        Premium pet supplies, fresh food, and expert care for your furry friends. 
+                        Shop with confidence and give your pets the love they deserve.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                        <a href="#products" class="btn btn-cyan rounded-full px-8 py-4 text-lg font-semibold">
+                            Shop Now
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </a>
+                        <a href="#services" class="btn btn-outline-cyan rounded-full px-8 py-4 text-lg font-semibold">
+                            Our Services
+                        </a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 mt-12 w-full">
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-cyan-600">500+</div>
+                            <div class="text-sm text-gray-600">Products</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-cyan-600">2K+</div>
+                            <div class="text-sm text-gray-600">Happy Pets</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-4xl font-bold text-cyan-600">98%</div>
+                            <div class="text-sm text-gray-600">Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose PawHaven?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We're committed to providing the best care and products for your beloved pets.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
+                    <div class="card-body items-center text-center">
+                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-bold text-gray-900">Premium Quality</h3>
+                        <p class="text-gray-600">All our products are carefully selected from top brands, ensuring safety and durability for your pets.</p>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
+                    <div class="card-body items-center text-center">
+                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-bold text-gray-900">Fast Delivery</h3>
+                        <p class="text-gray-600">Get your pet essentials delivered straight to your door within 24-48 hours across the city.</p>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
+                    <div class="card-body items-center text-center">
+                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title text-xl font-bold text-gray-900">Expert Care</h3>
+                        <p class="text-gray-600">Our team of pet specialists is always available to answer your questions and provide guidance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Products Section -->
+    <section id="products" class="py-16 bg-gradient-to-b from-white to-cyan-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Best Sellers</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Hand-picked products loved by pets and their owners.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
+                    <div class="relative">
+                        <img src="https://pollinations.ai/prompt/dog%20food%20premium%20natural%20ingredients?width=400&height=300&nologo=true" 
+                             alt="Premium Dog Food" 
+                             class="w-full h-48 object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="badge bg-cyan-500 text-white">Best Seller</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="card-title text-xl font-bold text-gray-900">Premium Natural Dog Food</h3>
+                        <p class="text-gray-600 text-sm">Organic, grain-free formula with real chicken and vegetables for optimal health.</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
+                            </div>
+                            <span class="text-sm text-gray-500">(128)</span>
+                        </div>
+                        <div class="card-actions justify-between mt-4">
+                            <span class="text-2xl font-bold text-cyan-600">$49.99</span>
+                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
+                    <div class="relative">
+                        <img src="https://pollinations.ai/prompt/cat%20toys%20interactive%20plush%20mouse?width=400&height=300&nologo=true" 
+                             alt="Interactive Cat Toy" 
+                             class="w-full h-48 object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="badge bg-purple-500 text-white">New</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="card-title text-xl font-bold text-gray-900">Interactive Plush Cat Toy</h3>
+                        <p class="text-gray-600 text-sm">Squeaky mouse with organic catnip that stimulates natural hunting instincts.</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
+                            </div>
+                            <span class="text-sm text-gray-500">(84)</span>
+                        </div>
+                        <div class="card-actions justify-between mt-4">
+                            <span class="text-2xl font-bold text-cyan-600">$14.99</span>
+                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
+                    <div class="relative">
+                        <img src="https://pollinations.ai/prompt/dog%20collar%20adjustable%20leather%20with%20buckle?width=400&height=300&nologo=true" 
+                             alt="Leather Dog Collar" 
+                             class="w-full h-48 object-cover">
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="card-title text-xl font-bold text-gray-900">Premium Leather Dog Collar</h3>
+                        <p class="text-gray-600 text-sm">Handcrafted genuine leather collar with adjustable sizing and brass buckle.</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
+                            </div>
+                            <span class="text-sm text-gray-500">(215)</span>
+                        </div>
+                        <div class="card-actions justify-between mt-4">
+                            <span class="text-2xl font-bold text-cyan-600">$34.99</span>
+                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
+                    <div class="relative">
+                        <img src="https://pollinations.ai/prompt/small%20animal%20cage%20for%20rabbits%20and%20guinea%20pigs?width=400&height=300&nologo=true" 
+                             alt="Small Animal Habitat" 
+                             class="w-full h-48 object-cover">
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="card-title text-xl font-bold text-gray-900">Small Animal Habitat</h3>
+                        <p class="text-gray-600 text-sm">Spacious wire cage with removable tray, perfect for rabbits and guinea pigs.</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <div class="rating rating-sm">
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
+                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
+                            </div>
+                            <span class="text-sm text-gray-500">(96)</span>
+                        </div>
+                        <div class="card-actions justify-between mt-4">
+                            <span class="text-2xl font-bold text-cyan-600">$79.99</span>
+                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#shop" class="btn btn-outline-cyan rounded-full px-8 py-3 font-semibold">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Professional care and grooming services to keep your pets looking and feeling their best.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
+                    <div class="card-body">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a1.5 1.5 0 003 0m3-7.5V14m0-2.5v-6a1.5 1.5 0 00-3 0m3 6a1.5 1.5 0 013 0v2a1.5 1.5 0 01-3 0M7 11.5V14m0-2.5v-6a1.5 1.5 0 013 0m-3 6a1.5 1.5 0 00-3 0" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="card-title text-xl font-bold text-gray-900">Grooming Salon</h3>
+                                <p class="text-gray-600 mt-2">Professional grooming including baths, haircuts, nail trimming, and ear cleaning.</p>
+                                <div class="card-actions mt-4">
+                                    <span class="text-cyan-600 font-semibold">$45+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
+                    <div class="card-body">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="card-title text-xl font-bold text-gray-900">Veterinary Care</h3>
+                                <p class="text-gray-600 mt-2">On-site veterinary services including vaccinations, check-ups, and health consultations.</p>
+                                <div class="card-actions mt-4">
+                                    <span class="text-cyan-600 font-semibold">$75+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
+                    <div class="card-body">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 20v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6m16 0h-4a2 2 0 01-2-2v-4a2 2 0 00-2-2H8a2 2 0 00-2 2v4a2 2 0 01-2 2H4m16 0v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4m16 0H4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="card-title text-xl font-bold text-gray-900">Pet Boarding</h3>
+                                <p class="text-gray-600 mt-2">Safe and comfortable overnight stays with 24/7 supervision and playtime.</p>
+                                <div class="card-actions mt-4">
+                                    <span class="text-cyan-600 font-semibold">$35/night</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-gradient-to-b from-cyan-50 to-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Pet Owners Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Real stories from our happy customers and their furry friends.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="card bg-white shadow-xl rounded-3xl p-6">
+                    <div class="rating rating-sm mb-4">
+                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"My golden retriever loves the grooming salon! The staff is so gentle and professional. Best pet store in town!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-cyan-200 rounded-full flex items-center justify-center">
+                            <span class="font-bold text-cyan-700">SJ</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-900">Sarah Johnson</div>
+                            <div class="text-sm text-gray-500">Dog mom to Max</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="card bg-white shadow-xl rounded-3xl p-6">
+                    <div class="rating rating-sm mb-4">
+                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"Found the perfect habitat for my guinea pigs. The staff helped me choose the right size and accessories. Highly recommend!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-cyan-200 rounded-full flex items-center justify-center">
+                            <span class="font-bold text-cyan-700">TM</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-900">Tom Martinez</div>
+                            <div class="text-sm text-gray-500">Cat dad to Luna</div>
+                        </div>
+                    </div

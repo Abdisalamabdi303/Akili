@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare - Your Trusted Pharmacy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.5.10/dist/tailwindcss.typography.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="navbar">
+                <div class="navbar-start">
+                    <div class="dropdown">
+                        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                        </div>
+                        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#products">Products</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-ghost text-xl font-bold text-primary">MediCare</a>
+                </div>
+                <div class="navbar-center hidden lg:flex">
+                    <ul class="menu menu-horizontal px-1">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="navbar-end">
+                    <a href="#" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/80 z-0"></div>
+        <div class="absolute inset-0 bg-[url('https://image.pollinations.ai/prompt/pharmacy-pharmacist-pharmaceutical-laboratory-healthcare-medical-chemistry-science-research-laboratory-equipment-glassware-test-tubes-beakers-microscopes-pipettes-bottles-tablets-pills-medicines-healthcare-professionals-modern-facility?width=1920&height=1080&nologo=true')] bg-cover bg-center bg-no-repeat z-0 animate-pulse"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/80 z-0 opacity-90"></div>
+        
+        <div class="hero-content text-center flex flex-col items-center z-10 px-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Your Health, <br> Our Priority
+            </h1>
+            <p class="text-xl md:text-2xl text-white mb-10 max-w-3xl">
+                Trusted pharmacy services with expert care, fast delivery, and affordable medications for your family's well-being.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#services" class="btn btn-accent text-lg px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-flask mr-2"></i> Our Services
+                </a>
+                <a href="#products" class="btn btn-outline text-white border-white hover:bg-white hover:text-primary text-lg px-8 py-4 rounded-full transition-all duration-300">
+                    <i class="fas fa-pills mr-2"></i> Shop Medicines
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-base-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Our Services</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto">Comprehensive healthcare solutions tailored to your needs with professional expertise and compassionate care.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-prescription text-2xl text-primary"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Prescription Refills</h3>
+                        <p class="text-gray-600 text-center">Easy refills for your ongoing medications with fast processing and delivery options.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-procedures text-2xl text-secondary"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Health Consultations</h3>
+                        <p class="text-gray-600 text-center">Expert advice from our pharmacists on medication management and health concerns.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-ambulance text-2xl text-accent"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Home Delivery</h3>
+                        <p class="text-gray-600 text-center">Convenient delivery service bringing your medications directly to your doorstep.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-info/10 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-vials text-2xl text-info"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Lab Tests</h3>
+                        <p class="text-gray-600 text-center">Comprehensive diagnostic testing with confidential results and professional guidance.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-heartbeat text-2xl text-success"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Vaccinations</h3>
+                        <p class="text-gray-600 text-center">Flu shots, travel vaccines, and immunizations administered by certified professionals.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-warning/10 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-first-aid text-2xl text-warning"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">First Aid Supplies</h3>
+                        <p class="text-gray-600 text-center">Essential first aid kits, bandages, and emergency supplies for your home and workplace.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold text-primary mb-6">Why Choose MediCare?</h2>
+                    <p class="text-lg text-gray-600 mb-8">With over 20 years of experience serving our community, we combine modern pharmacy practices with personalized care. Our team of dedicated pharmacists and healthcare professionals is committed to your well-being.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Expert Pharmacists</h4>
+                                <p class="text-gray-600">Our team holds advanced certifications and stays current with the latest medical research.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-secondary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Affordable Pricing</h4>
+                                <p class="text-gray-600">Competitive prices with discount programs for seniors and chronic condition patients.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">24/7 Support</h4>
+                                <p class="text-gray-600">Round-the-clock assistance for medication questions and emergency guidance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl transform rotate-3 opacity-20"></div>
+                    <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
+                        <img src="https://image.pollinations.ai/prompt/pharmacy-interior-modern-pharmacist-pharmaceutical-laboratory-healthcare-professionals-medical-equipment?width=800&height=600&nologo=true" alt="Modern Pharmacy Interior" class="w-full h-full object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <p class="text-white font-semibold">Trusted by over 50,000 patients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-base-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Popular Products</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto">High-quality medications and health products you can trust, available for immediate purchase or prescription.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="https://image.pollinations.ai/prompt/vitamin-c-supplements-health-products-nutritional-tablets?width=400&height=300&nologo=true" alt="Vitamin C" class="rounded-lg mx-auto">
+                        </div>
+                        <h3 class="font-semibold text-center">Vitamin C Boost</h3>
+                        <p class="text-sm text-gray-600 text-center">1000mg Immune Support</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-bold text-primary">$14.99</span>
+                            <button class="btn btn-sm btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="https://image.pollinations.ai/prompt/vitamin-d3-supplement-health-wellness-nutritional-tablets?width=400&height=300&nologo=true" alt="Vitamin D3" class="rounded-lg mx-auto">
+                        </div>
+                        <h3 class="font-semibold text-center">Vitamin D3</h3>
+                        <p class="text-sm text-gray-600 text-center">5000 IU Daily Support</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-bold text-primary">$12.99</span>
+                            <button class="btn btn-sm btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="https://image.pollinations.ai/prompt/probiotics-supplement-gut-health-nutritional-tablets?width=400&height=300&nologo=true" alt="Probiotics" class="rounded-lg mx-auto">
+                        </div>
+                        <h3 class="font-semibold text-center">Probiotics Plus</h3>
+                        <p class="text-sm text-gray-600 text-center">100 Billion CFU Gut Health</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-bold text-primary">$24.99</span>
+                            <button class="btn btn-sm btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="https://image.pollinations.ai/prompt/omega-3-fish-oil-supplement-health-wellness-nutritional-capsules?width=400&height=300&nologo=true" alt="Omega-3" class="rounded-lg mx-auto">
+                        </div>
+                        <h3 class="font-semibold text-center">Omega-3 Fish Oil</h3>
+                        <p class="text-sm text-gray-600 text-center">1000mg Heart Health</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-bold text-primary">$18.99</span>
+                            <button class="btn btn-sm btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="#" class="btn btn-outline btn-primary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-primary mb-6">Get In Touch</h2>
+                    <p class="text-lg text-gray-600 mb-8">Have questions about your medications or need to refill a prescription? Our team is here to help with friendly, personalized service.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Our Location</h4>
+                                <p class="text-gray-600">123 Health Street, Medical District<br>New York, NY 10019</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-secondary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Phone</h4>
+                                <p class="text-gray-600">(212) 555-0123<br>24/7 Emergency Line</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Email</h4>
+                                <p class="text-gray-600">support@medicare.com<br>prescriptions@medicare.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <form class="space-y-4">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Name</span>
+                                </label>
+                                <input type="text" placeholder="Your name" class="input input-bordered" />
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Email</span>
+                                </label>
+                                <input type="email" placeholder="your@email.com" class="input input-bordered" />
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Message</span>
+                                </label>
+                                <textarea class="textarea textarea-bordered" placeholder="How can we help you?"></textarea>
+                            </div>
+                            <div class="form-control mt-6">
+                                <button class="btn btn-primary">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-base-200 text-base-content py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">MediCare</h3>
+                    <p class="text-gray-600">Your trusted partner in health and wellness. Providing quality medications and expert care since 2003.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="link link-hover">Home</a></li>
+                        <li><a href="#services" class="link link-hover">Services</a></li>
+                        <li><a href="#products" class="link link-hover">Products</a></li>
+                        <li><a href="#contact" class="link link-hover">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="link link-hover">Prescription Refills</a></li>
+                        <li><a href="#" class="link link-hover">Health Consultations</a></li>
+                        <li><a href="#" class="link link-hover">Home Delivery</a></li>
+                        <li><a href="#" class="link link-hover">Vaccinations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-600 mb-4">Subscribe for health tips and special offers</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Enter email" class="input input-bordered w-full mr-2" />
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-base-300 mt-12 pt-8 text-center">
+                <p>&copy; 2023 MediCare Pharmacy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
