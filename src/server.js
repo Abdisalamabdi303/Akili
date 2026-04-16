@@ -160,11 +160,15 @@ To create files, output this exact XML format and STOP immediately after the clo
 CRITICAL WORKFLOW (Follow these exact steps):
 1. **Architecture**: You are building a Vanilla web application. Do NOT use React, Vue, or any frameworks. Just standard DOM APIs. Tailwind CSS and DaisyUI are available via CDN.
 2. **Files required**:
-   - \`index.html\` - The main entry point (MUST include the DaisyUI CDN link and Tailwind CDN script)
-   - \`styles.css\` - Any custom global styles not covered by Tailwind
-   - \`script.js\` - All your Javascript logic
-3. **Execution Loop**: After each tool call, STOP. The system runs the tool and hands control back to you.
-4. **Finishing**: When you have completed all files, DO NOT USE ANY TOOL TAGS. Simply write a short final message explaining the features you invented and built.
+   - 'index.html' - The main entry point (MUST include the DaisyUI CDN link and Tailwind CDN script)
+   - 'styles.css' - Any custom global styles not covered by Tailwind
+   - 'script.js' - All your Javascript logic
+3. **Strict Formatting Penalties**: 
+   - DO NOT nest XML tags. You MUST securely close </content></tool> before starting a new file!
+   - DO NOT write multiple versions of 'index.html'. Write it EXACTLY ONCE.
+   - If you write code, you MUST wrap it inside the tool format. NEVER output raw HTML or JS outside of the <content> tag.
+4. **Execution Loop**: After each tool call, STOP. The system runs the tool and hands control back to you.
+5. **Finishing**: When you have completed all files, DO NOT USE ANY TOOL TAGS. Simply write a short final message explaining the features you invented and built.
 
 CORRECT XML FORMAT:
 
@@ -283,6 +287,14 @@ function validateIndexHtmlQuality(content) {
 
     if (/\bbg-base-(800|900)\b/i.test(html)) {
         issues.push("Invalid DaisyUI surface classes detected (`bg-base-800/900`). Use valid theme tokens like `bg-base-100`, `bg-base-200`, or explicit Tailwind slate/zinc classes.");
+    }
+
+    const scriptMatches = html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi);
+    for (const match of scriptMatches) {
+        if (match[1] && match[1].trim().length > 5) {
+            issues.push("INLINE JAVASCRIPT DETECTED: You wrote JS logic inside <script> tags in index.html! This is STRICTLY FORBIDDEN. You must completely remove it from index.html and output it exactly inside a separate <tool name='createFile'><filePath>script.js</filePath> block.");
+            break;
+        }
     }
 
     return issues;

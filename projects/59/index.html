@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdisalam | Software Developer</title>
+    <meta name="description" content="Portfolio of Abdisalam Abdi Shakul, a passionate software developer specializing in modern web applications.">
+    <meta name="author" content="Abdisalam Abdi Shakul">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI -->
+    <link data-theme="dark" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#ec4899',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(99, 102, 241, 0.3)',
+                        'glow-secondary': '0 0 20px rgba(236, 72, 153, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #6366f1, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Navigation -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-white/10 h-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-full">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                        <span class="font-bold text-xl">A</span>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Abdisalam</span>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#about" class="hover:text-primary transition-colors">About</a>
+                    <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
+                    <a href="#experience" class="hover:text-primary transition-colors">Experience</a>
+                    <a href="#contact" class="btn btn-primary btn-sm rounded-full">Let's Talk</a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button class="btn btn-ghost btn-circle">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-16 pb-20 md:pt-24 md:pb-28 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://pollinations.ai/prompt/software%20developer%20workspace%20coding%20modern%20technology%20ui%20design?width=1920&height=1080&nologo=true')] bg-cover bg-center bg-no-repeat opacity-20"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-base-100/30 to-base-100"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="hero-content text-center flex flex-col items-center gap-8">
+                <div class="animate-fade-in">
+                    <div class="badge badge-primary badge-lg mb-4">Available for work</div>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6">
+                        Hi, I'm <span class="gradient-text">Abdisalam</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8">
+                        A passionate <span class="font-semibold text-primary">Software Developer</span> building modern, user-centric web applications with clean code and intuitive design.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="#projects" class="btn btn-primary btn-lg rounded-full">
+                            View My Work
+                            <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                        </a>
+                        <a href="#contact" class="btn btn-outline btn-lg rounded-full">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-6 mt-12 animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-primary">3+</div>
+                        <div class="text-sm text-gray-400">Years Exp.</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-secondary">50+</div>
+                        <div class="text-sm text-gray-400">Projects</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-accent">25+</div>
+                        <div class="text-sm text-gray-400">Clients</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-success">100%</div>
+                        <div class="text-sm text-gray-400">Satisfaction</div>
+                    </div>
+                    <div class="text-center hidden md:block">
+                        <div class="text-3xl font-bold text-info">15+</div>
+                        <div class="text-sm text-gray-400">Technologies</div>
+                    </div>
+                    <div class="text-center hidden md:block">
+                        <div class="text-3xl font-bold text-warning">99%</div>
+                        <div class="text-sm text-gray-400">Uptime</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-base-100/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <div class="badge badge-secondary badge-lg mb-4">About Me</div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Passionate about creating <span class="gradient-text">digital experiences</span> that matter.</h2>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        I'm Abdisalam Abdi Shakul, a software developer with over 3 years of experience in building web applications. I specialize in creating modern, responsive, and user-friendly applications using the latest technologies.
+                    </p>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        My journey began with a curiosity about how things work on the web, which led me to learn HTML, CSS, and JavaScript. Over time, I've expanded my skillset to include frameworks like React, Vue, and backend technologies like Node.js and Python.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="text-primary mb-3">
+                                <i data-lucide="code" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Clean Code</h3>
+                            <p class="text-sm text-gray-400">Writing maintainable, scalable, and efficient code that follows best practices.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="text-secondary mb-3">
+                                <i data-lucide="zap" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Performance</h3>
+                            <p class="text-sm text-gray-400">Optimizing applications for speed, responsiveness, and excellent user experience.</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn btn-primary btn-wide rounded-full">
+                        Download Resume
+                    </a>
+                </div>
+                
+                <div class="relative animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-3xl transform rotate-3 opacity-30"></div>
+                    <div class="relative glass-panel rounded-3xl p-8 overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 -mr-16 -mt-16"></div>
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-20 -ml-16 -mb-16"></div>
+                        
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary p-1 mb-6">
+                                <div class="w-full h-full rounded-full bg-base-100 overflow-hidden">
+                                    <img src="https://pollinations.ai/prompt/developer%20portrait%20professional%20software%20engineer%20abdisalam?width=400&height=400&nologo=true" alt="Abdisalam" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Abdisalam Abdi Shakul</h3>
+                            <p class="text-primary font-medium mb-6">Software Developer</p>
+                            
+                            <div class="flex gap-4 mb-8">
+                                <a href="#" class="btn btn-circle btn-ghost">
+                                    <i data-lucide="github" class="w-5 h-5"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-ghost">
+                                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-ghost">
+                                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-ghost">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </a>
+                            </div>
+                            
+                            <div class="w-full space-y-3">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">Frontend</span>
+                                    <span class="font-medium">95%</span>
+                                </div>
+                                <div class="progress w-full bg-base-300 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-primary w-[95%] h-full rounded-full"></div>
+                                </div>
+                                
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">Backend</span>
+                                    <span class="font-medium">85%</span>
+                                </div>
+                                <div class="progress w-full bg-base-300 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-secondary w-[85%] h-full rounded-full"></div>
+                                </div>
+                                
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-400">Database</span>
+                                    <span class="font-medium">80%</span>
+                                </div>
+                                <div class="progress w-full bg-base-300 rounded-full overflow-hidden">
+                                    <div class="progress-bar bg-accent w-[80%] h-full rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="badge badge-primary badge-lg mb-4">My Expertise</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Technical <span class="gradient-text">Skills</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">
+                    I've worked with a variety of technologies to build robust, scalable applications. Here are some of my key skills.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-3xl hover:scale-105 transition-all duration-300">
+                    <div class="text-primary mb-4">
+                        <i data-lucide="monitor" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Frontend Development</h3>
+                    <p class="text-gray-400 mb-4">Creating responsive, accessible, and performant user interfaces.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-outline badge-sm">HTML5</span>
+                        <span class="badge badge-outline badge-sm">CSS3</span>
+                        <span class="badge badge-outline badge-sm">JavaScript</span>
+                        <span class="badge badge-outline badge-sm">React</span>
+                        <span class="badge badge-outline badge-sm">Vue</span>
+                        <span class="badge badge-outline badge-sm">Tailwind</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 rounded-3xl hover:scale-105 transition-all duration-300">
+                    <div class="text-secondary mb-4">
+                        <i data-lucide="server" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Backend Development</h3>
+                    <p class="text-gray-400 mb-4">Building robust APIs and server-side logic for applications.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-outline badge-sm">Node.js</span>
+                        <span class="badge badge-outline badge-sm">Express</span>
+                        <span class="badge badge-outline badge-sm">Python</span>
+                        <span class="badge badge-outline badge-sm">Django</span>
+                        <span class="badge badge-outline badge-sm">PostgreSQL</span>
+                        <span class="badge badge-outline badge-sm">MongoDB</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 rounded-3xl hover:scale-105 transition-all duration-300">
+                    <div class="text-accent mb-4">
+                        <i data-lucide="smartphone" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Mobile Development</h3>
+                    <p class="text-gray-400 mb-4">Developing cross-platform mobile applications with modern frameworks.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-outline badge-sm">React Native</span>
+                        <span class="badge badge-outline badge-sm">Flutter</span>
+                        <span class="badge badge-outline badge-sm">TypeScript</span>
+                        <span class="badge badge-outline badge-sm">Firebase</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 rounded-3xl hover:scale-105 transition-all duration-300">
+                    <div class="text-success mb-4">
+                        <i data-lucide="settings" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">DevOps & Tools</h3>
+                    <p class="text-gray-400 mb-4">Containerization, CI/CD, and version control expertise.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-outline badge-sm">Git</span>
+                        <span class="badge badge-outline badge-sm">Docker</span>
+                        <span class="badge badge-outline badge-sm">AWS</span>
+                        <span class="badge badge-outline badge-sm">Jenkins</span>
+                        <span class="badge badge-outline badge-sm">Linux</span>
+                        <span class="badge badge-outline badge-sm">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-base-100/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="badge badge-secondary badge-lg mb-4">My Work</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured <span class="gradient-text">Projects</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">
+                    Here are some of my recent projects that showcase my skills and passion for building great products.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card glass-card hover:scale-105 transition-all duration-300">
+                    <figure class="relative overflow-hidden rounded-t-3xl h-48">
+                        <img src="https://pollinations.ai/prompt/e-commerce%20website%20modern%20design%20shopping%20cart?width=600&height=400&nologo=true" alt="Project 1" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <div class="flex gap-3">
+                                <a href="#" class="btn btn-circle btn-sm btn-primary">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-sm btn-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="card-body p-6">
+                        <div class="badge badge-primary badge-outline mb-3">E-commerce</div>
+                        <h3 class="card-title text-xl mb-2">E-Commerce Platform</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A full-featured e-commerce platform with product management, cart functionality, payment integration, and admin dashboard.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-sm badge-outline">React</span>
+                            <span class="badge badge-sm badge-outline">Node.js</span>
+                            <span class="badge badge-sm badge-outline">Stripe</span>
+                            <span class="badge badge-sm badge-outline">MongoDB</span>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a href="#" class="text-primary hover:text-primary/80 transition-colors font-medium flex items-center gap-1">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="card glass-card hover:scale-105 transition-all duration-300">
+                    <figure class="relative overflow-hidden rounded-t-3xl h-48">
+                        <img src="https://pollinations.ai/prompt/finance%20dashboard%20modern%20design%20analytics?width=600&height=400&nologo=true" alt="Project 2" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <div class="flex gap-3">
+                                <a href="#" class="btn btn-circle btn-sm btn-primary">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-sm btn-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="card-body p-6">
+                        <div class="badge badge-secondary badge-outline mb-3">Fintech</div>
+                        <h3 class="card-title text-xl mb-2">Personal Finance Dashboard</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A comprehensive personal finance dashboard with budget tracking, expense analysis, investment monitoring, and financial goal setting.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-sm badge-outline">Vue</span>
+                            <span class="badge badge-sm badge-outline">Firebase</span>
+                            <span class="badge badge-sm badge-outline">Chart.js</span>
+                            <span class="badge badge-sm badge-outline">Tailwind</span>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a href="#" class="text-secondary hover:text-secondary/80 transition-colors font-medium flex items-center gap-1">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card glass-card hover:scale-105 transition-all duration-300">
+                    <figure class="relative overflow-hidden rounded-t-3xl h-48">
+                        <img src="https://pollinations.ai/prompt/task%20management%20app%20modern%20ui%20productivity?width=600&height=400&nologo=true" alt="Project 3" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <div class="flex gap-3">
+                                <a href="#" class="btn btn-circle btn-sm btn-primary">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-sm btn-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="card-body p-6">
+                        <div class="badge badge-accent badge-outline mb-3">Productivity</div>
+                        <h3 class="card-title text-xl mb-2">Task Management App</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A collaborative task management application with real-time updates, team collaboration, file sharing, and advanced filtering.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-sm badge-outline">React</span>
+                            <span class="badge badge-sm badge-outline">GraphQL</span>
+                            <span class="badge badge-sm badge-outline">Redis</span>
+                            <span class="badge badge-sm badge-outline">AWS</span>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a href="#" class="text-accent hover:text-accent/80 transition-colors font-medium flex items-center gap-1">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="card glass-card hover:scale-105 transition-all duration-300">
+                    <figure class="relative overflow-hidden rounded-t-3xl h-48">
+                        <img src="https://pollinations.ai/prompt/health%20tracking%20mobile%20app%20fitness%20wellness?width=600&height=400&nologo=true" alt="Project 4" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <div class="flex gap-3">
+                                <a href="#" class="btn btn-circle btn-sm btn-primary">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-sm btn-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="card-body p-6">
+                        <div class="badge badge-success badge-outline mb-3">Health</div>
+                        <h3 class="card-title text-xl mb-2">Health & Fitness Tracker</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A mobile application for tracking health metrics, workouts, nutrition, sleep patterns, and providing personalized insights.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-sm badge-outline">React Native</span>
+                            <span class="badge badge-sm badge-outline">Node.js</span>
+                            <span class="badge badge-sm badge-outline">PostgreSQL</span>
+                            <span class="badge badge-sm badge-outline">WebSockets</span>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a href="#" class="text-success hover:text-success/80 transition-colors font-medium flex items-center gap-1">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="card glass-card hover:scale-105 transition-all duration-300">
+                    <figure class="relative overflow-hidden rounded-t-3xl h-48">
+                        <img src="https://pollinations.ai/prompt/education%20platform%20online%20learning%20interface?width=600&height=400&nologo=true" alt="Project 5" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <div class="flex gap-3">
+                                <a href="#" class="btn btn-circle btn-sm btn-primary">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-sm btn-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="card-body p-6">
+                        <div class="badge badge-warning badge-outline mb-3">Education</div>
+                        <h3 class="card-title text-xl mb-2">Online Learning Platform</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A comprehensive e-learning platform with video courses, quizzes, progress tracking, certificate generation, and community features.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-sm badge-outline">Vue</span>
+                            <span class="badge badge-sm badge-outline">Laravel</span>
+                            <span class="badge badge-sm badge-outline">MySQL</span>
+                            <span class="badge badge-sm badge-outline">AWS</span>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a href="#" class="text-warning hover:text-warning/80 transition-colors font-medium flex items-center gap-1">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="card glass-card hover:scale-105 transition-all duration-300">
+                    <figure class="relative overflow-hidden rounded-t-3xl h-48">
+                        <img src="https://pollinations.ai/prompt/social%20network%20platform%20modern%20design%20community?width=600&height=400&nologo=true" alt="Project 6" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <div class="flex gap-3">
+                                <a href="#" class="btn btn-circle btn-sm btn-primary">
+                                    <i data-lucide="github" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-sm btn-secondary">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="card-body p-6">
+                        <div class="badge badge-info badge-outline mb-3">Social</div>
+                        <h3 class="card-title text-xl mb-2">Community Platform</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A social networking platform for professionals to connect, share content, join groups, and participate in discussions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-sm badge-outline">React</span>
+                            <span class="badge badge-sm badge-outline">Express</span>
+                            <span class="badge badge-sm badge-outline">MongoDB</span>
+                            <span class="badge badge-sm badge-outline">Socket.io</span>
+                        </div>
+                        <div class="card-actions justify-end">
+                            <a href="#" class="text-info hover:text-info/80 transition-colors font-medium flex items-center gap-1">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="btn btn-outline rounded-full">
+                    View All Projects
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="badge badge-primary badge-lg mb-4">My Journey</div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Work <span class="gradient-text">Experience</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">
+                    My professional journey through various companies and roles, building products and solving problems.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Experience 1 -->
+                <div class="glass-card p-8 rounded-3xl relative">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 -mr-12 -mt-12"></div>
+                    <div class="flex flex-col h-full">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-2xl bg-base-200 flex items-center justify-center overflow-hidden">
+                                <img src="https://pollinations.ai/prompt/tech%20company%20logo%20innovation?width=100&height=100&nologo=true" alt="Company Logo" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl">Senior Software Engineer</h3>
+                                <p class="text-primary">Tech Innovations Inc.</p>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-400 mb-6">2022 - Present • 2 years</div>
+                        <p class="text-gray-300 mb-6 flex-grow">
+                            Leading a team of 5 developers in building scalable web applications. Implemented CI/CD pipelines, improved system performance by 40%, and mentored junior developers.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="badge badge-sm badge

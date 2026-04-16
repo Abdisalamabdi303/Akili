@@ -457,7 +457,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
     // All files here will be available in Sandpack's bundler as authored files.
     const baseSandpackFiles = useMemo(() => ({
         "/index.html": `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -466,7 +466,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-white min-h-screen">
+<body class="bg-slate-950 text-white min-h-screen antialiased">
   <div id="app"></div>
   <script src="script.js"></script>
 </body>

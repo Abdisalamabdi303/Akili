@@ -1,5 +1,6 @@
 // ZenFlow - Interactive Features
-document.addEventListener('DOMContentLoaded', () => {
+
+document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -15,167 +16,139 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile menu toggle
-    const mobileMenuButton = document.createElement('button');
-    mobileMenuButton.className = 'md:hidden btn btn-ghost';
-    mobileMenuButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
+    const mobileMenuButton = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
     
-    const navbar = document.querySelector('nav');
-    const navLinks = document.querySelector('.md\\:flex');
-    
-    if (navbar && navLinks) {
+    if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', () => {
-            navLinks.classList.toggle('hidden');
-            navLinks.classList.toggle('flex');
-            navLinks.classList.toggle('flex-col');
-            navLinks.classList.toggle('absolute');
-            navLinks.classList.toggle('top-full');
-            navLinks.classList.toggle('left-0');
-            navLinks.classList.toggle('w-full');
-            navLinks.classList.toggle('bg-base-950');
-            navLinks.classList.toggle('p-4');
-            navLinks.classList.toggle('border-b');
-            navLinks.classList.toggle('border-white/10');
+            mobileMenu.classList.toggle('hidden');
         });
-        
-        // Insert mobile menu button after brand
-        const brand = navbar.querySelector('.flex.items-center.gap-3');
-        if (brand) {
-            brand.after(mobileMenuButton);
+    }
+
+    // Countdown timer for free trial
+    function setupCountdown() {
+        const countdownElement = document.getElementById('countdown');
+        if (countdownElement) {
+            const days = 7;
+            const hours = 23;
+            const minutes = 59;
+            const seconds = 59;
+            
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s left`;
         }
     }
 
-    // Feature card hover effects
-    document.querySelectorAll('.glass-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px)';
-            card.style.boxShadow = '0 20px 40px -10px rgba(99, 102, 241, 0.3)';
-        });
+    // Interactive meditation timer
+    function setupMeditationTimer() {
+        const timerButtons = document.querySelectorAll('.meditation-timer-btn');
+        const timerDisplay = document.getElementById('timer-display');
         
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
-            card.style.boxShadow = '';
-        });
-    });
-
-    // Countdown timer for free trial
-    const countdownElement = document.getElementById('countdown');
-    if (countdownElement) {
-        let timeLeft = 3600; // 1 hour in seconds
-        const updateCountdown = () => {
-            const hours = Math.floor(timeLeft / 3600);
-            const minutes = Math.floor((timeLeft % 3600) / 60);
-            const seconds = timeLeft % 60;
+        if (timerButtons.length > 0 && timerDisplay) {
+            let timer = null;
+            let timeLeft = 300; // 5 minutes default
             
-            countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            if (timeLeft > 0) {
-                timeLeft--;
-            }
-        };
-        
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+            timerButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const duration = parseInt(this.dataset.duration);
+                    
+                    if (timer) {
+                        clearInterval(timer);
+                        timer = null;
+                        this.textContent = 'Start Meditation';
+                    } else {
+                        timeLeft = duration * 60;
+                        this.textContent = 'Pause';
+                        
+                        timer = setInterval(() => {
+                            timeLeft--;
+                            
+                            const minutes = Math.floor(timeLeft / 60);
+                            const seconds = timeLeft % 60;
+                            
+                            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                            
+                            if (timeLeft <= 0) {
+                                clearInterval(timer);
+                                timer = null;
+                                this.textContent = 'Start Meditation';
+                                timerDisplay.textContent = '0:00';
+                                // Play completion sound or notification
+                                alert('Meditation session complete!');
+                            }
+                        }, 1000);
+                    }
+                });
+            });
+        }
     }
 
-    // Program accordion functionality
-    document.querySelectorAll('.program-step').forEach(step => {
-        step.addEventListener('click', () => {
-            const content = step.querySelector('.program-content');
-            const icon = step.querySelector('.program-icon');
-            
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>';
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>';
-            }
-        });
-    });
-
-    // Breathing exercise animation
-    const breathingCircle = document.getElementById('breathing-circle');
-    if (breathingCircle) {
-        let scale = 1;
-        let direction = 1;
+    // Mood tracking functionality
+    function setupMoodTracking() {
+        const moodButtons = document.querySelectorAll('.mood-btn');
+        const moodResult = document.getElementById('mood-result');
         
-        const animateBreathing = () => {
-            scale += 0.02 * direction;
-            if (scale > 1.5 || scale < 1) {
-                direction *= -1;
-            }
-            breathingCircle.style.transform = `scale(${scale})`;
-            requestAnimationFrame(animateBreathing);
-        };
-        
-        animateBreathing();
-    }
-
-    // Testimonial carousel
-    const testimonials = document.querySelectorAll('.testimonial-card');
-    if (testimonials.length > 0) {
-        let currentTestimonial = 0;
-        
-        const showTestimonial = (index) => {
-            testimonials.forEach((t, i) => {
-                t.classList.add('hidden');
-                if (i === index) {
-                    t.classList.remove('hidden');
+        moodButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                moodButtons.forEach(btn => btn.classList.remove('btn-primary', 'btn-secondary', 'btn-accent'));
+                this.classList.add('btn-primary');
+                
+                if (moodResult) {
+                    moodResult.textContent = `You selected: ${this.dataset.mood}. Let's find some meditations for ${this.dataset.mood} moments.`;
                 }
             });
-        };
-        
-        showTestimonial(0);
-        
-        setInterval(() => {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            showTestimonial(currentTestimonial);
-        }, 8000);
+        });
     }
 
-    // Form submission handling
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
+    // Breathing exercise guide
+    function setupBreathingExercise() {
+        const breatheCircle = document.getElementById('breathe-circle');
+        const breatheButton = document.getElementById('breathe-button');
+        
+        if (breatheCircle && breatheButton) {
+            let breathingInterval = null;
             
-            submitBtn.textContent = 'Processing...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.textContent = 'Success!';
-                submitBtn.className = 'btn btn-success';
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.className = submitBtn.className.replace('btn-success', 'btn-primary');
-                    submitBtn.disabled = false;
-                    form.reset();
-                }, 3000);
-            }, 1500);
-        });
-    });
+            breatheButton.addEventListener('click', function() {
+                if (breathingInterval) {
+                    clearInterval(breathingInterval);
+                    breathingInterval = null;
+                    this.textContent = 'Start Breathing Exercise';
+                    breatheCircle.style.animationPlayState = 'paused';
+                } else {
+                    this.textContent = 'Stop Breathing Exercise';
+                    breatheCircle.style.animationPlayState = 'running';
+                    
+                    breathingInterval = setInterval(() => {
+                        // Breathing rhythm: 4 seconds inhale, 4 seconds exhale
+                        breatheCircle.style.animationName = 'inhale';
+                        setTimeout(() => {
+                            breatheCircle.style.animationName = 'exhale';
+                        }, 4000);
+                    }, 8000);
+                }
+            });
+        }
+    }
 
-    // Scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    // Initialize all interactive features
+    setupCountdown();
+    setupMeditationTimer();
+    setupMoodTracking();
+    setupBreathingExercise();
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
-                entry.target.classList.remove('opacity-0');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.glass-card, .program-step, .hero-content > div').forEach(el => {
-        el.classList.add('opacity-0');
-        observer.observe(el);
-    });
+    // Add custom animations for breathing exercise
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+        @keyframes inhale {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+        @keyframes exhale {
+            0% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+        .breathe-circle {
+            animation: inhale 4s ease-in-out infinite;
+        }
+    `;
+    document.head.appendChild(styleSheet);
 });

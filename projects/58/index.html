@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseForge | Smart Fitness Tracking for Modern Athletes</title>
+    <meta name="description" content="PulseForge is the all-in-one fitness tracker designed for serious athletes and everyday wellness seekers. Track workouts, nutrition, sleep, and progress with AI-powered insights.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .pulse-glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(99, 102, 241, 0.15);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.6) 50%, rgba(15,23,42,0.4) 100%);
+        }
+        
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .chart-bar {
+            transition: height 1s ease-in-out;
+        }
+        
+        @media (min-width: 768px) {
+            .chart-bar:hover {
+                height: 120% !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-slate-950/80 border-b border-white/10 h-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-full">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">PulseForge</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-sm font-medium hover:text-indigo-400 transition-colors">Features</a>
+                    <a href="#programs" class="text-sm font-medium hover:text-indigo-400 transition-colors">Programs</a>
+                    <a href="#nutrition" class="text-sm font-medium hover:text-indigo-400 transition-colors">Nutrition</a>
+                    <a href="#analytics" class="text-sm font-medium hover:text-indigo-400 transition-colors">Analytics</a>
+                    <a href="#pricing" class="text-sm font-medium hover:text-indigo-400 transition-colors">Pricing</a>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex items-center gap-3">
+                    <a href="#" class="hidden md:block text-sm font-medium hover:text-white transition-colors">Log In</a>
+                    <a href="#" class="btn btn-primary btn-sm px-4 py-2 rounded-full">Get Started</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="btn btn-ghost btn-square">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-16 pb-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+                 style="background-image: url('https://pollinations.ai/prompt/fitness%20technology%20dashboard%20with%20wearables%20and%20analytics%20data%20visualization?width=1920&height=1080&nologo=true');">
+            </div>
+            <div class="hero-overlay absolute inset-0"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="hero-content text-center">
+                <div class="max-w-3xl flex flex-col items-center gap-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-4">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                        </span>
+                        New: AI-Powered Recovery Insights
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                        Track Your <span class="gradient-text">Potential</span><br>
+                        With Precision & Purpose
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-slate-300 max-w-2xl">
+                        PulseForge combines advanced biometric tracking with actionable insights to help you crush goals, optimize recovery, and build sustainable fitness habits.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                        <a href="#" class="btn btn-primary btn-lg px-8 rounded-full shadow-lg shadow-indigo-500/30">Start Free Trial</a>
+                        <a href="#" class="btn btn-outline btn-lg px-8 rounded-full border-slate-600 hover:bg-slate-800 hover:border-slate-500">View Demo</a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 w-full mt-8">
+                        <div class="glass-panel rounded-2xl p-4">
+                            <div class="text-3xl font-bold text-white counter" data-target="125000">0</div>
+                            <div class="text-sm text-slate-400">Active Users</div>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-4">
+                            <div class="text-3xl font-bold text-white counter" data-target="87">0</div>
+                            <div class="text-sm text-slate-400">Avg Goal Completion</div>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-4">
+                            <div class="text-3xl font-bold text-white counter" data-target="2500000">0</div>
+                            <div class="text-sm text-slate-400">Workouts Logged</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="py-10 border-y border-white/5 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-slate-500 mb-6">TRUSTED BY PROFESSIONAL ATHLETES & WELLNESS ENTHUSIASTS</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5 10 5 10-5-5-2.5-5 2.5z"/>
+                    </svg>
+                    <span class="font-bold text-lg">AthleticPro</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-1.04 3.97-2.69 5.39z"/>
+                    </svg>
+                    <span class="font-bold text-lg">HealthFirst</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+                    </svg>
+                    <span class="font-bold text-lg">MediTrack</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-1.04 3.97-2.69 5.39z"/>
+                    </svg>
+                    <span class="font-bold text-lg">FitLife</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Everything You Need to <span class="gradient-text">Level Up</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">PulseForge gives you the tools to track, analyze, and optimize every aspect of your fitness journey with precision and ease.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-card rounded-3xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-indigo-500/30 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Real-Time Tracking</h3>
+                    <p class="text-slate-400 text-sm mb-4">Live monitoring of heart rate, calories, and activity intensity with 99.8% accuracy during any workout.</p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Heart rate zones
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            GPS route mapping
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="glass-card rounded-3xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-emerald-500/30 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Sleep Optimization</h3>
+                    <p class="text-slate-400 text-sm mb-4">Advanced sleep analysis with personalized recovery recommendations based on your biometric data.</p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Sleep stage detection
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Smart wake-up alerts
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="glass-card rounded-3xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-amber-500/30 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Nutrition Analytics</h3>
+                    <p class="text-slate-400 text-sm mb-4">Track macros, hydration, and micronutrients with AI-powered meal suggestions based on your goals.</p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Barcode scanner
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Hydration tracker
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="glass-card rounded-3xl p-6 hover:scale-105 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-pink-500/30 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Personalized Insights</h3>
+                    <p class="text-slate-400 text-sm mb-4">AI-driven recommendations for workout adjustments, recovery timing, and nutrition based on your unique physiology.</p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Recovery score
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Performance trends
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workout Programs Section -->
+    <section id="programs" class="py-20 bg-slate-900/30">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Tailored <span class="gradient-text">Workout Programs</span></h2>
+                    <p class="text-slate-400">Choose from scientifically-backed training plans designed by certified coaches and optimized for your goals.</p>
+                </div>
+                <a href="#" class="btn btn-link text-indigo-400 hover:text-indigo-300 mt-4 md:mt-0">View All Programs →</a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Program 1 -->
+                <div class="glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://pollinations.ai/prompt/strength%20training%20workout%20with%20weights%20and%20fitness%20equipment?width=600&height=400&nologo=true" alt="Strength Training" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full">4 Weeks</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Strength Builder</h3>
+                        <p class="text-slate-400 text-sm mb-4">Build lean muscle mass and increase functional strength with progressive overload programming.</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="badge badge-indigo badge-outline text-xs">Beginner</span>
+                            <span class="badge badge-indigo badge-outline text-xs">Intermediate</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">$29.99</span>
+                            <button class="btn btn-sm btn-primary rounded-full">Start Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program 2 -->
+                <div class="glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://pollinations.ai/prompt/yoga%20and%20mindfulness%20session%20with%20mat%20and%20calm%20environment?width=600&height=400&nologo=true" alt="Yoga & Flexibility" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">6 Weeks</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Flexibility & Flow</h3>
+                        <p class="text-slate-400 text-sm mb-4">Improve mobility, reduce injury risk, and enhance recovery with daily yoga and mobility routines.</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="badge badge-emerald badge-outline text-xs">All Levels</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">$39.99</span>
+                            <button class="btn btn-sm btn-primary rounded-full">Start Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Program 3 -->
+                <div class="glass-card rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://pollinations.ai/prompt/high-intensity%20interval%20training%20HIIT%20workout%20with%20timer%20and%20equipment?width=600&height=400&nologo=true" alt="HIIT & Cardio" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-full">3 Weeks</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">HIIT & Cardio Blast</h3>
+                        <p class="text-slate-400 text-sm mb-4">Maximize calorie burn and cardiovascular health with high-intensity interval training sessions.</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="badge badge-amber badge-outline text-xs">Intermediate</span>
+                            <span class="badge badge-amber badge-outline text-xs">Advanced</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">$24.99</span>
+                            <button class="btn btn-sm btn-primary rounded-full">Start Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Section -->
+    <section id="nutrition" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Fuel Your Body <span class="gradient-text">Right</span></h2>
+                    <p class="text-slate-400 mb-6">PulseForge's nutrition engine creates personalized meal plans based on your goals, dietary preferences, and macro targets.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">Smart Meal Planning</h3>
+                                <p class="text-sm text-slate-400">AI-generated recipes that match your caloric needs and taste preferences.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class
