@@ -3,8 +3,17 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Folder, Sparkles, Clock } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  ArrowRight,
+  Folder,
+  Sparkles,
+  Clock,
+  Zap,
+  Code2,
+  Globe,
+  Plus,
+  ChevronRight,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface Project {
@@ -13,23 +22,39 @@ interface Project {
   created_at: string;
 }
 
+const EXAMPLES = [
+  "A task manager with drag-and-drop and local storage",
+  "A weather dashboard with live charts and city search",
+  "An e-commerce product landing page with animations",
+  "A personal portfolio with smooth scroll and dark mode",
+  "A finance tracker with budgets and visual summaries",
+];
+
+const FEATURES = [
+  { icon: Zap, label: "Instant Generation", desc: "From idea to working app in seconds" },
+  { icon: Code2, label: "Clean Code", desc: "Semantic HTML, vanilla JS, Tailwind CSS" },
+  { icon: Globe, label: "Live Preview", desc: "See your app render in real-time as it builds" },
+];
+
 export default function LandingPage() {
   const [input, setInput] = useState("");
   const [projects, setProjects] = useState<Project[]>([]);
+  const [placeholderIdx, setPlaceholderIdx] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const loadProjects = async () => {
-      try {
-        const res = await fetch("http://localhost:4000/api/chats");
-        if (!res.ok) return;
-        const data = await res.json();
-        setProjects(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error("Failed to fetch projects:", err);
-      }
-    };
-    loadProjects();
+    const interval = setInterval(() => {
+      setPlaceholderIdx((i) => (i + 1) % EXAMPLES.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/chats")
+      .then((r) => r.json())
+      .then((d) => setProjects(Array.isArray(d) ? d : []))
+      .catch(() => {});
   }, []);
 
   const handleStartProject = async () => {
@@ -39,9 +64,7 @@ export default function LandingPage() {
       if (!chatRes.ok) return;
       const chat = await chatRes.json();
       router.push(`/project/${chat.id}?prompt=${encodeURIComponent(input)}`);
-    } catch (err) {
-      console.error("Failed to create chat:", err);
-    }
+    } catch {}
   };
 
   const handleCreateEmptyProject = async () => {
@@ -50,9 +73,7 @@ export default function LandingPage() {
       if (!chatRes.ok) return;
       const chat = await chatRes.json();
       router.push(`/project/${chat.id}`);
-    } catch (err) {
-      console.error("Failed to create chat:", err);
-    }
+    } catch {}
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -64,117 +85,187 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-      {/* Navbar / Header */}
-      <header className="sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-primary/35 bg-gradient-to-br from-primary/30 via-primary/15 to-accent/30 shadow-[0_0_24px_rgba(34,211,238,0.35)] sm:h-10 sm:w-10">
-              <span className="text-sm font-extrabold text-primary-foreground sm:text-base">A</span>
-              <Sparkles className="absolute -right-1 -top-1 h-3.5 w-3.5 text-primary" />
+
+      {/* ── Navbar ── */}
+      <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary shadow-sm shadow-primary/40">
+              <Sparkles className="h-4 w-4 text-white" />
             </div>
-            <h1 className="bg-gradient-to-r from-primary via-cyan-300 to-accent bg-clip-text text-xl font-bold tracking-tight text-transparent sm:text-2xl">
-              Akili AI
-            </h1>
+            <span className="text-lg font-bold tracking-tight text-foreground">
+              Akili <span className="text-primary font-extrabold">AI</span>
+            </span>
           </div>
-          <div className="rounded-full border border-border/70 bg-card/60 px-3 py-1 text-xs text-muted-foreground sm:text-sm">
-            v1.0.0
+
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-xs text-muted-foreground border border-border rounded-full px-2.5 py-0.5 bg-secondary/60">
+              v1.0 · Alpha
+            </span>
+            <Button
+              size="sm"
+              className="rounded-full bg-accent text-white hover:bg-accent/90 shadow-sm btn-shine"
+              onClick={handleCreateEmptyProject}
+            >
+              <Plus size={14} className="mr-1" /> New Project
+            </Button>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col overflow-y-auto px-4 sm:px-6 lg:px-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 sm:px-6 lg:px-8">
 
-        {/* Hero Section */}
-        <section className="w-full py-10 text-center md:py-16 lg:pt-16 lg:pb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
-          <div className="mx-auto max-w-4xl rounded-3xl border border-border/70 bg-card/45 px-5 py-10 shadow-[0_24px_80px_rgba(3,7,18,0.65)] backdrop-blur-xl sm:px-8 sm:py-12">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-              AI Product Studio
+        {/* ── Hero ── */}
+        <section className="py-16 md:py-24 text-center animate-in fade-in slide-in-from-bottom-6 duration-700">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary mb-6 shadow-sm">
+            <Sparkles size={12} />
+            AI-Powered App Factory
+          </div>
+
+          {/* Headline */}
+          <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            Describe your idea.{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 text-primary">Akili builds it.</span>
+              <span className="absolute -bottom-1 left-0 right-0 h-3 rounded-full bg-primary/15 -z-0" />
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg leading-relaxed">
+            From a single prompt, Akili designs and generates a full web app — complete UI, logic, and live preview.
+          </p>
+
+          {/* Input */}
+          <div className="mx-auto mt-10 w-full max-w-2xl">
+            <div
+              className={`relative flex items-center rounded-2xl border bg-white shadow-lg transition-all duration-300 ${
+                isFocused
+                  ? "border-primary ring-4 ring-primary/15 shadow-primary/20"
+                  : "border-border shadow-sm"
+              }`}
+            >
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                placeholder={isFocused ? "Describe your project..." : EXAMPLES[placeholderIdx]}
+                className="h-14 w-full rounded-2xl border-0 bg-transparent pl-5 pr-16 text-sm text-foreground placeholder:text-muted-foreground/70 shadow-none focus-visible:ring-0 md:text-base"
+                autoFocus
+              />
+              <Button
+                onClick={handleStartProject}
+                disabled={!input.trim()}
+                className="absolute right-2 h-10 w-10 rounded-xl bg-primary p-0 text-white shadow-md hover:bg-primary/90 disabled:opacity-40 btn-shine"
+              >
+                <ArrowRight size={18} />
+              </Button>
             </div>
-            <h2 className="mx-auto max-w-4xl text-4xl font-extrabold tracking-tight leading-tight md:text-5xl">
-              Build from idea to deploy-ready in one <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">flow</span>
-            </h2>
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-              Describe your product once. Akili plans, designs, and generates code with a modern stack and clean project structure.
-            </p>
 
-            <div className="group relative mx-auto mt-8 w-full max-w-2xl transform transition-transform duration-300 hover:scale-[1.01]">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary/45 via-cyan-400/35 to-accent/45 blur-md opacity-70 transition duration-500 group-hover:opacity-100"></div>
-              <div className="relative flex items-center">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Describe your project (e.g., 'A login page with glassmorphism')..."
-                  className="h-14 w-full rounded-full border-border/80 bg-background/90 pl-6 pr-16 text-base shadow-2xl backdrop-blur-xl focus:ring-2 focus:ring-primary/60 md:h-16 md:pl-8 md:text-lg"
-                  autoFocus
-                />
-                <Button
-                  onClick={handleStartProject}
-                  disabled={!input.trim()}
-                  className="absolute bottom-1.5 right-1.5 top-1.5 h-11 w-11 rounded-full bg-gradient-to-br from-primary to-accent p-0 text-primary-foreground shadow-lg transition-all hover:brightness-110 md:bottom-2 md:right-2 md:top-2 md:h-12 md:w-12"
+            {/* Example chips */}
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              {EXAMPLES.slice(0, 3).map((ex) => (
+                <button
+                  key={ex}
+                  onClick={() => setInput(ex)}
+                  className="rounded-full border border-border bg-white px-3 py-1 text-xs text-muted-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/5 transition-all duration-200 shadow-sm"
                 >
-                  <ArrowRight size={24} />
-                </Button>
-              </div>
+                  {ex.length > 42 ? ex.slice(0, 42) + "…" : ex}
+                </button>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Recent Projects Grid */}
-        <section className="w-full animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-100">
-          <div className="mb-6 flex items-center justify-between border-b border-border/70 pb-4">
-            <h3 className="text-2xl font-semibold flex items-center gap-2">
-              <Clock className="text-primary w-5 h-5" />
-              Recent Projects
-            </h3>
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-              View All
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* New Project Card */}
-            <Card
-              className="group h-64 cursor-pointer border border-primary/35 bg-gradient-to-br from-primary/15 to-accent/10 p-8 transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_18px_45px_rgba(14,165,233,0.22)] flex flex-col items-center justify-center"
-              onClick={handleCreateEmptyProject}
+        {/* ── Feature Pills ── */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+          {FEATURES.map(({ icon: Icon, label, desc }) => (
+            <div
+              key={label}
+              className="flex items-center gap-3 rounded-xl border border-border bg-white/70 px-4 py-3.5 shadow-sm backdrop-blur-sm"
             >
-              <div className="mb-4 rounded-full border border-primary/40 bg-primary/20 p-4 transition-transform group-hover:scale-110">
-                <Folder className="w-8 h-8 text-primary" />
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                <Icon size={18} className="text-primary" />
               </div>
-              <p className="text-lg font-medium text-primary">Start New Project</p>
-            </Card>
+              <div>
+                <p className="text-sm font-semibold text-foreground">{label}</p>
+                <p className="text-xs text-muted-foreground">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </section>
 
+        {/* ── Divider ── */}
+        <div className="flex items-center gap-4 pb-6">
+          <div className="flex-1 border-t border-border" />
+          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <Clock size={12} /> Recent Projects
+          </span>
+          <div className="flex-1 border-t border-border" />
+        </div>
+
+        {/* ── Projects Grid ── */}
+        <section className="pb-16 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {/* New Project Card */}
+            <button
+              onClick={handleCreateEmptyProject}
+              className="group flex h-44 flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:shadow-md"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/50 bg-white shadow-sm transition-transform duration-200 group-hover:scale-110">
+                <Plus size={20} className="text-primary" />
+              </div>
+              <span className="text-sm font-semibold text-primary">Start New Project</span>
+            </button>
+
+            {/* Project Cards */}
             {projects.map((project) => (
-              <Card
+              <button
                 key={project.id}
-                className="group cursor-pointer overflow-hidden border border-border/80 bg-card/65 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_20px_55px_rgba(15,23,42,0.55)]"
                 onClick={() => router.push(`/project/${project.id}`)}
+                className="group flex h-44 flex-col justify-between rounded-2xl border border-border bg-white p-5 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
               >
-                <CardHeader className="pb-3 bg-secondary/25">
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors truncate">
-                      {project.title || "Untitled Project"}
-                    </CardTitle>
-                    <div className="rounded-full border border-border/70 bg-background/80 p-1.5 shadow-sm">
-                      <Folder size={16} className="text-muted-foreground" />
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary">
+                      <Folder size={15} className="text-primary" />
                     </div>
+                    <ChevronRight
+                      size={16}
+                      className="text-muted-foreground opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0.5"
+                    />
                   </div>
-                  <CardDescription className="text-xs flex items-center gap-1 mt-1">
-                    <Clock size={12} /> {new Date(project.created_at).toLocaleDateString()}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <p className="text-sm text-muted-foreground line-clamp-2 italic">
-                    Project ID: {project.id}
-                  </p>
-                </CardContent>
-              </Card>
+                  <h3 className="mt-3 text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                    {project.title || "Untitled Project"}
+                  </h3>
+                </div>
+                <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock size={11} />
+                  {new Date(project.created_at).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
+              </button>
             ))}
           </div>
+
+          {projects.length === 0 && (
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              No projects yet. Describe an idea above to get started!
+            </p>
+          )}
         </section>
       </main>
+
+      {/* ── Footer ── */}
+      <footer className="border-t border-border bg-secondary/30 py-4 text-center text-xs text-muted-foreground">
+        Akili AI · Built with ❤️ using Next.js, Tailwind CSS & Ollama
+      </footer>
     </div>
   );
 }

@@ -561,16 +561,16 @@ console.log("App loaded");`,
     return (
         <div className="h-screen bg-background flex overflow-hidden font-sans">
             {/* Sidebar: Chat Panel */}
-            <div className={`border-r border-border/80 bg-card/60 backdrop-blur-xl flex flex-col h-[50vh] md:h-full shadow-[0_0_45px_rgba(2,6,23,0.4)] z-20 transition-all duration-300 ease-in-out shrink-0 overflow-hidden ${isChatOpen ? "w-full md:w-[400px]" : "w-0 border-none opacity-0"}`}>
-                <div className="p-4 border-b border-border/80 bg-card/40 flex items-center justify-between min-w-[300px]">
+            <div className={`border-r border-border bg-white flex flex-col h-[50vh] md:h-full shadow-[2px_0_20px_rgba(30,64,175,0.06)] z-20 transition-all duration-300 ease-in-out shrink-0 overflow-hidden ${isChatOpen ? "w-full md:w-[380px]" : "w-0 border-none opacity-0"}`}>
+                <div className="p-4 border-b border-border bg-secondary/40 flex items-center justify-between min-w-[300px]">
                     <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => router.push('/')} className="mr-1 hover:bg-primary/10">
+                        <Button variant="ghost" size="icon" onClick={() => router.push('/')} className="mr-1 text-muted-foreground hover:text-primary hover:bg-primary/10">
                             <ArrowLeft size={18} />
                         </Button>
                         <div>
-                            <h2 className="font-semibold text-foreground truncate max-w-[180px]">{projectTitle}</h2>
+                            <h2 className="font-semibold text-foreground truncate max-w-[180px] text-sm">{projectTitle}</h2>
                             <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                <span className="w-2 h-2 rounded-full bg-green-500 inline-block"></span> Online
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Online
                             </p>
                         </div>
                     </div>
@@ -582,7 +582,7 @@ console.log("App loaded");`,
                 </div>
 
                 {/* Messages */}
-                <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 min-w-[300px] space-y-4">
+                <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 min-w-[300px] space-y-4 bg-background/50">
                     {displayMessages.map((msg, idx) => (
                         <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                             {msg.role === "user" && (
@@ -593,9 +593,9 @@ console.log("App loaded");`,
                                 </div>
                             )}
                             <div
-                                className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${msg.role === "user"
-                                    ? "bg-gradient-to-br from-primary to-accent text-primary-foreground rounded-br-none"
-                                    : "bg-muted/70 text-foreground rounded-bl-none border border-border/70"
+                                className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm text-sm ${msg.role === "user"
+                                    ? "bg-primary text-white rounded-br-sm shadow-md"
+                                    : "bg-white text-foreground rounded-bl-sm border border-border shadow-sm"
                                     }`}
                             >
                                 {msg.role === "assistant" && !msg.content.trim() && loading ? (
@@ -622,20 +622,20 @@ console.log("App loaded");`,
                 </div>
 
                 {/* Input */}
-                <div className="p-4 border-t border-border/80 bg-card/30 min-w-[300px]">
+                <div className="p-4 border-t border-border bg-white min-w-[300px]">
                     <div className="relative flex items-center shadow-sm">
                         <Input
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="Type a message..."
-                            className="pr-12 rounded-full border-border/80 focus:ring-primary bg-background/85"
+                            className="pr-12 rounded-full border-border bg-secondary/50 focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
                             disabled={loading}
                         />
                         {loading ? (
                             <Button
                                 onClick={handleInterrupt}
-                                className="absolute right-1 w-8 h-8 rounded-full p-0 transition-transform active:scale-95 bg-red-500 hover:bg-red-600 text-white"
+                                className="absolute right-1.5 w-8 h-8 rounded-full p-0 transition-transform active:scale-95 bg-red-500 hover:bg-red-600 text-white shadow-sm"
                                 size="icon"
                                 title="Stop Generation"
                             >
@@ -645,7 +645,7 @@ console.log("App loaded");`,
                             <Button
                                 onClick={() => sendMessage()}
                                 disabled={!input.trim()}
-                                className="absolute right-1 w-8 h-8 rounded-full p-0 transition-transform active:scale-95 bg-gradient-to-br from-primary to-accent text-primary-foreground"
+                                className="absolute right-1.5 w-8 h-8 rounded-full p-0 transition-transform active:scale-95 bg-primary hover:bg-primary/90 text-white shadow-sm disabled:opacity-40"
                                 size="icon"
                                 title="Send Message"
                             >
@@ -659,48 +659,48 @@ console.log("App loaded");`,
             {/* Main Area: Workspace */}
             <div className="flex-1 flex flex-col bg-background relative overflow-hidden min-w-0">
                 {/* Toolbar */}
-                <div className="h-14 border-b border-border/80 flex items-center px-4 bg-background/80 backdrop-blur-lg shadow-sm z-10 shrink-0 gap-4">
+                <div className="h-13 border-b border-border flex items-center px-4 bg-white z-10 shrink-0 gap-3 shadow-sm">
                     <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => setIsChatOpen(!isChatOpen)}
-                        className="text-muted-foreground hover:bg-primary/10"
+                        className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg"
                         title={isChatOpen ? "Close Chat" : "Open Chat"}
                     >
-                        {isChatOpen ? <PanelLeftClose size={18} /> : <PanelLeft size={18} />}
+                        {isChatOpen ? <PanelLeftClose size={17} /> : <PanelLeft size={17} />}
                     </Button>
 
-                    <div className="flex bg-card/70 border border-border/70 p-1 rounded-lg">
+                    <div className="flex bg-secondary border border-border p-1 rounded-lg">
                         <button
                             onClick={() => setActiveTab("preview")}
-                            className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === "preview"
-                                ? "bg-background text-primary shadow-sm ring-1 ring-primary/30"
+                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all ${activeTab === "preview"
+                                ? "bg-white text-primary shadow-sm"
                                 : "text-muted-foreground hover:text-foreground"
                                 }`}
                         >
-                            <Eye size={16} /> Preview
+                            <Eye size={14} /> Preview
                         </button>
                         <button
                             onClick={() => setActiveTab("code")}
-                            className={`flex items-center gap-2 px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === "code"
-                                ? "bg-background text-primary shadow-sm ring-1 ring-primary/30"
+                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all ${activeTab === "code"
+                                ? "bg-white text-primary shadow-sm"
                                 : "text-muted-foreground hover:text-foreground"
                                 }`}
                         >
-                            <Code size={16} /> Code
+                            <Code size={14} /> Code
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground ml-auto pr-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse hidden md:block"></div>
-                        <span className="hidden md:inline">React Compiler</span>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground ml-auto pr-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse hidden md:block"></div>
+                        <span className="hidden md:inline font-medium">Sandpack</span>
                     </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 overflow-hidden bg-transparent relative flex">
+                <div className="flex-1 overflow-hidden bg-background relative flex">
                     {activeTab === "code" && (
-                        <div className="w-64 flex-shrink-0 border-r border-border/80 bg-card/40">
+                        <div className="w-60 flex-shrink-0 border-r border-border bg-secondary/30">
                             <FileExplorer
                                 tree={fileTree}
                                 onFileSelect={handleFileSelect}
@@ -717,7 +717,7 @@ console.log("App loaded");`,
                                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
                                     </div>
                                 ) : (
-                                    <pre className="p-6 font-mono text-sm leading-relaxed text-foreground bg-card/80 h-full overflow-auto">
+                                    <pre className="p-6 font-mono text-xs leading-relaxed text-foreground bg-white h-full overflow-auto">
                                         <code>{code}</code>
                                     </pre>
                                 )}
@@ -725,7 +725,7 @@ console.log("App loaded");`,
                         ) : (
                             <div className="h-full w-full relative" style={{ height: '100%' }}>
                                 {(loading || Object.keys(virtualFiles).length === 0) && (
-                                    <div className="absolute inset-0 z-50 bg-background/92 backdrop-blur-sm animate-in fade-in duration-500">
+                                    <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm animate-in fade-in duration-500">
                                         <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
                                             <Loader2 className="mb-4 h-10 w-10 animate-spin text-primary" />
                                             <h3 className="max-w-md text-sm font-medium tracking-wide text-foreground/90">

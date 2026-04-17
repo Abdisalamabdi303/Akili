@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .weather-card {
+            transition: all 0.3s ease;
+        }
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .search-input {
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl font-bold text-primary" href="#">
+                <i class="fas fa-cloud-sun mr-2 text-amber-500"></i> WeatherDash
+            </a>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <input type="text" id="searchInput" placeholder="Search city..." class="input input-bordered search-input w-24 md:w-auto" />
+            </div>
+            <button id="searchBtn" class="btn btn-primary">
+                <i class="fas fa-search mr-2"></i> Search
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero min-h-[400px] bg-gradient-to-r from-blue-400 to-indigo-500">
+        <div class="hero-content text-center flex flex-col items-center">
+            <h1 class="text-5xl font-bold text-white mb-4">Global Weather Dashboard</h1>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl">Real-time weather data, forecasts, and historical trends for cities worldwide</p>
+            <div class="flex gap-4">
+                <button id="currentLocationBtn" class="btn btn-outline btn-white text-white hover:bg-white hover:text-blue-900">
+                    <i class="fas fa-map-marker-alt mr-2"></i> Use Current Location
+                </button>
+                <button id="randomCityBtn" class="btn btn-secondary bg-amber-500 hover:bg-amber-600">
+                    <i class="fas fa-random mr-2"></i> Random City
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Current Weather Section -->
+        <div id="currentWeatherSection" class="hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Current Weather Card -->
+                <div class="weather-card bg-white rounded-xl shadow-lg p-6 col-span-1 md:col-span-2">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div class="text-center md:text-left mb-4 md:mb-0">
+                            <h2 id="cityName" class="text-3xl font-bold text-gray-800 mb-2">New York</h2>
+                            <p id="currentDate" class="text-gray-600">Loading...</p>
+                            <p id="weatherDescription" class="text-lg text-gray-700">Partly Cloudy</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i id="weatherIcon" class="fas fa-cloud text-8xl text-amber-500 mr-4"></i>
+                            <div class="text-center">
+                                <h3 id="temperature" class="text-6xl font-bold text-gray-800">22°</h3>
+                                <p id="feelsLike" class="text-gray-600">Feels like 24°</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Details -->
+                <div class="weather-card bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
+                    <h3 class="text-xl font-bold mb-4">Weather Details</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-3 bg-white/10 rounded-lg">
+                            <i class="fas fa-wind text-2xl mb-2"></i>
+                            <p class="text-sm">Wind</p>
+                            <p id="windSpeed" class="font-bold text-lg">12 km/h</p>
+                        </div>
+                        <div class="text-center p-3 bg-white/10 rounded-lg">
+                            <i class="fas fa-tint text-2xl mb-2"></i>
+                            <p class="text-sm">Humidity</p>
+                            <p id="humidity" class="font-bold text-lg">65%</p>
+                        </div>
+                        <div class="text-center p-3 bg-white/10 rounded-lg">
+                            <i class="fas fa-sun text-2xl mb-2"></i>
+                            <p class="text-sm">UV Index</p>
+                            <p id="uvIndex" class="font-bold text-lg">4</p>
+                        </div>
+                        <div class="text-center p-3 bg-white/10 rounded-lg">
+                            <i class="fas fa-eye text-2xl mb-2"></i>
+                            <p class="text-sm">Visibility</p>
+                            <p id="visibility" class="font-bold text-lg">10 km</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecast Section -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">7-Day Forecast</h3>
+                <div id="forecastContainer" class="grid grid-cols-2 md:grid-cols-7 gap-4">
+                    <!-- Forecast cards will be populated here -->
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="weather-card bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Temperature Trend</h3>
+                    <div class="chart-container">
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+                </div>
+                <div class="weather-card bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Humidity & Pressure</h3>
+                    <div class="chart-container">
+                        <canvas id="humidityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Alerts -->
+            <div id="alertsSection" class="weather-card bg-white rounded-xl shadow-lg p-6 hidden">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i> Weather Alerts
+                </h3>
+                <div id="alertsContainer" class="space-y-3">
+                    <!-- Alerts will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results Section -->
+        <div id="searchResultsSection" class="hidden">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Search Results</h3>
+            <div id="searchResultsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Search results will be populated here -->
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingSection" class="text-center py-12">
+            <div class="spinner spinner-primary spinner-lg mb-4"></div>
+            <p class="text-gray-600">Loading weather data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorSection" class="hidden text-center py-12">
+            <div class="alert alert-error shadow-lg mb-4 max-w-md mx-auto">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-exclamation-circle text-4xl mb-4 text-error"></i>
+                    <h3 class="text-xl font-bold">Weather Data Unavailable</h3>
+                    <p class="text-error-content mt-2">Could not load weather data for this location. Please try again.</p>
+                    <button id="retryBtn" class="btn btn-primary mt-4">Try Again</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center items-center mb-4">
+                <i class="fas fa-cloud-sun text-2xl text-amber-500 mr-2"></i>
+                <span class="text-xl font-bold">WeatherDash</span>
+            </div>
+            <p class="text-gray-400 mb-4">Real-time weather data and forecasts for cities worldwide</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-github text-xl"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm mt-8">© 2023 WeatherDash. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

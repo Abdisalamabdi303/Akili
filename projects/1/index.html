@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawHaven | Premium Pet Supplies</title>
-    <meta name="description" content="Everything your pets need - premium food, toys, grooming supplies, and more.">
+    <title>FitPulse | Modern Fitness Tracker</title>
+    <meta name="description" content="Track your workouts, monitor progress, and achieve your fitness goals with FitPulse.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,21 +17,192 @@
     
     <!-- Custom Styles -->
     <style>
+        :root {
+            --primary-cyan: #00e5ff;
+            --secondary-cyan: #00b8e6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+        
         .cyan-gradient {
             background: linear-gradient(135deg, #ffffff 0%, #e0f7ff 50%, #00e5ff 100%);
         }
         
-        .hero-overlay {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 255, 0.85) 100%);
+        .cyan-gradient-text {
+            background: linear-gradient(135deg, #00b8e6 0%, #00e5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .pet-card {
+        .btn-cyan {
+            background: linear-gradient(135deg, #00b8e6 0%, #00e5ff 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+        }
+        
+        .btn-cyan:hover {
+            background: linear-gradient(135deg, #00a0cc 0%, #00d1e6 100%);
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .stat-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
             transition: all 0.3s ease;
         }
         
-        .pet-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 229, 255, 0.2);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .activity-card {
+            transition: all 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.2);
+        }
+        
+        .progress-ring {
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 247, 255, 0.9) 100%);
+        }
+        
+        .activity-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .testimonial-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .cta-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .stats-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .dashboard-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .community-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .progress-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+        
+        .activity-card {
+            background: white;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.3);
         }
         
         .feature-icon {
@@ -42,386 +213,337 @@
             transform: scale(1.15) rotate(5deg);
         }
         
-        .btn-cyan {
-            background: linear-gradient(135deg, #00b8e6 0%, #00e5ff 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+        .testimonial-icon {
+            transition: all 0.3s ease;
         }
         
-        .btn-cyan:hover {
-            background: linear-gradient(135deg, #00a0cc 0%, #00d1e6 100%);
-            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
+        .testimonial-icon:hover {
+            transform: scale(1.15) rotate(5deg);
         }
         
-        .btn-outline-cyan {
-            border: 2px solid #00e5ff;
-            color: #0093b5;
+        .pricing-icon {
+            transition: all 0.3s ease;
         }
         
-        .btn-outline-cyan:hover {
-            background: #00e5ff;
-            color: white;
+        .pricing-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .cta-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .cta-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .stats-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .stats-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .dashboard-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .community-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .community-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .progress-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .progress-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .activity-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .activity-icon:hover {
+            transform: scale(1.15) rotate(5deg);
         }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-white min-h-screen">
     <!-- Navigation -->
-    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-white/10 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-cyan-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center gap-2">
                     <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4a1 1 0 011 1v6a1 1 0 01-1 1h-4m-6 0h4a1 1 0 011 1v6a1 1 0 01-1 1h-4m-6 0h4a1 1 0 011 1v6a1 1 0 01-1 1h-4" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l3.75 2.25m-7.5-4.5l3.75-2.25m0 0l3.75 2.25m-7.5-4.5l3.75 2.25" />
-                        </svg>
+                        <i data-lucide="activity" class="h-6 w-6 text-white"></i>
                     </div>
-                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-blue-600">
-                        PawHaven
-                    </span>
+                    <span class="text-2xl font-bold cyan-gradient-text">FitPulse</span>
                 </div>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Home</a>
-                    <a href="#products" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Products</a>
-                    <a href="#services" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Services</a>
-                    <a href="#about" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">About</a>
-                    <a href="#contact" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Contact</a>
+                    <a href="#dashboard" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Dashboard</a>
+                    <a href="#activities" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Activities</a>
+                    <a href="#progress" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Progress</a>
+                    <a href="#community" class="text-gray-700 hover:text-cyan-600 font-medium transition-colors">Community</a>
                 </div>
                 
-                <!-- CTA Button -->
-                <div class="hidden md:flex items-center">
-                    <a href="#shop" class="btn btn-cyan rounded-full px-6 py-2 font-medium">
-                        Shop Now
-                    </a>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
+                <!-- User Profile -->
+                <div class="flex items-center gap-4">
                     <button class="btn btn-ghost btn-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                        <i data-lucide="bell" class="h-5 w-5 text-gray-600"></i>
                     </button>
+                    <div class="dropdown dropdown-end">
+                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                            <div class="w-10 rounded-full bg-cyan-100 flex items-center justify-center">
+                                <span class="text-cyan-700 font-bold">JD</span>
+                            </div>
+                        </div>
+                        <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52 border border-cyan-100">
+                            <li><a>Profile</a></li>
+                            <li><a>Settings</a></li>
+                            <li><a>Logout</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
-    
+
     <!-- Hero Section -->
-    <section id="home" class="hero pt-10 md:pt-16 pb-12 md:pb-20 relative overflow-hidden">
-        <!-- Background with overlay -->
+    <section class="hero min-h-[600px] relative overflow-hidden">
         <div class="absolute inset-0 hero-overlay z-0"></div>
-        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat hero-overlay" 
-             style="background-image: url('https://pollinations.ai/prompt/cute%20dogs%20and%20cats%20playing%20together%20in%20a%20pet%20store?width=1920&height=600&nologo=true');">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+             style="background-image: url('https://image.pollinations.ai/prompt/fitness%20tracker%20smartwatch%20on%20wrist%20modern%20gym%20background?width=1920&height=600&nologo=true');">
         </div>
         
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="hero-content text-center">
-                <div class="max-w-3xl flex flex-col items-center gap-6">
-                    <div class="badge badge-lg bg-cyan-100 text-cyan-800 font-semibold rounded-full mb-4">
-                        <span class="mr-2">✨</span> New Arrivals This Week
+        <div class="hero-content text-center relative z-10">
+            <div class="max-w-4xl flex flex-col items-center gap-6">
+                <div class="badge badge-lg bg-cyan-100 text-cyan-800 font-semibold rounded-full">
+                    <i data-lucide="zap" class="h-5 w-5 mr-2"></i>
+                    Track Your Fitness Journey
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold text-gray-900 leading-tight">
+                    <span class="block">Transform Your Body</span>
+                    <span class="block cyan-gradient-text">With FitPulse</span>
+                </h1>
+                
+                <p class="text-xl text-gray-600 max-w-2xl">
+                    The ultimate fitness tracker for modern athletes. Monitor workouts, track nutrition, and achieve your goals with our comprehensive platform.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                    <button class="btn btn-cyan px-8 py-4 text-lg rounded-full">
+                        <i data-lucide="play" class="h-5 w-5 mr-2"></i>
+                        Start Tracking
+                    </button>
+                    <button class="btn btn-outline btn-cyan px-8 py-4 text-lg rounded-full">
+                        <i data-lucide="users" class="h-5 w-5 mr-2"></i>
+                        Join Community
+                    </button>
+                </div>
+                
+                <div class="flex items-center gap-8 mt-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gray-900">10K+</div>
+                        <div class="text-sm text-gray-500">Active Users</div>
                     </div>
-                    
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
-                        Everything Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Pets</span> Need
-                    </h1>
-                    
-                    <p class="text-lg md:text-xl text-gray-700 max-w-2xl">
-                        Premium pet supplies, fresh food, and expert care for your furry friends. 
-                        Shop with confidence and give your pets the love they deserve.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                        <a href="#products" class="btn btn-cyan rounded-full px-8 py-4 text-lg font-semibold">
-                            Shop Now
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </a>
-                        <a href="#services" class="btn btn-outline-cyan rounded-full px-8 py-4 text-lg font-semibold">
-                            Our Services
-                        </a>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gray-900">500+</div>
+                        <div class="text-sm text-gray-500">Workout Plans</div>
                     </div>
-                    
-                    <!-- Stats -->
-                    <div class="grid grid-cols-3 gap-8 mt-12 w-full">
-                        <div class="text-center">
-                            <div class="text-3xl md:text-4xl font-bold text-cyan-600">500+</div>
-                            <div class="text-sm text-gray-600">Products</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl md:text-4xl font-bold text-cyan-600">2K+</div>
-                            <div class="text-sm text-gray-600">Happy Pets</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl md:text-4xl font-bold text-cyan-600">98%</div>
-                            <div class="text-sm text-gray-600">Satisfaction</div>
-                        </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gray-900">99%</div>
+                        <div class="text-sm text-gray-500">Satisfaction</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Features Section -->
-    <section id="features" class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose PawHaven?</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">We're committed to providing the best care and products for your beloved pets.</p>
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Everything You Need to <span class="cyan-gradient-text">Succeed</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Powerful features designed to help you track every aspect of your fitness journey
+                </p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
-                    <div class="card-body items-center text-center">
-                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                        </div>
-                        <h3 class="card-title text-xl font-bold text-gray-900">Premium Quality</h3>
-                        <p class="text-gray-600">All our products are carefully selected from top brands, ensuring safety and durability for your pets.</p>
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="activity" class="h-8 w-8 text-cyan-600 feature-icon"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Workout Tracking</h3>
+                    <p class="text-gray-600">
+                        Log your workouts with precision. Track exercises, sets, reps, and weights for complete progress monitoring.
+                    </p>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
-                    <div class="card-body items-center text-center">
-                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <h3 class="card-title text-xl font-bold text-gray-900">Fast Delivery</h3>
-                        <p class="text-gray-600">Get your pet essentials delivered straight to your door within 24-48 hours across the city.</p>
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="utensils" class="h-8 w-8 text-cyan-600 feature-icon"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Nutrition Tracking</h3>
+                    <p class="text-gray-600">
+                        Monitor your daily intake with our comprehensive food database. Set goals and track macronutrients effortlessly.
+                    </p>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
-                    <div class="card-body items-center text-center">
-                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="card-title text-xl font-bold text-gray-900">Expert Care</h3>
-                        <p class="text-gray-600">Our team of pet specialists is always available to answer your questions and provide guidance.</p>
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="clock" class="h-8 w-8 text-cyan-600 feature-icon"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Smart Analytics</h3>
+                    <p class="text-gray-600">
+                        Gain insights with advanced analytics. Visualize your progress and identify patterns in your fitness journey.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="smartphone" class="h-8 w-8 text-cyan-600 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Mobile Sync</h3>
+                    <p class="text-gray-600">
+                        Sync across all your devices. Access your data anytime, anywhere with our seamless mobile experience.
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="users" class="h-8 w-8 text-cyan-600 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Community Support</h3>
+                    <p class="text-gray-600">
+                        Join thousands of fitness enthusiasts. Share your journey, get motivated, and achieve goals together.
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="bell" class="h-8 w-8 text-cyan-600 feature-icon"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Smart Reminders</h3>
+                    <p class="text-gray-600">
+                        Never miss a workout with intelligent reminders. Get notifications for workouts, hydration, and rest.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Products Section -->
-    <section id="products" class="py-16 bg-gradient-to-b from-white to-cyan-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Best Sellers</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Hand-picked products loved by pets and their owners.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Product 1 -->
-                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
-                    <div class="relative">
-                        <img src="https://pollinations.ai/prompt/dog%20food%20premium%20natural%20ingredients?width=400&height=300&nologo=true" 
-                             alt="Premium Dog Food" 
-                             class="w-full h-48 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="badge bg-cyan-500 text-white">Best Seller</span>
+
+    <!-- Stats Section -->
+    <section id="stats" class="py-20 bg-gradient-to-br from-cyan-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                        <span class="block">Track Every</span>
+                        <span class="block cyan-gradient-text">Detail of Your Journey</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        FitPulse provides comprehensive tracking for all aspects of your fitness journey, from workouts to nutrition and beyond.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="stats-card p-6 rounded-2xl">
+                            <div class="text-4xl font-bold text-cyan-600 mb-2">10K+</div>
+                            <div class="text-gray-600">Workouts Tracked</div>
                         </div>
-                    </div>
-                    <div class="card-body p-6">
-                        <h3 class="card-title text-xl font-bold text-gray-900">Premium Natural Dog Food</h3>
-                        <p class="text-gray-600 text-sm">Organic, grain-free formula with real chicken and vegetables for optimal health.</p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <div class="rating rating-sm">
-                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-1" class="mask mask-star-2 bg-cyan-400" />
-                            </div>
-                            <span class="text-sm text-gray-500">(128)</span>
+                        <div class="stats-card p-6 rounded-2xl">
+                            <div class="text-4xl font-bold text-cyan-600 mb-2">500+</div>
+                            <div class="text-gray-600">Nutrition Plans</div>
                         </div>
-                        <div class="card-actions justify-between mt-4">
-                            <span class="text-2xl font-bold text-cyan-600">$49.99</span>
-                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
-                                Add to Cart
-                            </button>
+                        <div class="stats-card p-6 rounded-2xl">
+                            <div class="text-4xl font-bold text-cyan-600 mb-2">99%</div>
+                            <div class="text-gray-600">User Satisfaction</div>
+                        </div>
+                        <div class="stats-card p-6 rounded-2xl">
+                            <div class="text-4xl font-bold text-cyan-600 mb-2">24/7</div>
+                            <div class="text-gray-600">Support Available</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Product 2 -->
-                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
-                    <div class="relative">
-                        <img src="https://pollinations.ai/prompt/cat%20toys%20interactive%20plush%20mouse?width=400&height=300&nologo=true" 
-                             alt="Interactive Cat Toy" 
-                             class="w-full h-48 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="badge bg-purple-500 text-white">New</span>
-                        </div>
-                    </div>
-                    <div class="card-body p-6">
-                        <h3 class="card-title text-xl font-bold text-gray-900">Interactive Plush Cat Toy</h3>
-                        <p class="text-gray-600 text-sm">Squeaky mouse with organic catnip that stimulates natural hunting instincts.</p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <div class="rating rating-sm">
-                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-2" class="mask mask-star-2 bg-cyan-400" />
-                            </div>
-                            <span class="text-sm text-gray-500">(84)</span>
-                        </div>
-                        <div class="card-actions justify-between mt-4">
-                            <span class="text-2xl font-bold text-cyan-600">$14.99</span>
-                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
-                                Add to Cart
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl transform rotate-3 opacity-20"></div>
+                    <div class="relative bg-white rounded-2xl p-8 shadow-xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-gray-900">Today's Progress</h3>
+                            <button class="btn btn-ghost btn-sm">
+                                <i data-lucide="calendar" class="h-4 w-4"></i>
                             </button>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
-                    <div class="relative">
-                        <img src="https://pollinations.ai/prompt/dog%20collar%20adjustable%20leather%20with%20buckle?width=400&height=300&nologo=true" 
-                             alt="Leather Dog Collar" 
-                             class="w-full h-48 object-cover">
-                    </div>
-                    <div class="card-body p-6">
-                        <h3 class="card-title text-xl font-bold text-gray-900">Premium Leather Dog Collar</h3>
-                        <p class="text-gray-600 text-sm">Handcrafted genuine leather collar with adjustable sizing and brass buckle.</p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <div class="rating rating-sm">
-                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-3" class="mask mask-star-2 bg-cyan-400" />
-                            </div>
-                            <span class="text-sm text-gray-500">(215)</span>
-                        </div>
-                        <div class="card-actions justify-between mt-4">
-                            <span class="text-2xl font-bold text-cyan-600">$34.99</span>
-                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="card pet-card bg-white shadow-lg rounded-3xl overflow-hidden">
-                    <div class="relative">
-                        <img src="https://pollinations.ai/prompt/small%20animal%20cage%20for%20rabbits%20and%20guinea%20pigs?width=400&height=300&nologo=true" 
-                             alt="Small Animal Habitat" 
-                             class="w-full h-48 object-cover">
-                    </div>
-                    <div class="card-body p-6">
-                        <h3 class="card-title text-xl font-bold text-gray-900">Small Animal Habitat</h3>
-                        <p class="text-gray-600 text-sm">Spacious wire cage with removable tray, perfect for rabbits and guinea pigs.</p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <div class="rating rating-sm">
-                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
-                                <input type="radio" name="rating-4" class="mask mask-star-2 bg-cyan-400" />
-                            </div>
-                            <span class="text-sm text-gray-500">(96)</span>
-                        </div>
-                        <div class="card-actions justify-between mt-4">
-                            <span class="text-2xl font-bold text-cyan-600">$79.99</span>
-                            <button class="btn btn-cyan rounded-full px-4 py-2 text-sm">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#shop" class="btn btn-outline-cyan rounded-full px-8 py-3 font-semibold">
-                    View All Products
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Services Section -->
-    <section id="services" class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Professional care and grooming services to keep your pets looking and feeling their best.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
-                    <div class="card-body">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a1.5 1.5 0 003 0m3-7.5V14m0-2.5v-6a1.5 1.5 0 00-3 0m3 6a1.5 1.5 0 013 0v2a1.5 1.5 0 01-3 0M7 11.5V14m0-2.5v-6a1.5 1.5 0 013 0m-3 6a1.5 1.5 0 00-3 0" />
-                                </svg>
-                            </div>
+                        
+                        <div class="space-y-6">
                             <div>
-                                <h3 class="card-title text-xl font-bold text-gray-900">Grooming Salon</h3>
-                                <p class="text-gray-600 mt-2">Professional grooming including baths, haircuts, nail trimming, and ear cleaning.</p>
-                                <div class="card-actions mt-4">
-                                    <span class="text-cyan-600 font-semibold">$45+</span>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-600">Steps</span>
+                                    <span class="font-bold text-gray-900">8,432 / 10,000</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-2">
+                                    <div class="bg-cyan-500 h-2 rounded-full" style="width: 84%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-600">Calories</span>
+                                    <span class="font-bold text-gray-900">1,840 / 2,200</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-2">
+                                    <div class="bg-cyan-500 h-2 rounded-full" style="width: 83%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-600">Water</span>
+                                    <span class="font-bold text-gray-900">4 / 8 glasses</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-2">
+                                    <div class="bg-cyan-500 h-2 rounded-full" style="width: 50%"></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Service 2 -->
-                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
-                    <div class="card-body">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="card-title text-xl font-bold text-gray-900">Veterinary Care</h3>
-                                <p class="text-gray-600 mt-2">On-site veterinary services including vaccinations, check-ups, and health consultations.</p>
-                                <div class="card-actions mt-4">
-                                    <span class="text-cyan-600 font-semibold">$75+</span>
+                        
+                        <div class="mt-8 pt-6 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                                        <i data-lucide="activity" class="h-6 w-6 text-cyan-600"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-gray-900">Running</div>
+                                        <div class="text-sm text-gray-500">30 min • 320 kcal</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Service 3 -->
-                <div class="card bg-base-100 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300">
-                    <div class="card-body">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 20v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6m16 0h-4a2 2 0 01-2-2v-4a2 2 0 00-2-2H8a2 2 0 00-2 2v4a2 2 0 01-2 2H4m16 0v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4m16 0H4" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="card-title text-xl font-bold text-gray-900">Pet Boarding</h3>
-                                <p class="text-gray-600 mt-2">Safe and comfortable overnight stays with 24/7 supervision and playtime.</p>
-                                <div class="card-actions mt-4">
-                                    <span class="text-cyan-600 font-semibold">$35/night</span>
-                                </div>
+                                <button class="btn btn-sm btn-cyan rounded-full">
+                                    <i data-lucide="plus" class="h-4 w-4"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -429,53 +551,164 @@
             </div>
         </div>
     </section>
-    
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-16 bg-gradient-to-b from-cyan-50 to-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Pet Owners Say</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Real stories from our happy customers and their furry friends.</p>
+
+    <!-- Dashboard Preview Section -->
+    <section id="dashboard" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Your <span class="cyan-gradient-text">Dashboard</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Get a comprehensive overview of your fitness journey with our intuitive dashboard
+                </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="card bg-white shadow-xl rounded-3xl p-6">
-                    <div class="rating rating-sm mb-4">
-                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-5" class="mask mask-star-2 bg-cyan-400" checked="checked" />
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="dashboard-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Weekly Overview</h3>
+                        <i data-lucide="calendar" class="h-5 w-5 text-gray-400 dashboard-icon"></i>
                     </div>
-                    <p class="text-gray-600 italic mb-6">"My golden retriever loves the grooming salon! The staff is so gentle and professional. Best pet store in town!"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-cyan-200 rounded-full flex items-center justify-center">
-                            <span class="font-bold text-cyan-700">SJ</span>
+                    <div class="h-48 flex items-center justify-center bg-gray-50 rounded-xl">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-cyan-600 mb-2">7</div>
+                            <div class="text-gray-600">Workouts This Week</div>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Calories Burned</h3>
+                        <i data-lucide="flame" class="h-5 w-5 text-red-400 dashboard-icon"></i>
+                    </div>
+                    <div class="h-48 flex items-center justify-center bg-gray-50 rounded-xl">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-red-500 mb-2">2,450</div>
+                            <div class="text-gray-600">kcal Today</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Active Streak</h3>
+                        <i data-lucide="fire" class="h-5 w-5 text-orange-400 dashboard-icon"></i>
+                    </div>
+                    <div class="h-48 flex items-center justify-center bg-gray-50 rounded-xl">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-500 mb-2">14</div>
+                            <div class="text-gray-600">Days Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="dashboard-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Recent Workouts</h3>
+                        <button class="btn btn-sm btn-link text-cyan-600">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="activity" class="h-6 w-6 text-cyan-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900">Morning Run</div>
+                                <div class="text-sm text-gray-500">45 min • 420 kcal</div>
+                            </div>
+                            <div class="ml-auto text-right">
+                                <div class="font-bold text-cyan-600">3.2 miles</div>
+                                <div class="text-sm text-gray-500">10:15 pace</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="dumbbell" class="h-6 w-6 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900">Strength Training</div>
+                                <div class="text-sm text-gray-500">60 min • 380 kcal</div>
+                            </div>
+                            <div class="ml-auto text-right">
+                                <div class="font-bold text-purple-600">Upper Body</div>
+                                <div class="text-sm text-gray-500">4 sets</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="heart" class="h-6 w-6 text-green-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900">Yoga Session</div>
+                                <div class="text-sm text-gray-500">30 min • 150 kcal</div>
+                            </div>
+                            <div class="ml-auto text-right">
+                                <div class="font-bold text-green-600">Vinyasa</div>
+                                <div class="text-sm text-gray-500">Flexibility</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Today's Goals</h3>
+                        <button class="btn btn-sm btn-link text-cyan-600">Edit Goals</button>
+                    </div>
+                    <div class="space-y-4">
                         <div>
-                            <div class="font-bold text-gray-900">Sarah Johnson</div>
-                            <div class="text-sm text-gray-500">Dog mom to Max</div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Calories</span>
+                                <span class="font-bold text-gray-900">1,840 / 2,200</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div class="bg-cyan-500 h-2 rounded-full" style="width: 83%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Steps</span>
+                                <span class="font-bold text-gray-900">8,432 / 10,000</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div class="bg-cyan-500 h-2 rounded-full" style="width: 84%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Water</span>
+                                <span class="font-bold text-gray-900">4 / 8 glasses</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div class="bg-cyan-500 h-2 rounded-full" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Sleep</span>
+                                <span class="font-bold text-gray-900">7:20 / 8:00 hours</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div class="bg-cyan-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="card bg-white shadow-xl rounded-3xl p-6">
-                    <div class="rating rating-sm mb-4">
-                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                        <input type="radio" name="rating-6" class="mask mask-star-2 bg-cyan-400" checked="checked" />
-                    </div>
-                    <p class="text-gray-600 italic mb-6">"Found the perfect habitat for my guinea pigs. The staff helped me choose the right size and accessories. Highly recommend!"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-cyan-200 rounded-full flex items-center justify-center">
-                            <span class="font-bold text-cyan-700">TM</span>
-                        </div>
-                        <div>
-                            <div class="font-bold text-gray-900">Tom Martinez</div>
-                            <div class="text-sm text-gray-500">Cat dad to Luna</div>
-                        </div>
-                    </div
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-

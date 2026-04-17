@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        .drag-over {
+            background-color: #e0e7ff;
+            border-color: #6366f1;
+        }
+        .task-card {
+            transition: all 0.2s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .priority-high { border-left: 4px solid #ef4444; }
+        .priority-medium { border-left: 4px solid #f59e0b; }
+        .priority-low { border-left: 4px solid #10b981; }
+    </style>
+</head>
+<body class="bg-base-200 min-h-screen">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-tasks text-indigo-600 text-2xl"></i>
+                    <span class="text-2xl font-bold text-gray-900">Task Manager</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="clear-btn" class="btn btn-sm btn-outline btn-error">
+                        <i class="fas fa-trash mr-2"></i> Clear All
+                    </button>
+                    <div class="dropdown dropdown-end">
+                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                            <i class="fas fa-user text-xl"></i>
+                        </div>
+                        <div tabindex="0" class="card card-compact w-52 dropdown-content z-[1] bg-base-100 shadow">
+                            <div class="card-body">
+                                <span class="text-xs font-bold uppercase text-gray-500">User Profile</span>
+                                <p class="font-semibold">Guest User</p>
+                                <div class="card-actions">
+                                    <button class="btn btn-sm btn-outline btn-block">Settings</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero bg-gradient-to-r from-indigo-500 to-purple-600 py-16">
+        <div class="hero-content text-center text-white">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl font-bold mb-4">Organize Your Tasks</h1>
+                <p class="text-lg mb-8 opacity-90">Drag and drop tasks between columns to manage your workflow efficiently. All changes are saved automatically.</p>
+                <div class="flex justify-center space-x-4">
+                    <button id="add-task-btn" class="btn btn-lg bg-white text-indigo-600 hover:bg-gray-100 border-none">
+                        <i class="fas fa-plus-circle mr-2"></i> Add New Task
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="stat bg-base-100 rounded-box shadow">
+                <div class="stat-title">Total Tasks</div>
+                <div class="stat-value text-primary">0</div>
+                <div class="stat-desc">All tasks created</div>
+            </div>
+            <div class="stat bg-base-100 rounded-box shadow">
+                <div class="stat-title">In Progress</div>
+                <div class="stat-value text-secondary">0</div>
+                <div class="stat-desc">Tasks currently working on</div>
+            </div>
+            <div class="stat bg-base-100 rounded-box shadow">
+                <div class="stat-title">Completed</div>
+                <div class="stat-value text-success">0</div>
+                <div class="stat-desc">Finished tasks</div>
+            </div>
+        </div>
+
+        <!-- Task Board -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- To Do Column -->
+            <div class="column" data-column="todo">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="card-title text-xl">
+                                <i class="fas fa-clipboard-list text-primary mr-2"></i> To Do
+                            </h2>
+                            <span class="badge badge-primary badge-outline" id="todo-count">0</span>
+                        </div>
+                        <div class="task-list" data-column="todo">
+                            <!-- Tasks will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="column" data-column="inprogress">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="card-title text-xl">
+                                <i class="fas fa-spinner text-secondary mr-2"></i> In Progress
+                            </h2>
+                            <span class="badge badge-secondary badge-outline" id="inprogress-count">0</span>
+                        </div>
+                        <div class="task-list" data-column="inprogress">
+                            <!-- Tasks will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completed Column -->
+            <div class="column" data-column="completed">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="card-title text-xl">
+                                <i class="fas fa-check-circle text-success mr-2"></i> Completed
+                            </h2>
+                            <span class="badge badge-success badge-outline" id="completed-count">0</span>
+                        </div>
+                        <div class="task-list" data-column="completed">
+                            <!-- Tasks will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Task Modal -->
+    <dialog id="add-task-modal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Add New Task</h3>
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 close-modal">✕</button>
+            <div class="py-4 space-y-4">
+                <div>
+                    <label class="label">
+                        <span class="label-text">Task Title</span>
+                    </label>
+                    <input type="text" id="task-title" placeholder="Enter task title" class="input input-bordered w-full" required>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea id="task-description" placeholder="Enter task description" class="textarea textarea-bordered w-full" rows="3"></textarea>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Priority</span>
+                    </label>
+                    <select id="task-priority" class="select select-bordered w-full">
+                        <option value="high">High Priority</option>
+                        <option value="medium" selected>Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Due Date</span>
+                    </label>
+                    <input type="date" id="task-due-date" class="input input-bordered w-full">
+                </div>
+            </div>
+            <div class="modal-action">
+                <button id="save-task-btn" class="btn btn-primary">Add Task</button>
+                <button class="btn btn-ghost close-modal">Cancel</button>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
+    <!-- Edit Task Modal -->
+    <dialog id="edit-task-modal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Edit Task</h3>
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 close-modal">✕</button>
+            <input type="hidden" id="edit-task-id">
+            <div class="py-4 space-y-4">
+                <div>
+                    <label class="label">
+                        <span class="label-text">Task Title</span>
+                    </label>
+                    <input type="text" id="edit-task-title" placeholder="Enter task title" class="input input-bordered w-full" required>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea id="edit-task-description" placeholder="Enter task description" class="textarea textarea-bordered w-full" rows="3"></textarea>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Priority</span>
+                    </label>
+                    <select id="edit-task-priority" class="select select-bordered w-full">
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Due Date</span>
+                    </label>
+                    <input type="date" id="edit-task-due-date" class="input input-bordered w-full">
+                </div>
+                <div>
+                    <label class="label">
+                        <span class="label-text">Status</span>
+                    </label>
+                    <select id="edit-task-status" class="select select-bordered w-full">
+                        <option value="todo">To Do</option>
+                        <option value="inprogress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-action">
+                <button id="update-task-btn" class="btn btn-primary">Update Task</button>
+                <button class="btn btn-ghost close-modal">Cancel</button>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
+    <script src="script.js"></script>
+</body>
+</html>

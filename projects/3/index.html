@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek's Portfolio</title>
+    <title>Modern Tech - Premium Smart Watch</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -19,122 +19,198 @@
                 </div>
                 <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow">
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost text-xl font-bold" href="#">Abhishek</a>
+            <a class="btn btn-ghost text-xl font-bold" href="#">Modern Tech</a>
         </div>
         <div class="navbar-center hidden md:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
         <div class="navbar-end">
-            <a class="btn btn-primary" href="#contact">Let's Talk</a>
+            <a class="btn btn-primary" href="#contact">Buy Now</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero min-h-screen bg-base-200">
-        <div class="hero-content text-center flex flex-col items-center">
-            <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Abhishek<br />Full Stack Developer
-            </h1>
-            <p class="py-6 text-lg md:text-xl max-w-2xl">
-                Building modern, responsive web applications with clean code and intuitive design.
-            </p>
-            <div class="flex gap-4">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-outline">Contact Me</a>
+    <section id="home" class="hero min-h-screen bg-base-200 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20"></div>
+        <div class="hero-content text-center flex flex-col items-center relative z-10">
+            <div class="animate-fade-in-up">
+                <span class="badge badge-primary badge-lg mb-4">New Arrival</span>
+                <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6">
+                    Smart Watch Pro
+                </h1>
+                <p class="py-6 text-lg md:text-xl max-w-2xl mx-auto">
+                    Experience the future on your wrist with our most advanced smartwatch yet. Features 24/7 health monitoring, 14-day battery life, and stunning AMOLED display.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#contact" class="btn btn-primary btn-lg animate-bounce">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-16M7 13L5.4 5M7 13l.4 2M9 19h6m-6-4h8m-8-4l1.6 7.2M16 7v4m0 0v6m0-6l-1.6 7.2M9 19v-6m6 6v-6" /></svg>
+                        $299.99
+                    </a>
+                    <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+                </div>
+                <div class="mt-8 flex items-center justify-center gap-8 opacity-70">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        Free Shipping
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        2-Year Warranty
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        30-Day Return
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-base-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Key Features</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card bg-base-200 p-6 rounded-xl hover:scale-105 transition-all duration-300 hover:shadow-xl">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-2">Health Monitoring</h3>
+                    <p class="text-center text-sm">24/7 heart rate, sleep, and blood oxygen tracking</p>
+                </div>
+                <div class="card bg-base-200 p-6 rounded-xl hover:scale-105 transition-all duration-300 hover:shadow-xl">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-2">14-Day Battery</h3>
+                    <p class="text-center text-sm">Extended battery life for continuous use</p>
+                </div>
+                <div class="card bg-base-200 p-6 rounded-xl hover:scale-105 transition-all duration-300 hover:shadow-xl">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-2">Fast Charging</h3>
+                    <p class="text-center text-sm">0-100% in just 90 minutes</p>
+                </div>
+                <div class="card bg-base-200 p-6 rounded-xl hover:scale-105 transition-all duration-300 hover:shadow-xl">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-info/20 rounded-full flex items-center justify-center mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-2">Water Resistant</h3>
+                    <p class="text-center text-sm">5ATM rating for swimming and showering</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-base-100">
+    <!-- Product Showcase -->
+    <section class="py-16 bg-base-200">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-xl transform rotate-3"></div>
-                    <div class="relative bg-base-200 rounded-xl p-6 h-64 flex items-center justify-center">
-                        <img src="https://image.pollinations.ai/prompt/Professional%20headshot%20of%20a%20developer%20with%20a%20laptop%20and%20code%20on%20screen%2C%20modern%20office%20background%2C%20high%20quality%2C%20realistic%20lighting%2C%20smiling%2C%20business%20casual%20attire%3Fwidth=800&height=600&nologo=true" alt="Abhishek" class="rounded-xl shadow-xl w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl transform rotate-3"></div>
+                    <div class="relative bg-base-100 rounded-2xl p-8 shadow-2xl">
+                        <img src="https://image.pollinations.ai/prompt/Premium%20smart%20watch%20on%20a%20white%20background%2C%20minimalist%20design%2C%20AMOLED%20display%20showing%20health%20metrics%2C%20modern%20tech%20aesthetic%2C%20high%20resolution%2C%20product%20photography%3Fwidth=800&height=600&nologo=true" alt="Smart Watch" class="rounded-xl shadow-xl w-full animate-fade-in" />
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-bold mb-4">Passionate Developer</h3>
-                    <p class="mb-6 text-lg">
-                        I'm Abhishek, a dedicated full stack developer with over 5 years of experience in building web applications. I specialize in creating responsive, user-friendly interfaces and robust backend systems.
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Premium Build Quality</h2>
+                    <p class="text-lg mb-6">
+                        Crafted with premium materials, the Smart Watch Pro features a durable aluminum chassis, scratch-resistant glass, and comfortable silicone bands. Designed for both style and functionality.
                     </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="card bg-base-200 p-4 rounded-xl">
-                            <div class="text-3xl font-bold text-primary">5+</div>
-                            <div class="text-sm">Years Experience</div>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <span>Lightweight design (42g)</span>
                         </div>
-                        <div class="card bg-base-200 p-4 rounded-xl">
-                            <div class="text-3xl font-bold text-secondary">50+</div>
-                            <div class="text-sm">Projects Completed</div>
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <span>Customizable watch faces</span>
                         </div>
+                        <div class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <span>GPS and heart rate sensor</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#contact" class="btn btn-primary">Buy Now</a>
+                        <a href="#features" class="btn btn-outline">View Specs</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-base-200">
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 bg-base-100">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">My Projects</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Customer Reviews</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="card bg-base-100 shadow-xl">
-                    <figure>
-                        <img src="https://image.pollinations.ai/prompt/E-commerce%20website%20with%20modern%20design%2C%20product%20grid%2C%20shopping%20cart%2C%20responsive%20layout%2C%20clean%20UI%2C%20mobile-friendly%2C%20dark%20mode%20toggle%3Fwidth=800&height=600&nologo=true" alt="Project 1" />
-                    </figure>
-                    <div class="card-body">
-                        <h3 class="card-title text-xl">E-Commerce Platform</h3>
-                        <p>A fully functional e-commerce website with product catalog, shopping cart, and secure checkout.</p>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
+                <div class="card bg-base-200 p-6 rounded-xl">
+                    <div class="flex gap-1 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
+                    <p class="mb-4">"The best smartwatch I've ever owned! Battery life is amazing and the health tracking is incredibly accurate. Highly recommended!"</p>
+                    <div class="font-bold">Sarah Johnson</div>
+                    <div class="text-sm opacity-70">Tech Reviewer</div>
                 </div>
-                <div class="card bg-base-100 shadow-xl">
-                    <figure>
-                        <img src="https://image.pollinations.ai/prompt/Task%20management%20dashboard%20with%20Kanban%20board%2C%20drag%20and%20drop%20functionality%2C%20team%20collaboration%2C%20real-time%20updates%2C%20modern%20design%2C%20dark%20mode%20support%3Fwidth=800&height=600&nologo=true" alt="Project 2" />
-                    </figure>
-                    <div class="card-body">
-                        <h3 class="card-title text-xl">Task Manager</h3>
-                        <p>A collaborative task management tool with Kanban boards, team features, and real-time updates.</p>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
+                <div class="card bg-base-200 p-6 rounded-xl">
+                    <div class="flex gap-1 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
+                    <p class="mb-4">"Stunning design and incredibly functional. The AMOLED display is beautiful and the fitness tracking has helped me reach my goals."</p>
+                    <div class="font-bold">Michael Chen</div>
+                    <div class="text-sm opacity-70">Fitness Enthusiast</div>
                 </div>
-                <div class="card bg-base-100 shadow-xl">
-                    <figure>
-                        <img src="https://image.pollinations.ai/prompt/Portfolio%20website%20for%20a%20photographer%2C%20image%20gallery%2C%20lightbox%20view%2C%20responsive%20layout%2C%20elegant%20design%2C%20dark%20theme%2C%20smooth%20animations%3Fwidth=800&height=600&nologo=true" alt="Project 3" />
-                    </figure>
-                    <div class="card-body">
-                        <h3 class="card-title text-xl">Photography Portfolio</h3>
-                        <p>An elegant portfolio website for a professional photographer with image gallery and lightbox features.</p>
-                        <div class="card-actions">
-                            <a href="#" class="btn btn-primary">View Project</a>
-                        </div>
+                <div class="card bg-base-200 p-6 rounded-xl">
+                    <div class="flex gap-1 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
+                    <p class="mb-4">"Absolutely love this watch! The battery lasts over two weeks and the health insights have helped me improve my daily routine."</p>
+                    <div class="font-bold">Emily Rodriguez</div>
+                    <div class="text-sm opacity-70">Health Coach</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-base-100">
+    <section id="contact" class="py-16 bg-base-200">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Get In Touch</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Order Now</h2>
             <div class="max-w-3xl mx-auto">
                 <form class="space-y-6">
                     <div class="form-control">
@@ -150,13 +226,23 @@
                         <input type="email" id="email" placeholder="your.email@example.com" class="input input-bordered w-full" required />
                     </div>
                     <div class="form-control">
-                        <label class="label" for="message">
-                            <span class="label-text">Message</span>
+                        <label class="label" for="quantity">
+                            <span class="label-text">Quantity</span>
                         </label>
-                        <textarea id="message" placeholder="Your Message" class="textarea textarea-bordered w-full" rows="5" required></textarea>
+                        <select id="quantity" class="select select-bordered w-full">
+                            <option value="1">1 - $299.99</option>
+                            <option value="2">2 - $549.98 (5% off)</option>
+                            <option value="3">3 - $819.97 (10% off)</option>
+                        </select>
                     </div>
                     <div class="form-control">
-                        <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                        <label class="label" for="message">
+                            <span class="label-text">Special Instructions</span>
+                        </label>
+                        <textarea id="message" placeholder="Any special requests or messages" class="textarea textarea-bordered w-full" rows="3"></textarea>
+                    </div>
+                    <div class="form-control">
+                        <button type="submit" class="btn btn-primary w-full btn-lg">Complete Order</button>
                     </div>
                 </form>
             </div>
@@ -166,8 +252,18 @@
     <!-- Footer -->
     <footer class="footer p-10 bg-base-200 text-base-content">
         <div>
-            <span class="footer-title">Abhishek</span>
-            <p>Building digital experiences with passion and precision.</p>
+            <span class="footer-title">Modern Tech</span>
+            <p>Innovating the future of wearable technology.</p>
+            <p class="mt-4">© 2024 Modern Tech. All rights reserved.</p>
+        </div>
+        <div>
+            <span class="footer-title">Quick Links</span>
+            <div class="flex flex-col gap-2">
+                <a href="#home" class="link link-hover">Home</a>
+                <a href="#features" class="link link-hover">Features</a>
+                <a href="#reviews" class="link link-hover">Reviews</a>
+                <a href="#contact" class="link link-hover">Order</a>
+            </div>
         </div>
         <div>
             <span class="footer-title">Connect</span>
@@ -176,11 +272,6 @@
                 <a href="#" class="link link-hover">LinkedIn</a>
                 <a href="#" class="link link-hover">Twitter</a>
             </div>
-        </div>
-        <div>
-            <span class="footer-title">Contact</span>
-            <p>abhishek@example.com</p>
-            <p>+1 (555) 123-4567</p>
         </div>
     </footer>
 

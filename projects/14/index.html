@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosphere | Weather Dashboard</title>
+    
+    <!-- Tailwind CSS & DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-base-200 font-sans selection:bg-primary selection:text-white">
+
+    <!-- Navbar -->
+    <div class="navbar bg-base-100 shadow-sm sticky top-0 z-50">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl text-primary gap-2">
+                <i data-lucide="cloud-sun"></i>
+                Atmosphere
+            </a>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="badge badge-outline">v1.0</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-md space-y-8">
+            
+            <!-- Header Section -->
+            <div class="text-center space-y-2">
+                <h1 class="text-4xl font-bold text-base-content">Weather Check</h1>
+                <p class="text-base-content/70">Enter a city to get real-time atmospheric data.</p>
+            </div>
+
+            <!-- Search Card -->
+            <div class="card bg-base-100 shadow-xl border border-base-200">
+                <div class="card-body">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold">Location Search</span>
+                        </label>
+                        <div class="join">
+                            <input 
+                                id="cityInput" 
+                                type="text" 
+                                placeholder="e.g. Tokyo, New York, London" 
+                                class="input input-bordered join-item w-full focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            />
+                            <button id="searchBtn" class="btn btn-primary join-item">
+                                <span id="btnText">Search</span>
+                                <span id="btnLoader" class="loading loading-spinner hidden"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Container -->
+            <div id="resultContainer" class="hidden transition-all duration-500 ease-in-out">
+                <!-- Content injected via JS -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content/60 mt-auto">
+        <aside>
+            <p>Built with Vanilla JS, Tailwind & DaisyUI</p>
+        </aside>
+    </footer>
+
+    <!-- Application Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

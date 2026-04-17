@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmos | Live Weather Dashboard</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom scrollbar for weather cards */
+        .weather-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .weather-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .weather-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Animation for loading states */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-base-200 min-h-screen font-sans transition-colors duration-300">
+
+    <!-- Navbar -->
+    <div class="navbar sticky top-0 z-50 glass-panel shadow-sm">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#forecast">Forecast</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-ghost text-xl font-bold tracking-tight text-primary">
+                <i data-lucide="cloud-sun" class="w-8 h-8 mr-2"></i>
+                Atmos
+            </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1 font-medium">
+                <li><a href="#dashboard" class="hover:bg-primary/10 rounded-lg">Dashboard</a></li>
+                <li><a href="#forecast" class="hover:bg-primary/10 rounded-lg">7-Day Forecast</a></li>
+                <li><a href="#analytics" class="hover:bg-primary/10 rounded-lg">Analytics</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end gap-2">
+            <div class="form-control hidden sm:block">
+                <input type="text" id="city-search" placeholder="Search city..." class="input input-bordered w-24 md:w-auto input-sm focus:input-primary transition-all" />
+            </div>
+            <button id="search-btn" class="btn btn-square btn-ghost btn-sm">
+                <i data-lucide="search" class="w-5 h-5"></i>
+            </button>
+            <label class="swap swap-rotate btn btn-ghost btn-circle btn-sm">
+                <input type="checkbox" id="theme-toggle" />
+                <i data-lucide="sun" class="swap-on w-5 h-5 fill-current"></i>
+                <i data-lucide="moon" class="swap-off w-5 h-5 fill-current"></i>
+            </label>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-base-content">Weather Overview</h1>
+                <p class="text-base-content/60 mt-1" id="current-date">Loading date...</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="badge badge-primary badge-lg gap-2">
+                    <i data-lucide="map-pin" class="w-4 h-4"></i>
+                    <span id="location-name">New York, US</span>
+                </span>
+                <div class="tooltip" data-tip="Last updated">
+                    <div class="badge badge-outline gap-2">
+                        <i data-lucide="clock" class="w-3 h-3"></i>
+                        <span id="last-updated">Just now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Section: Current Weather & Key Stats -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Main Current Weather Card -->
+            <div class="lg:col-span-2 card bg-gradient-to-br from-blue-500 to-cyan-400 text-white shadow-xl overflow-hidden relative">
+                <div class="absolute top-0 right-0 p-4 opacity-20">
+                    <i data-lucide="cloud-rain" class="w-64 h-64 -mr-16 -mt-16"></i>
+                </div>
+                <div class="card-body relative z-10">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="card-title text-3xl mb-1" id="main-temp">72°F</h2>
+                            <p class="text-lg opacity-90" id="main-condition">Partly Cloudy</p>
+                            <div class="flex gap-4 mt-4 text-sm opacity-80">
+                                <span class="flex items-center gap-1"><i data-lucide="arrow-down" class="w-3 h-3"></i> H: 78°</span>
+                                <span class="flex items-center gap-1"><i data-lucide="arrow-up" class="w-3 h-3"></i> L: 65°</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-6xl font-light" id="temp-large">72°</div>
+                        </div>
+                    </div>
+                    
+                    <div class="divider my-2 opacity-30"></div>
+                    
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
+                            <i data-lucide="droplets" class="w-5 h-5 mx-auto mb-1 opacity-80"></i>
+                            <div class="text-xs opacity-70">Humidity</div>
+                            <div class="font-bold" id="humidity">64%</div>
+                        </div>
+                        <div class="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
+                            <i data-lucide="wind" class="w-5 h-5 mx-auto mb-1 opacity-80"></i>
+                            <div class="text-xs opacity-70">Wind</div>
+                            <div class="font-bold" id="wind-speed">8 mph</div>
+                        </div>
+                        <div class="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
+                            <i data-lucide="sun" class="w-5 h-5 mx-auto mb-1 opacity-80"></i>
+                            <div class="text-xs opacity-70">UV Index</div>
+                            <div class="font-bold" id="uv-index">4 Moderate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Sun & Air Quality -->
+            <div class="flex flex-col gap-6">
+                <!-- Sun Cycle -->
+                <div class="card bg-base-100 shadow-xl flex-1">
+                    <div class="card-body">
+                        <h3 class="card-title text-sm text-base-content/70">Sun Cycle</h3>
+                        <div class="flex justify-between items-center mt-4">
+                            <div class="text-center">
+                                <i data-lucide="sunrise" class="w-6 h-6 text-orange-400 mx-auto mb-2"></i>
+                                <div class="text-xs text-base-content/60">Sunrise</div>
+                                <div class="font-bold" id="sunrise">6:23 AM</div>
+                            </div>
+                            <div class="flex-1 px-4 relative h-16 flex items-center justify-center">
+                                <!-- Simple SVG Arc for Sun Path -->
+                                <svg class="w-full h-full overflow-visible" viewBox="0 0 100 50">
+                                    <path d="M 10 50 Q 50 -10 90 50" fill="none" stroke="currentColor" stroke-width="2" class="text-base-content/10" stroke-dasharray="4 4"/>
+                                    <circle cx="50" cy="20" r="4" class="fill-orange-400 animate-pulse"/>
+                                </svg>
+                            </div>
+                            <div class="text-center">
+                                <i data-lucide="sunset" class="w-6 h-6 text-indigo-400 mx-auto mb-2"></i>
+                                <div class="text-xs text-base-content/60">Sunset</div>
+                                <div class="font-bold" id="sunset">8:14 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Air Quality -->
+                <div class="card bg-base-100 shadow-xl flex-1">
+                    <div class="card-body">
+                        <h3 class="card-title text-sm text-base-content/70">Air Quality</h3>
+                        <div class="flex items-center justify-between mt-2">
+                            <div>
+                                <div class="text-3xl font-bold text-green-500" id="aqi-value">32</div>
+                                <div class="text-xs text-base-content/60">Good</div>
+                            </div>
+                            <div class="radial-progress text-green-500" style="--value:32; --size:3rem;" role="progressbar">32</div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span>PM2.5</span>
+                                <span class="font-bold">12 µg/m³</span>
+                            </div>
+                            <progress class="progress progress-success w-full" value="30" max="100"></progress>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="analytics">
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h3 class="card-title">Temperature Trend (24h)</h3>
+                    <div class="h-64 w-full">
+                        <canvas id="tempChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h3 class="card-title">Precipitation Probability</h3>
+                    <div class="h-64 w-full">
+                        <canvas id="rainChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 Day Forecast -->
+        <div class="card bg-base-100 shadow-xl" id="forecast">
+            <div class="card-body">
+                <h3 class="card-title mb-4">7-Day Forecast</h3>
+                <div class="overflow-x-auto">
+                    <table class="table table-zebra w-full">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Condition</th>
+                                <th>High</th>
+                                <th>Low</th>
+                                <th>Precip</th>
+                                <th>Wind</th>
+                            </tr>
+                        </thead>
+                        <tbody id="forecast-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer footer-center p-10 bg-base-300 text-base-content rounded mt-12">
+        <nav class="grid grid-flow-col gap-4">
+            <a class="link link-hover">About us</a>
+            <a class="link link-hover">Contact</a>
+            <a class="link link-hover">Jobs</a>
+            <a class="link link-hover">Press kit</a>
+        </nav> 
+        <nav>
+            <div class="grid grid-flow-col gap-4 sm:place-self-center sm:justify-self-start">
+                <a class="btn btn-ghost btn-circle">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </a> 
+                <a class="btn btn-ghost btn-circle">
+                    <i data-lucide="youtube" class="w-5 h-5"></i>
+                </a> 
+                <a class="btn btn-ghost btn-circle">
+                    <i data-lucide="facebook" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </nav> 
+        <aside>
+            <p>Copyright © 2024 - All right reserved by Atmos Weather Inc.</p>
+        </aside>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

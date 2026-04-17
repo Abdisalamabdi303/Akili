@@ -55,7 +55,9 @@ function buildFallbackTitle(prompt) {
 }
 
 function sanitizeTitle(rawTitle, fallbackTitle) {
-    const candidate = (rawTitle || "")
+    let cleanTitle = (rawTitle || "").replace(/<think>[\s\S]*?<\/think>/gi, "");
+    
+    const candidate = cleanTitle
         .replace(/^["'`]+|["'`]+$/g, "")
         .replace(/\s+/g, " ")
         .trim();
@@ -67,7 +69,7 @@ function sanitizeTitle(rawTitle, fallbackTitle) {
 async function generateProjectTitle(userPrompt, assistantResponse) {
     const fallbackTitle = buildFallbackTitle(userPrompt);
     const jobEndpoint = process.env.JOB_ENDPOINT || "localhost";
-    const llmModel = process.env.LLM_MODEL || "gemma4:e2b";
+    const llmModel = process.env.LLM_MODEL || "qwen3-coder-next:cloud";
 
     const prompt = `Generate a short, relevant project title (2-6 words) for this app request.
 Return ONLY the title text. No quotes, no markdown, no punctuation-heavy formatting.
@@ -152,17 +154,16 @@ Output each file using this EXACT XML format. Close each tool tag completely bef
 \`\`\`
 
 ## CRITICAL WORKFLOW RULES
-1. You MUST generate BOTH index.html and script.js in your very first response. Never output one file and wait.
-2. Write index.html EXACTLY ONCE.
-3. Write script.js EXACTLY ONCE.
-4. After all required files are created, respond with a plain text summary (NO tool tags).
+1. If starting a NEW project, you MUST generate BOTH index.html and script.js in your response.
+2. If files already exist in the workspace, ONLY update the specific files that require changes. Do not rewrite files unnecessarily.
+3. If the user's message is a greeting or does not require code changes (e.g. "hi", "how are you?"), DO NOT output any <tool> tags. Just reply in plain text.
+4. After all required files are created or updated, respond with a plain text summary (NO tool tags).
 5. NEVER output raw code outside of <content> tags.
 6. DO NOT nest XML tags.
 7. Only use DOM manipulation in script.js. Do not rely on external JS libraries except Tailwind/DaisyUI.
 
 ## COMPLETION SIGNAL
-When ALL files have been created and confirmed saved, write a plain-text message like:
-"✅ Done! Here's what I built: [brief summary of features]"
+When necessary files have been created/updated, write a plain-text message summarizing the changes.
 Do NOT output any more <tool> tags after this.
 
 Available Tools:
@@ -377,7 +378,7 @@ app.post("/api/chats/:id/messages", async (req, res) => {
 
             // Extract the workspace context (files already created)
             const fileTreeResult = tools.getFileTree(id);
-            let workspaceContext = "[System Data: Current files in workspace:\n";
+            let workspaceContext = `[System Data: Project Context ID: ${id}]\n[System Data: Current files in workspace:\n`;
             if (!fileTreeResult.error && fileTreeResult.tree) {
                 const extractPaths = (nodes, basePath = "") => {
                     let paths = [];
@@ -437,6 +438,7 @@ app.post("/api/chats/:id/messages", async (req, res) => {
                     model: llmModel,
                     prompt: fullPrompt,
                     system: systemPrompt,
+                    context: [],
                     stream: true,
                     keep_alive: "30m",
                     options: {
@@ -579,7 +581,7 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                             buf2 = lines2.pop() || '';
                             for (const line of lines2) {
                                 if (!line.trim()) continue;
-                                try { const j = JSON.parse(line); if (j.response) { res.write(j.response); summary += j.response; } } catch(e) {}
+                                try { const j = JSON.parse(line); if (j.response) { res.write(j.response); summary += j.response; } } catch (e) { }
                             }
                         }
                         return summary;

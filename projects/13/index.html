@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Master Your Day</title>
+    
+    <!-- Tailwind CSS & DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-base-200 min-h-screen font-sans selection:bg-primary selection:text-primary-content">
+
+    <!-- Navbar -->
+    <div class="navbar sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-content/10 shadow-sm">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl gap-2 text-primary">
+                <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+                <span class="hidden sm:inline">TaskFlow</span>
+            </a>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <input type="text" placeholder="Quick add..." class="input input-bordered w-24 md:w-auto h-10 rounded-full" id="quickAddInput" />
+            </div>
+            <button class="btn btn-square btn-ghost" id="themeToggle">
+                <i data-lucide="moon" class="w-5 h-5"></i>
+            </button>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">
+                        U
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-5xl">
+        
+        <!-- Hero / Stats Section -->
+        <div class="hero min-h-[300px] rounded-3xl bg-base-100 shadow-xl mb-8 overflow-hidden relative">
+            <!-- Background Image with Gradient Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://image.pollinations.ai/prompt/organized-modern-desk-workspace-minimalist?width=1200&height=400&nologo=true" 
+                     alt="Workspace" 
+                     class="w-full h-full object-cover opacity-20"
+                     onerror="this.style.display='none'">
+                <div class="absolute inset-0 bg-gradient-to-r from-base-100 via-base-100/90 to-transparent"></div>
+            </div>
+            
+            <div class="hero-content text-left z-10 w-full">
+                <div class="max-w-md">
+                    <h1 class="mb-5 text-5xl font-bold text-base-content">Focus on what matters.</h1>
+                    <p class="mb-5 text-lg text-base-content/70">Organize your life, track your progress, and achieve your goals with TaskFlow. You have <span id="pendingCount" class="font-bold text-primary">0</span> tasks pending today.</p>
+                    <button class="btn btn-primary btn-lg shadow-lg shadow-primary/30" onclick="document.getElementById('taskInput').focus()">
+                        Create New Task
+                        <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls & Filter -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <div class="tabs tabs-boxed bg-base-100 p-1 shadow-sm">
+                <a class="tab tab-active" data-filter="all">All</a>
+                <a class="tab" data-filter="active">Active</a>
+                <a class="tab" data-filter="completed">Completed</a>
+            </div>
+            
+            <div class="flex gap-2">
+                <select class="select select-bordered select-sm w-full max-w-xs" id="priorityFilter">
+                    <option disabled selected>Filter Priority</option>
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="low">Low Priority</option>
+                </select>
+                <button class="btn btn-square btn-ghost btn-sm" id="clearCompleted" title="Clear Completed">
+                    <i data-lucide="trash-2" class="w-5 h-5 text-error"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Task Input Area -->
+        <div class="card bg-base-100 shadow-lg mb-8 border border-base-content/5">
+            <div class="card-body">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-lg input-bordered flex-grow bg-base-200/50" />
+                    
+                    <div class="flex gap-2">
+                        <select id="priorityInput" class="select select-bordered select-lg w-full md:w-40">
+                            <option value="low">Low Priority</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                        <button class="btn btn-primary btn-lg px-8" id="addTaskBtn">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task List -->
+        <div class="space-y-4" id="taskList">
+            <!-- Tasks will be injected here by JS -->
+            <div class="text-center py-20 text-base-content/40" id="emptyState">
+                <i data-lucide="inbox" class="w-16 h-16 mx-auto mb-4 opacity-50"></i>
+                <p class="text-xl">No tasks yet. Start by adding one above!</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer footer-center p-10 bg-base-300 text-base-content mt-12">
+        <aside>
+            <p class="font-bold text-lg">TaskFlow</p> 
+            <p>Copyright © 2024 - All rights reserved by Abdisalam Abdi Shakul</p>
+        </aside> 
+        <nav>
+            <div class="grid grid-flow-col gap-4 text-2xl">
+                <a class="link link-hover"><i data-lucide="twitter" class="w-6 h-6"></i></a> 
+                <a class="link link-hover"><i data-lucide="youtube" class="w-6 h-6"></i></a> 
+                <a class="link link-hover"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+            </div>
+        </nav>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast toast-end z-50"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

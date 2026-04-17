@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  weight: ["400", "500", "600", "700"],
+const inter = Inter({
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-inter",
 });
 
 const jetBrainsMono = JetBrains_Mono({
@@ -15,8 +15,12 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Akili",
-  description: "Your AI assistant",
+  title: "Akili AI — Build apps with AI",
+  description: "Describe your idea. Akili plans, designs, and generates a full app — instantly.",
+  openGraph: {
+    title: "Akili AI",
+    description: "Your AI product studio",
+  }
 };
 
 export default function RootLayout({
@@ -26,9 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} font-sans antialiased`}
-      >
+      <body className={`${inter.variable} ${jetBrainsMono.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

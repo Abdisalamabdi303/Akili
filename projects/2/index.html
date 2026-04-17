@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-base-200 min-h-screen">
+    <div class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl font-bold text-teal-600">TaskFlow</a>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <input type="text" id="searchInput" placeholder="Search tasks..." class="input input-bordered w-24 md:w-auto" />
+            </div>
+            <button id="clearBtn" class="btn btn-outline btn-error btn-sm">Clear All</button>
+        </div>
+    </div>
+
+    <div class="hero bg-gradient-to-br from-teal-500 to-emerald-600 min-h-[300px]">
+        <div class="hero-content text-center flex flex-col items-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Manage Your Tasks</h1>
+            <p class="text-teal-100 max-w-md mb-8">Drag and drop tasks between To Do, In Progress, and Done. Your progress is saved automatically.</p>
+            <div class="flex gap-4">
+                <button id="addTaskBtn" class="btn btn-lg btn-success text-white shadow-lg hover:scale-105 transition-all">
+                    <i data-lucide="plus" class="mr-2"></i> Add New Task
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- To Do Column -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-bold text-teal-700">
+                        <i data-lucide="list" class="mr-2"></i> To Do
+                        <span id="todoCount" class="badge badge-primary badge-lg ml-2">0</span>
+                    </h2>
+                    <div class="space-y-3" id="todoList" data-column="todo">
+                        <!-- Tasks will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-bold text-teal-700">
+                        <i data-lucide="clock" class="mr-2"></i> In Progress
+                        <span id="inProgressCount" class="badge badge-secondary badge-lg ml-2">0</span>
+                    </h2>
+                    <div class="space-y-3" id="inProgressList" data-column="inProgress">
+                        <!-- Tasks will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done Column -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-lg font-bold text-teal-700">
+                        <i data-lucide="check-circle" class="mr-2"></i> Done
+                        <span id="doneCount" class="badge badge-success badge-lg ml-2">0</span>
+                    </h2>
+                    <div class="space-y-3" id="doneList" data-column="done">
+                        <!-- Tasks will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">Add New Task</h3>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Task Title</span>
+                </label>
+                <input type="text" id="taskTitle" placeholder="Enter task title..." class="input input-bordered w-full" />
+            </div>
+            <div class="form-control mt-4">
+                <label class="label">
+                    <span class="label-text">Description (Optional)</span>
+                </label>
+                <textarea id="taskDescription" placeholder="Enter task description..." class="textarea textarea-bordered w-full" rows="3"></textarea>
+            </div>
+            <div class="modal-action">
+                <button id="saveTaskBtn" class="btn btn-primary">Add Task</button>
+                <button id="closeModalBtn" class="btn btn-ghost">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
