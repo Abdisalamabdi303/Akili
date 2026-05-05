@@ -3,79 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskMaster - Interactive Todo List</title>
+    <title>Abdisalam Abdi Shakul - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
-    <div class="navbar sticky top-0 z-50 backdrop-blur-lg bg-white/90 border-b border-base-content/10 shadow-sm">
+<body class="bg-base-100 text-base-content">
+    <!-- Navigation -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/90 border-b border-base-content/10 shadow-sm">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
-                <i data-lucide="list-checks" class="w-6 h-6 mr-2"></i>
-                TaskMaster
+            <a href="#" class="btn btn-ghost text-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+                <i data-lucide="code" class="w-6 h-6 mr-2"></i>
+                Abdisalam Abdi Shakul
             </a>
         </div>
         <div class="flex-none gap-2">
-            <div class="form-control">
-                <input type="text" placeholder="Search tasks..." class="input input-bordered w-full md:w-auto" id="searchInput">
+            <button class="btn btn-ghost" onclick="scrollToSection('about')">About</button>
+            <button class="btn btn-ghost" onclick="scrollToSection('projects')">Projects</button>
+            <button class="btn btn-ghost" onclick="scrollToSection('skills')">Skills</button>
+            <button class="btn btn-ghost" onclick="scrollToSection('contact')">Contact</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero min-h-[80vh] bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+        <div class="hero-content text-center flex flex-col items-center">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
+                    Abdisalam Abdi Shakul
+                </h1>
+                <p class="text-xl md:text-2xl text-base-content/80 mb-8 max-w-2xl mx-auto">
+                    Elite autonomous UI/UX engineer and product architect building stunning web applications with modern technologies.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="#projects" class="btn btn-primary btn-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        <i data-lucide="briefcase" class="w-5 h-5 mr-2"></i>
+                        View My Work
+                    </a>
+                    <a href="#contact" class="btn btn-outline btn-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        <i data-lucide="mail" class="w-5 h-5 mr-2"></i>
+                        Contact Me
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="hero min-h-[50vh] bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
-        <div class="hero-content text-center flex flex-col items-center">
-            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-md">Your Daily Tasks</h1>
-            <p class="text-lg md:text-xl text-white/95 max-w-2xl drop-shadow-sm">Stay organized and productive with our interactive todo list. Add, edit, and track your tasks effortlessly.</p>
-        </div>
-    </div>
-
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <div class="card bg-white shadow-xl mb-8 rounded-2xl border border-indigo-100">
-            <div class="card-body">
-                <div class="form-control">
-                    <div class="input-group">
-                        <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-bordered w-full shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
-                        <button class="btn btn-primary shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" id="addTaskBtn">
-                            <i data-lucide="plus" class="w-6 h-6"></i>
-                            Add Task
-                        </button>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-base-100">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="card bg-white shadow-xl rounded-2xl border border-base-content/10 overflow-hidden">
+                <div class="card-body">
+                    <h2 class="card-title text-3xl font-bold mb-6 text-center">
+                        <i data-lucide="user" class="w-8 h-8 mr-2 inline-block"></i>
+                        About Me
+                    </h2>
+                    <div class="prose max-w-none">
+                        <p class="text-lg text-base-content/80 mb-4">
+                            I'm a passionate web developer with expertise in creating beautiful, functional, and user-centered digital experiences. With a focus on clean code and modern technologies, I build applications that delight users and solve real-world problems.
+                        </p>
+                        <p class="text-lg text-base-content/80 mb-4">
+                            My journey began with a curiosity for how things work on the web, which evolved into a career building responsive, accessible, and performant web applications. I specialize in Vanilla JavaScript, Tailwind CSS, and creating intuitive user interfaces.
+                        </p>
+                        <p class="text-lg text-base-content/80">
+                            When I'm not coding, I'm exploring new technologies, contributing to open-source projects, or helping others learn web development.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="flex flex-wrap gap-4 mb-6 justify-center">
-            <button class="btn btn-outline btn-sm" id="filterAll">All</button>
-            <button class="btn btn-outline btn-sm" id="filterActive">Active</button>
-            <button class="btn btn-outline btn-sm" id="filterCompleted">Completed</button>
-        </div>
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-base-200">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <i data-lucide="cpu" class="w-10 h-10 mx-auto mb-4 text-indigo-600"></i>
+                    Technical Skills
+                </h2>
+                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
+                    My expertise in modern web technologies and development practices
+                </p>
+            </div>
 
-        <div class="card bg-white shadow-xl rounded-2xl border border-indigo-100">
-            <div class="card-body p-0">
-                <div class="overflow-x-auto">
-                    <table class="table">
-                        <thead>
-                            <tr class="bg-gradient-to-r from-indigo-50 to-purple-50">
-                                <th class="font-semibold text-indigo-700">Status</th>
-                                <th class="font-semibold text-indigo-700">Task</th>
-                                <th class="font-semibold text-indigo-700">Created</th>
-                                <th class="font-semibold text-indigo-700">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="taskList" class="divide-y divide-gray-100">
-                            <!-- Tasks will be added here dynamically -->
-                        </tbody>
-                    </table>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Frontend Development -->
+                <div class="card bg-white shadow-xl rounded-xl border border-base-content/10 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="card-body">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="monitor" class="w-8 h-8 text-indigo-600 mr-3"></i>
+                            <h3 class="text-xl font-bold">Frontend Development</h3>
+                        </div>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                HTML5 & Semantic Markup
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                CSS3 & Tailwind CSS
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Vanilla JavaScript
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Responsive Design
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                UI/UX Principles
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Backend & Tools -->
+                <div class="card bg-white shadow-xl rounded-xl border border-base-content/10 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="card-body">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="database" class="w-8 h-8 text-purple-600 mr-3"></i>
+                            <h3 class="text-xl font-bold">Backend & Tools</h3>
+                        </div>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                RESTful APIs
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Git & GitHub
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                npm & Package Management
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Webpack & Bundlers
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Testing & Debugging
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Design & Architecture -->
+                <div class="card bg-white shadow-xl rounded-xl border border-base-content/10 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="card-body">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="palette" class="w-8 h-8 text-pink-600 mr-3"></i>
+                            <h3 class="text-xl font-bold">Design & Architecture</h3>
+                        </div>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Modern UI Design
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Component Architecture
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Accessibility (a11y)
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Performance Optimization
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>
+                                Cross-browser Compatibility
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="mt-8 text-center">
-            <div class="badge badge-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md" id="taskCount">0 tasks pending</div>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-base-100">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <i data-lucide="layers" class="w-10 h-10 mx-auto mb-4 text-indigo-600"></i>
+                    Featured Projects
+                </h2>
+                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
+                    A selection of my recent work showcasing technical skills and creative solutions
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card bg-white shadow-xl rounded-2xl border border-base-content/10 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="relative h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="layout-dashboard" class="w-16 h-16 text-white/80"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">TaskMaster</h3>
+                        <p class="text-base-content/70 mb-4">
+                            A comprehensive task management application with local storage persistence, filtering, and search functionality.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-lg badge-primary">Vanilla JS</span>
+                            <span class="badge badge-lg badge-secondary">Tailwind</span>
+                            <span class="badge badge-lg badge-accent">LocalStorage</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card bg-white shadow-xl rounded-2xl border border-base-content/10 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="relative h-48 bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="shopping-cart" class="w-16 h-16 text-white/80"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">E-Commerce Dashboard</h3>
+                        <p class="text-base-content/70 mb-4">
+                            A modern e-commerce dashboard with product management, analytics, and responsive design.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-lg badge-primary">JavaScript</span>
+                            <span class="badge badge-lg badge-secondary">CSS3</span>
+                            <span class="badge badge-lg badge-accent">API</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="card bg-white shadow-xl rounded-2xl border border-base-content/10 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="relative h-48 bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="calendar" class="w-16 h-16 text-white/80"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-xl font-bold mb-2">Event Planner</h3>
+                        <p class="text-base-content/70 mb-4">
+                            An event planning application with calendar integration, guest management, and scheduling features.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="badge badge-lg badge-primary">HTML5</span>
+                            <span class="badge badge-lg badge-secondary">CSS3</span>
+                            <span class="badge badge-lg badge-accent">JavaScript</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-base-200">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <i data-lucide="message-circle" class="w-10 h-10 mx-auto mb-4 text-indigo-600"></i>
+                    Get In Touch
+                </h2>
+                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
+                    Have a project in mind or want to discuss potential collaboration? Let's connect!
+                </p>
+            </div>
+
+            <div class="card bg-white shadow-xl rounded-2xl border border-base-content/10 overflow-hidden">
+                <div class="card-body">
+                    <form class="space-y-6">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-bold">Name</span>
+                            </label>
+                            <input type="text" placeholder="Your Name" class="input input-bordered w-full" />
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-bold">Email</span>
+                            </label>
+                            <input type="email" placeholder="your.email@example.com" class="input input-bordered w-full" />
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-bold">Message</span>
+                            </label>
+                            <textarea class="textarea textarea-bordered w-full" placeholder="Your message..." rows="5"></textarea>
+                        </div>
+                        <div class="form-control">
+                            <button type="button" class="btn btn-primary btn-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div class="flex flex-wrap gap-6 justify-center">
+                    <a href="#" class="btn btn-outline btn-lg">
+                        <i data-lucide="github" class="w-6 h-6 mr-2"></i>
+                        GitHub
+                    </a>
+                    <a href="#" class="btn btn-outline btn-lg">
+                        <i data-lucide="linkedin" class="w-6 h-6 mr-2"></i>
+                        LinkedIn
+                    </a>
+                    <a href="#" class="btn btn-outline btn-lg">
+                        <i data-lucide="twitter" class="w-6 h-6 mr-2"></i>
+                        Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-base-100 border-t border-base-content/10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-base-content/70">
+                © 2024 Abdisalam Abdi Shakul. All rights reserved.
+            </p>
+            <p class="text-sm text-base-content/50 mt-2">
+                Built with Vanilla HTML, CSS, and JavaScript
+            </p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

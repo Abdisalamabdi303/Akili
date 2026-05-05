@@ -52,11 +52,13 @@ function TreeNode({ node, onFileSelect, selectedFile, level }: TreeNodeProps) {
         return (
             <button
                 onClick={() => onFileSelect(node.path)}
-                className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover:bg-muted/50 transition-colors ${isSelected ? "bg-primary/15 text-primary font-medium border border-primary/30" : "text-foreground"
+                className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-[13px] transition-all group ${isSelected 
+                    ? "bg-primary/10 text-primary font-bold border border-primary/20 shadow-[0_0_15px_rgba(var(--primary),0.1)]" 
+                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                     }`}
-                style={{ paddingLeft: `${level * 12 + 8}px` }}
+                style={{ paddingLeft: `${level * 12 + 10}px` }}
             >
-                <File size={14} className="flex-shrink-0" />
+                <File size={14} className={`flex-shrink-0 ${isSelected ? "text-primary" : "text-muted-foreground/60 group-hover:text-primary/70"}`} />
                 <span className="truncate">{node.name}</span>
             </button>
         );
@@ -66,8 +68,8 @@ function TreeNode({ node, onFileSelect, selectedFile, level }: TreeNodeProps) {
         <div>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover:bg-muted/50 transition-colors text-foreground"
-                style={{ paddingLeft: `${level * 12 + 8}px` }}
+                className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-[13px] font-bold text-foreground hover:bg-white/5 transition-all"
+                style={{ paddingLeft: `${level * 12 + 10}px` }}
             >
                 {isOpen ? (
                     <>

@@ -1,5 +1,6 @@
 import { createFile, readFile, updateFile, getFileTree, deleteFile } from "./files.js";
 import { runCommand } from "./terminal.js";
+import { pushToGitHub } from "./github.js";
 
 export const tools = {
     createFile,
@@ -7,7 +8,8 @@ export const tools = {
     updateFile,
     deleteFile,
     runCommand,
-    getFileTree
+    getFileTree,
+    pushToGitHub
 };
 
 export const toolDefinitions = [
@@ -66,6 +68,17 @@ export const toolDefinitions = [
                 filePath: { type: "string", description: "Relative path to the file or folder to delete" },
             },
             required: ["filePath"]
+        }
+    },
+    {
+        name: "pushToGitHub",
+        description: "Pushes the current project code to GitHub. Only use this if the user asks you to push their code or confirms they want it on GitHub.",
+        parameters: {
+            type: "object",
+            properties: {
+                commitMessage: { type: "string", description: "A brief description of the changes being pushed." },
+            },
+            required: ["commitMessage"]
         }
     }
 ];

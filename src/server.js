@@ -18,8 +18,9 @@ pool.connect()
 // Pre-warm the model so first user request is instant (no 17s cold-start)
 async function warmModel() {
     const jobEndpoint = process.env.JOB_ENDPOINT || "localhost";
-    const llmModel = process.env.LLM_MODEL || "gemma4:e2b";
-    console.log(`🔥 Pre-warming model ${llmModel}...`);
+    const llmModel = process.env.LLM_MODEL;
+    if (!llmModel) return;
+    console.log(`🔥 Pre-warming cloud model ${llmModel}...`);
     try {
         const res = await fetch(`http://${jobEndpoint}:11434/api/generate`, {
             method: "POST",
@@ -114,57 +115,46 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const SYSTEM_PROMPT = `You are Akili, an elite autonomous UI/UX engineer and product architect built by Abdisalam Abdi Shakul.
-You build stunning, fully-featured Vanilla web applications using HTML, JavaScript, Tailwind CSS, and DaisyUI.
+const SYSTEM_PROMPT = `You are Akili, an elite, world-class Senior Product Architect and Lead UI/UX Engineer. Your mission is to build production-grade web applications that are stunning, accessible, and logically flawless.
 
-## CORE BEHAVIOR
-- Act autonomously. Never ask clarifying questions for simple requests.
-- For any request, invent rich features, realistic content, and production-quality design.
-- Build the best possible version of what the user describes.
+## THE THINKING PHASE (MANDATORY)
+Before writing any code or tool calls, you MUST wrap your initial reasoning in a <thinking> block. In this block:
+1. **Analyze Requirements**: Deconstruct the user's request.
+2. **Architectural Plan**: Decide on state management, UI components, and data flow.
+3. **Design System**: Choose a cohesive color palette with high contrast. Explicitly plan background and text color pairs to ensure readability.
+4. **Edge Cases**: Identify potential JS bugs or layout issues on mobile.
 
-## TECHNOLOGY
-- Stack: Plain HTML + Vanilla JS + Tailwind CSS (CDN) + DaisyUI (CDN)
-- DO NOT use React, Vue, or any JS framework
-- index.html MUST include: Tailwind CDN script + DaisyUI CDN link
-- All logic goes in script.js. NEVER wrap your code in \`DOMContentLoaded\` because the bundler executes JS dynamically AFTER the DOM is ready. Run logic directly in the global scope or call your init function immediately.
-- Custom CSS goes in styles.css
+## ENGINEERING STANDARDS
+- **Modern JavaScript**: Use ES6+ features. Avoid spaghetti code. Use modular, clean functions.
+- **State Management**: If the app is complex, implement a clear state-driven rendering logic.
+- **Accessibility (A11y)**: Use semantic HTML (<main>, <section>, <nav>). Ensure buttons have visible focus states.
+- **Design Harmony**: Use DaisyUI and Tailwind CSS to create "premium" feeling interfaces. Avoid "generic" looks. Use gradients, shadows, and consistent spacing.
+- **Color Contrast**: NEVER use similar brightness for text and background. (e.g., Use text-slate-900 on bg-slate-100, or text-white on bg-slate-900).
 
-## DESIGN STANDARDS
-- Use DaisyUI components (\`btn\`, \`card\`, \`navbar\`, \`hero\`, \`badge\`, \`modal\`, etc.)
-- Mobile-first: \`flex-col\`, \`grid-cols-1\` by default → \`md:flex-row\`, \`md:grid-cols-3\` for desktop
-- Hero sections: use \`<div class="hero-content text-center flex flex-col items-center">\` — NEVER horizontal layouts
-- Navbar: \`sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10\`
-- Images: Pollinations.ai → \`https://image.pollinations.ai/prompt/your-description-here?width=800&height=600&nologo=true\` (Use hyphens. NO URL encoding the \`?\`). AI images take 10-15 seconds to load! ALWAYS apply a background placeholder class (e.g., \`bg-base-300 animate-pulse\` or wrap in a DaisyUI \`skeleton\`) so the UI looks great while waiting.
-- Always add a CSS gradient fallback on hero in case images fail to load
-- Use Lucide icons via CDN when appropriate
-- Micro-animations: \`transition-all duration-300 hover:scale-105 active:scale-95\` on interactive elements
-- Glassmorphism: \`bg-white/10 border border-white/20 backdrop-blur-lg\`
-- Real content only — no lorem ipsum, no "Product Name", no placeholder text
+## TECHNOLOGY STACK
+- **Core**: HTML5 + Vanilla JS (ES6) + Tailwind CSS + DaisyUI.
+- **Icons**: Lucide-icons.
+- **Images**: Pollinations.ai (Use descriptive prompts, hyphens for spaces).
+- **Rule**: NO frameworks (React/Vue). Pure Vanilla JS only.
 
 ## FILE OUTPUT FORMAT
-Output each file using this EXACT XML format. Close each tool tag completely before opening the next:
+Output each file using this EXACT XML format. 
 
 \`\`\`
 <tool name="createFile">
-    <filePath>index.html</filePath>
+    <filePath>filename.ext</filePath>
     <content>
-<!-- full content -->
+FULL_FILE_CONTENT
     </content>
 </tool>
 \`\`\`
 
 ## CRITICAL WORKFLOW RULES
-1. If starting a NEW project, you MUST generate BOTH index.html and script.js in your response.
-2. If files already exist in the workspace, ONLY update the specific files that require changes. Do not rewrite files unnecessarily.
-3. If the user's message is a greeting or does not require code changes (e.g. "hi", "how are you?"), DO NOT output any <tool> tags. Just reply in plain text.
-4. After all required files are created or updated, respond with a plain text summary (NO tool tags).
-5. NEVER output raw code outside of <content> tags.
-6. DO NOT nest XML tags.
-7. Only use DOM manipulation in script.js. Do not rely on external JS libraries except Tailwind/DaisyUI.
-
-## COMPLETION SIGNAL
-When necessary files have been created/updated, write a plain-text message summarizing the changes.
-Do NOT output any more <tool> tags after this.
+1. **Plan First**: Always provide your <thinking> block first.
+2. **Read Before Edit**: If modifying existing code, you MUST use readFile first.
+3. **Atomic Updates**: Only update files that need changes.
+4. **No Placeholders**: Never use "TODO" or placeholder comments. Implement the full feature.
+5. **No Explanations during Tool Output**: Keep your technical summary brief and place it AFTER all tool calls are finished.
 
 Available Tools:
 ${JSON.stringify(toolDefinitions, null, 2)} `;
@@ -182,6 +172,10 @@ async function executeToolCall(toolCall) {
             result = tool(args.projectId, args.filePath);
         } else if (name === 'runCommand') {
             result = await tool(args.projectId, args.command);
+        } else if (name === 'deleteFile') {
+            result = await tool(args.projectId, args.filePath);
+        } else if (name === 'pushToGitHub') {
+            result = await tool(args.projectId, args.commitMessage);
         } else {
             return { success: false, error: { message: "Unknown tool signature", tool: name, args: args } };
         }
@@ -198,13 +192,13 @@ async function executeToolCall(toolCall) {
 }
 
 function parseToolCalls(text) {
-    const regex = /<tool name="(\w+)">([\s\S]*?)(?:<\/tool>|$)/g;
+    const regex = /<tool name="(\w+)">([\s\S]*?)(?=<\/tool>|<tool|$)/g;
     const found = [];
     let match;
     while ((match = regex.exec(text)) !== null) {
         const [, name, content] = match;
         const args = {};
-        const paramRegex = /<(\w+)>([\s\S]*?)(?:<\/\1>|$)/g;
+        const paramRegex = /<(\w+)>([\s\S]*?)(?=<\/\1>|<[a-zA-Z]+|$)/g;
         let paramMatch;
         while ((paramMatch = paramRegex.exec(content)) !== null) {
             args[paramMatch[1]] = paramMatch[2].trim();
@@ -427,7 +421,7 @@ app.post("/api/chats/:id/messages", async (req, res) => {
             fullPrompt += "Assistant: ";
 
             const jobEndpoint = process.env.JOB_ENDPOINT || "localhost";
-            const llmModel = process.env.LLM_MODEL || "gemma4:e2b";
+            const llmModel = process.env.LLM_MODEL;
 
             console.log(`🤖 [Loop ${loopCount}] Autonomous Product Manager Phase, model: ${llmModel}`);
 
@@ -516,8 +510,14 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                 for (const toolCall of toolCalls) {
                     toolCall.args.projectId = id;
                     const result = await executeToolCall(toolCall);
-                    allResults += `Tool '${toolCall.name}' (${toolCall.args.filePath || ''}) → ${result.success ? 'saved ✓' : 'FAILED: ' + JSON.stringify(result.error)}\n`;
-                    if (!result.success) allSucceeded = false;
+                    
+                    if (result.success) {
+                        const outputStr = typeof result.output === 'object' ? JSON.stringify(result.output, null, 2) : String(result.output || 'success ✓');
+                        allResults += `[TOOL_RESULT: ${toolCall.name} (${toolCall.args.filePath || toolCall.args.command || ''})]\n${outputStr}\n\n`;
+                    } else {
+                        allResults += `[TOOL_ERROR: ${toolCall.name}]\n${JSON.stringify(result.error)}\n\n`;
+                        allSucceeded = false;
+                    }
                 }
 
                 console.log(`🗂️ Tool results:\n${allResults}`);
@@ -545,7 +545,7 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                     console.log(`✅ All files created for chat ${id}. Stopping loop.`);
                     await pool.query(
                         "INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)",
-                        [id, 'user', '[SYSTEM: All files saved successfully. Your task is complete. Do not create any more files. Write a brief plain-text summary of what you built.]']
+                        [id, 'user', '[SYSTEM: All files saved successfully. Your task is complete. Do not create any more files. IMPORTANT: You now have the ability to push this code to GitHub for the user. Mention this to the user and ask if they want you to push it. If they say yes, use the pushToGitHub tool. Your GitHub username is abdisalamabdi303. Write a brief plain-text summary of what you built and offer the GitHub push.]']
                     );
                     // Do one final loop to get the summary message from the model, then break
                     const finalResponse = await (async () => {
@@ -561,7 +561,7 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                model: process.env.LLM_MODEL || 'gemma4:e2b',
+                                model: process.env.LLM_MODEL,
                                 prompt: finalPrompt,
                                 system: SYSTEM_PROMPT,
                                 stream: true,

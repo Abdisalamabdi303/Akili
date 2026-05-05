@@ -15,6 +15,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 interface Project {
   id: number;
@@ -84,66 +85,77 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col selection:bg-primary/30">
 
       {/* ── Navbar ── */}
-      <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 border-b border-white/5 bg-background/60 backdrop-blur-2xl">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
           {/* Logo */}
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary shadow-sm shadow-primary/40">
-              <Sparkles className="h-4 w-4 text-white" />
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-[0_0_20px_rgba(var(--primary),0.4)]">
+              <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <span className="text-lg font-bold tracking-tight text-foreground">
-              Akili <span className="text-primary font-extrabold">AI</span>
+            <span className="text-xl font-black tracking-tight text-foreground uppercase italic">
+              Akili <span className="text-primary not-italic">AI</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="hidden sm:inline text-xs text-muted-foreground border border-border rounded-full px-2.5 py-0.5 bg-secondary/60">
-              v1.0 · Alpha
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline text-[10px] font-bold tracking-widest uppercase text-muted-foreground border border-white/10 rounded-full px-3 py-1 bg-white/5">
+              Alpha v1.0
             </span>
             <Button
               size="sm"
-              className="rounded-full bg-accent text-white hover:bg-accent/90 shadow-sm btn-shine"
+              className="rounded-xl bg-white text-black hover:bg-white/90 shadow-xl font-bold px-5 btn-shine"
               onClick={handleCreateEmptyProject}
             >
-              <Plus size={14} className="mr-1" /> New Project
+              <Plus size={16} className="mr-2" /> New Project
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 sm:px-6 lg:px-8">
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-24">
 
         {/* ── Hero ── */}
-        <section className="py-16 md:py-24 text-center animate-in fade-in slide-in-from-bottom-6 duration-700">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary mb-6 shadow-sm">
-            <Sparkles size={12} />
-            AI-Powered App Factory
-          </div>
+        <section className="py-24 md:py-32 text-center relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary mb-8 shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+              <Zap size={14} />
+              AI-Powered Product Studio
+            </div>
 
-          {/* Headline */}
-          <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
-            Describe your idea.{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-primary">Akili builds it.</span>
-              <span className="absolute -bottom-1 left-0 right-0 h-3 rounded-full bg-primary/15 -z-0" />
-            </span>
-          </h1>
+            {/* Headline */}
+            <h1 className="mx-auto max-w-4xl text-5xl font-black leading-[1.1] tracking-tighter text-foreground md:text-7xl lg:text-8xl">
+              Describe your idea. <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
+                Akili builds it.
+              </span>
+            </h1>
 
-          <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground md:text-lg leading-relaxed">
-            From a single prompt, Akili designs and generates a full web app — complete UI, logic, and live preview.
-          </p>
+            <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl font-medium leading-relaxed">
+              The ultimate playground for creators. Instantly generate full web applications, 
+              complete with clean code and live previews, all from a simple prompt.
+            </p>
+          </motion.div>
 
-          {/* Input */}
-          <div className="mx-auto mt-10 w-full max-w-2xl">
+          {/* Input Area */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="mx-auto mt-14 w-full max-w-3xl"
+          >
             <div
-              className={`relative flex items-center rounded-2xl border bg-white shadow-lg transition-all duration-300 ${
+              className={`group relative flex items-center p-2 rounded-3xl border transition-all duration-500 ${
                 isFocused
-                  ? "border-primary ring-4 ring-primary/15 shadow-primary/20"
-                  : "border-border shadow-sm"
+                  ? "border-primary/50 bg-white/5 ring-8 ring-primary/10 shadow-[0_0_50px_rgba(var(--primary),0.2)]"
+                  : "border-white/10 bg-white/5 hover:border-white/20 shadow-2xl"
               }`}
             >
               <Input
@@ -152,119 +164,151 @@ export default function LandingPage() {
                 onKeyDown={handleKeyDown}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                placeholder={isFocused ? "Describe your project..." : EXAMPLES[placeholderIdx]}
-                className="h-14 w-full rounded-2xl border-0 bg-transparent pl-5 pr-16 text-sm text-foreground placeholder:text-muted-foreground/70 shadow-none focus-visible:ring-0 md:text-base"
+                placeholder={isFocused ? "What are we building today?" : EXAMPLES[placeholderIdx]}
+                className="h-16 w-full rounded-2xl border-0 bg-transparent pl-6 pr-20 text-lg text-foreground placeholder:text-muted-foreground/40 shadow-none focus-visible:ring-0"
                 autoFocus
               />
               <Button
                 onClick={handleStartProject}
                 disabled={!input.trim()}
-                className="absolute right-2 h-10 w-10 rounded-xl bg-primary p-0 text-white shadow-md hover:bg-primary/90 disabled:opacity-40 btn-shine"
+                className="absolute right-4 h-12 w-12 rounded-2xl bg-primary p-0 text-white shadow-xl hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all disabled:opacity-20 btn-shine"
               >
-                <ArrowRight size={18} />
+                <ArrowRight size={24} />
               </Button>
             </div>
 
             {/* Example chips */}
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
-              {EXAMPLES.slice(0, 3).map((ex) => (
-                <button
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              {EXAMPLES.slice(0, 4).map((ex, idx) => (
+                <motion.button
                   key={ex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + idx * 0.1 }}
                   onClick={() => setInput(ex)}
-                  className="rounded-full border border-border bg-white px-3 py-1 text-xs text-muted-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/5 transition-all duration-200 shadow-sm"
+                  className="rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs font-semibold text-muted-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/5 transition-all duration-300 shadow-sm"
                 >
-                  {ex.length > 42 ? ex.slice(0, 42) + "…" : ex}
-                </button>
+                  {ex}
+                </motion.button>
               ))}
             </div>
-          </div>
+          </motion.div>
         </section>
 
-        {/* ── Feature Pills ── */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-          {FEATURES.map(({ icon: Icon, label, desc }) => (
-            <div
+        {/* ── Feature Grid ── */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20">
+          {FEATURES.map(({ icon: Icon, label, desc }, idx) => (
+            <motion.div
               key={label}
-              className="flex items-center gap-3 rounded-xl border border-border bg-white/70 px-4 py-3.5 shadow-sm backdrop-blur-sm"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.2 }}
+              className="glass-card flex flex-col gap-4 p-8 rounded-3xl"
             >
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                <Icon size={18} className="text-primary" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                <Icon size={28} />
               </div>
               <div>
-                <p className="text-sm font-semibold text-foreground">{label}</p>
-                <p className="text-xs text-muted-foreground">{desc}</p>
+                <h3 className="text-xl font-bold text-foreground mb-2">{label}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground font-medium">{desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </section>
 
-        {/* ── Divider ── */}
-        <div className="flex items-center gap-4 pb-6">
-          <div className="flex-1 border-t border-border" />
-          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-            <Clock size={12} /> Recent Projects
-          </span>
-          <div className="flex-1 border-t border-border" />
-        </div>
+        {/* ── Recent Projects Section ── */}
+        <section className="mt-12 pt-12 border-t border-white/5">
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-2xl font-black tracking-tight text-foreground flex items-center gap-3 uppercase italic">
+              <Clock className="text-primary not-italic" size={24} />
+              Recent <span className="text-primary not-italic">Creations</span>
+            </h2>
+            <Button variant="ghost" className="text-muted-foreground hover:text-foreground font-bold uppercase tracking-widest text-[10px]">
+              View All
+            </Button>
+          </div>
 
-        {/* ── Projects Grid ── */}
-        <section className="pb-16 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* New Project Card */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleCreateEmptyProject}
-              className="group flex h-44 flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:shadow-md"
+              className="group flex h-56 flex-col items-center justify-center gap-4 rounded-[2.5rem] border-2 border-dashed border-primary/30 bg-primary/5 transition-all duration-300 hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_40px_rgba(var(--primary),0.15)]"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-primary/50 bg-white shadow-sm transition-transform duration-200 group-hover:scale-110">
-                <Plus size={20} className="text-primary" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-xl transition-transform duration-500 group-hover:rotate-90">
+                <Plus size={28} />
               </div>
-              <span className="text-sm font-semibold text-primary">Start New Project</span>
-            </button>
+              <span className="text-sm font-black uppercase tracking-widest text-primary">New Project</span>
+            </motion.button>
 
             {/* Project Cards */}
-            {projects.map((project) => (
-              <button
+            {projects.map((project, idx) => (
+              <motion.button
                 key={project.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ y: -5 }}
                 onClick={() => router.push(`/project/${project.id}`)}
-                className="group flex h-44 flex-col justify-between rounded-2xl border border-border bg-white p-5 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+                className="group flex h-56 flex-col justify-between rounded-[2.5rem] glass-card p-8 text-left transition-all duration-300"
               >
                 <div>
-                  <div className="mb-2 flex items-center justify-between">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary">
-                      <Folder size={15} className="text-primary" />
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <Folder size={24} />
                     </div>
-                    <ChevronRight
-                      size={16}
-                      className="text-muted-foreground opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0.5"
-                    />
+                    <div className="h-8 w-8 items-center justify-center rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-all flex">
+                      <ChevronRight size={18} className="text-primary" />
+                    </div>
                   </div>
-                  <h3 className="mt-3 text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-primary transition-colors">
-                    {project.title || "Untitled Project"}
+                  <h3 className="text-lg font-bold leading-tight text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                    {project.title || "Untitled Masterpiece"}
                   </h3>
                 </div>
-                <p className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock size={11} />
-                  {new Date(project.created_at).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </p>
-              </button>
+                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                    <Clock size={12} />
+                    {new Date(project.created_at).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-primary/50">#00{project.id}</span>
+                </div>
+              </motion.button>
             ))}
           </div>
 
           {projects.length === 0 && (
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              No projects yet. Describe an idea above to get started!
-            </p>
+            <div className="py-20 text-center glass-card rounded-[2.5rem]">
+              <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
+                Your creation gallery is empty
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground/60">
+                Describe an idea above to witness the magic.
+              </p>
+            </div>
           )}
         </section>
       </main>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-border bg-secondary/30 py-4 text-center text-xs text-muted-foreground">
-        Akili AI · Built with ❤️ using Next.js, Tailwind CSS & Ollama
+      <footer className="border-t border-white/5 bg-black/20 py-10 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3 opacity-50">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-xs font-bold uppercase tracking-tighter">Akili AI Studio</span>
+          </div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50">
+            Built for the next generation of builders
+          </p>
+          <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
+            <a href="#" className="hover:text-primary transition-colors">Twitter</a>
+            <a href="#" className="hover:text-primary transition-colors">Github</a>
+          </div>
+        </div>
       </footer>
     </div>
   );

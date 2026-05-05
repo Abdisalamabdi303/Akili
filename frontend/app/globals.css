@@ -3,42 +3,35 @@
 @plugin "tailwindcss-animate";
 
 :root {
-  /* Arctic Theme — Option I */
-  --background: 210 45% 97%;
-  --foreground: 210 25% 12%;
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
 
-  --card: 210 30% 93%;
-  --card-foreground: 210 25% 12%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
 
-  --popover: 210 30% 93%;
-  --popover-foreground: 210 25% 12%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
 
-  --primary: 210 100% 45%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 263.4 70% 50.4%;
+  --primary-foreground: 210 20% 98%;
 
-  --secondary: 210 25% 88%;
-  --secondary-foreground: 210 25% 20%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
 
-  --muted: 210 25% 90%;
-  --muted-foreground: 210 15% 50%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
 
-  --accent: 210 15% 18%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
 
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 100%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
 
-  --border: 210 25% 84%;
-  --input: 210 25% 90%;
-  --ring: 210 100% 45%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 263.4 70% 50.4%;
 
-  --chart-1: 210 100% 45%;
-  --chart-2: 210 80% 62%;
-  --chart-3: 162 80% 49%;
-  --chart-4: 37 100% 63%;
-  --chart-5: 343 95% 68%;
-
-  --radius: 0.75rem;
+  --radius: 1rem;
 }
 
 @theme inline {
@@ -61,57 +54,81 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  --color-chart-1: hsl(var(--chart-1));
-  --color-chart-2: hsl(var(--chart-2));
-  --color-chart-3: hsl(var(--chart-3));
-  --color-chart-4: hsl(var(--chart-4));
-  --color-chart-5: hsl(var(--chart-5));
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
-
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-
-  @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--radix-accordion-content-height); }
-  }
-  @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
-  }
 }
 
 body {
-  background:
-    radial-gradient(900px circle at 10% 0%, rgba(59, 130, 246, 0.08), transparent 50%),
-    radial-gradient(700px circle at 90% 100%, rgba(30, 58, 138, 0.06), transparent 45%),
-    hsl(var(--background));
+  background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: var(--font-inter), var(--font-space-grotesk), Arial, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* Arctic Glass Card */
+/* Animated Mesh Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(at 0% 0%, hsla(263, 70%, 50%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(210, 100%, 50%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(280, 100%, 50%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(220, 100%, 50%, 0.05) 0px, transparent 50%);
+  filter: blur(100px);
+  animation: mesh-move 20s ease-in-out infinite alternate;
+}
+
+@keyframes mesh-move {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1) translate(2%, 2%); }
+}
+
 .glass {
-  background: rgba(240, 246, 255, 0.7);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(148, 183, 224, 0.35);
+  background: hsla(240, 10%, 3.9%, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid hsla(240, 5%, 64.9%, 0.1);
+}
+
+.glass-card {
+  background: hsla(0, 0%, 100%, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid hsla(0, 0%, 100%, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card:hover {
+  border: 1px solid hsla(263, 70%, 50%, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 15px hsla(263, 70%, 50%, 0.1);
 }
 
 /* Premium thin scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: hsl(210 30% 75%); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: hsl(210 100% 45%); }
+::-webkit-scrollbar-thumb { background: hsla(0, 0%, 100%, 0.1); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: hsla(263, 70%, 50%, 0.5); }
 
-/* Subtle shine on primary buttons */
+.text-gradient {
+  background: linear-gradient(to right, #fff, hsl(var(--muted-foreground)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .btn-shine {
   position: relative;
   overflow: hidden;
 }
+
 .btn-shine::after {
   content: '';
   position: absolute;
@@ -119,8 +136,35 @@ body {
   left: -75%;
   width: 50%;
   height: 200%;
-  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
   transform: skewX(-20deg);
-  transition: left 0.5s ease;
+  transition: left 0.7s ease;
 }
+
 .btn-shine:hover::after { left: 125%; }
+
+/* --- Chat & Prose Overrides --- */
+.prose {
+  color: inherit !important;
+  max-width: 100% !important;
+}
+
+.prose p {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  line-height: 1.6;
+}
+
+.prose p:first-child {
+  margin-top: 0 !important;
+}
+
+.prose p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.prose pre {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem !important;
+}

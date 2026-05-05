@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List App</title>
+    <title>Purrfect Pets - Cat Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,25 +13,26 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        .task-item {
+        .cat-card {
             transition: all 0.3s ease;
         }
-        .task-item.completed {
-            opacity: 0.6;
-            text-decoration: line-through;
+        .cat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(74, 222, 128, 0.3);
         }
-        .task-item:not(.completed):hover {
-            transform: translateX(5px);
+        .hero-gradient {
+            background: linear-gradient(135deg, #dcfce7 0%, #ffffff 100%);
         }
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
+        .btn-green {
+            background: #4ade80;
+            color: #166534;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .btn-green:hover {
+            background: #86efac;
         }
-        .empty-state {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .badge-green {
+            background: #4ade80;
+            color: #166534;
         }
     </style>
 </head>
@@ -39,45 +40,49 @@
     <!-- Navbar -->
     <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                <i class="fas fa-list-check mr-2 text-primary"></i> TaskMaster
+            <a class="btn btn-ghost text-xl font-bold bg-gradient-to-r from-green-500 to-green-300 bg-clip-text text-transparent">
+                <i class="fas fa-paw mr-2 text-green-600"></i> Purrfect Pets
             </a>
         </div>
         <div class="flex-none gap-2">
             <div class="form-control">
-                <input type="text" placeholder="Search tasks..." id="searchInput" class="input input-bordered w-24 md:w-auto input-sm" />
+                <input type="text" placeholder="Search cats..." id="searchInput" class="input input-bordered w-24 md:w-auto input-sm" />
             </div>
+            <a href="#cart" class="btn btn-ghost btn-circle">
+                <i class="fas fa-shopping-cart text-green-600"></i>
+                <span class="badge badge-sm badge-green absolute top-0 right-0">0</span>
+            </a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero py-10 bg-gradient-to-br from-primary/10 to-secondary/10">
+    <div class="hero py-10 hero-gradient">
         <div class="hero-content text-center">
             <div class="max-w-3xl">
-                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
-                    Organize Your Tasks
+                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent mb-4">
+                    Find Your Feline Friend
                 </h1>
                 <p class="text-lg mb-8 text-base-content/70">
-                    Manage your daily tasks efficiently with our powerful todo list application.
-                    Track progress, set priorities, and stay productive.
+                    Discover our adorable cats looking for loving homes. 
+                    Adopt, don't shop - give a cat a second chance at happiness!
                 </p>
                 
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div class="stat bg-base-100 rounded-box shadow border border-base-content/10">
-                        <div class="stat-title">Total Tasks</div>
-                        <div class="stat-value text-primary" id="totalTasks">0</div>
-                        <div class="stat-desc">All tasks created</div>
+                    <div class="stat bg-white rounded-box shadow border border-green-200">
+                        <div class="stat-title">Available Cats</div>
+                        <div class="stat-value text-green-600" id="totalCats">0</div>
+                        <div class="stat-desc">Waiting for homes</div>
                     </div>
-                    <div class="stat bg-base-100 rounded-box shadow border border-base-content/10">
-                        <div class="stat-title">Pending</div>
-                        <div class="stat-value text-secondary" id="pendingTasks">0</div>
-                        <div class="stat-desc">Tasks to complete</div>
+                    <div class="stat bg-white rounded-box shadow border border-green-200">
+                        <div class="stat-title">Adopted</div>
+                        <div class="stat-value text-green-500" id="adoptedCats">0</div>
+                        <div class="stat-desc">Happy families</div>
                     </div>
-                    <div class="stat bg-base-100 rounded-box shadow border border-base-content/10">
-                        <div class="stat-title">Completed</div>
-                        <div class="stat-value text-success" id="completedTasks">0</div>
-                        <div class="stat-desc">Tasks finished</div>
+                    <div class="stat bg-white rounded-box shadow border border-green-200">
+                        <div class="stat-title">Rescued</div>
+                        <div class="stat-value text-green-400" id="rescuedCats">0</div>
+                        <div class="stat-desc">Saved from streets</div>
                     </div>
                 </div>
             </div>
@@ -85,25 +90,34 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container mx-auto px-4 max-w-4xl">
-        <!-- Add Task Form -->
-        <div class="card bg-base-100 shadow-xl mb-6">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <!-- Add Cat Form -->
+        <div class="card bg-white shadow-xl mb-6">
             <div class="card-body">
                 <h2 class="card-title text-xl mb-4">
-                    <i class="fas fa-plus-circle mr-2 text-primary"></i> Add New Task
+                    <i class="fas fa-plus-circle mr-2 text-green-600"></i> Add New Cat
                 </h2>
-                <form id="taskForm" class="flex flex-col md:flex-row gap-4">
+                <form id="catForm" class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
-                        <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-bordered w-full" required />
+                        <input type="text" id="catNameInput" placeholder="Cat's name" class="input input-bordered w-full" required />
                     </div>
                     <div class="flex gap-2">
-                        <select id="prioritySelect" class="select select-bordered">
-                            <option value="high">High Priority</option>
-                            <option value="medium" selected>Medium Priority</option>
-                            <option value="low">Low Priority</option>
+                        <select id="catBreedSelect" class="select select-bordered">
+                            <option value="domestic-shorthair">Domestic Shorthair</option>
+                            <option value="siamese">Siamese</option>
+                            <option value="persian">Persian</option>
+                            <option value="maine-coon">Maine Coon</option>
+                            <option value="ragdoll">Ragdoll</option>
+                            <option value="bengal">Bengal</option>
                         </select>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-plus mr-2"></i> Add Task
+                        <select id="catAgeSelect" class="select select-bordered">
+                            <option value="kitten">Kitten (0-1 year)</option>
+                            <option value="young">Young (1-3 years)</option>
+                            <option value="adult" selected>Adult (3-7 years)</option>
+                            <option value="senior">Senior (7+ years)</option>
+                        </select>
+                        <button type="submit" class="btn btn-green">
+                            <i class="fas fa-plus mr-2"></i> Add Cat
                         </button>
                     </div>
                 </form>
@@ -113,58 +127,59 @@
         <!-- Filters and Search -->
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
             <div class="flex gap-2">
-                <button class="btn btn-sm btn-active btn-primary filter-btn" data-filter="all">
-                    <i class="fas fa-list mr-2"></i> All
+                <button class="btn btn-sm btn-active btn-green filter-btn" data-filter="all">
+                    <i class="fas fa-list mr-2"></i> All Cats
                 </button>
-                <button class="btn btn-sm filter-btn" data-filter="pending">
-                    <i class="fas fa-clock mr-2"></i> Pending
+                <button class="btn btn-sm filter-btn" data-filter="available">
+                    <i class="fas fa-heart mr-2"></i> Available
                 </button>
-                <button class="btn btn-sm filter-btn" data-filter="completed">
-                    <i class="fas fa-check-circle mr-2"></i> Completed
+                <button class="btn btn-sm filter-btn" data-filter="adopted">
+                    <i class="fas fa-user-check mr-2"></i> Adopted
                 </button>
             </div>
             
             <div class="flex gap-2">
                 <select id="sortSelect" class="select select-sm select-bordered">
-                    <option value="date-desc">Newest First</option>
-                    <option value="date-asc">Oldest First</option>
-                    <option value="priority">Priority</option>
+                    <option value="name-asc">Name A-Z</option>
+                    <option value="name-desc">Name Z-A</option>
+                    <option value="age-asc">Age: Youngest First</option>
+                    <option value="age-desc">Age: Oldest First</option>
                 </select>
-                <button id="clearCompletedBtn" class="btn btn-sm btn-outline btn-error hidden">
-                    <i class="fas fa-trash mr-2"></i> Clear Completed
+                <button id="clearAdoptedBtn" class="btn btn-sm btn-outline btn-error hidden">
+                    <i class="fas fa-trash mr-2"></i> Clear Adopted
                 </button>
             </div>
         </div>
 
-        <!-- Task List -->
-        <div class="bg-base-100 rounded-box shadow-xl overflow-hidden">
+        <!-- Cat Grid -->
+        <div class="bg-white rounded-box shadow-xl overflow-hidden">
             <div class="p-6">
                 <h2 class="text-2xl font-bold mb-4">
-                    <i class="fas fa-clipboard-list mr-2 text-primary"></i> Your Tasks
+                    <i class="fas fa-cat mr-2 text-green-600"></i> Our Cats
                 </h2>
                 
                 <!-- Empty State -->
-                <div id="emptyState" class="text-center py-12 fade-in">
-                    <div class="empty-state rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
-                        <i class="fas fa-clipboard text-white text-4xl"></i>
+                <div id="emptyState" class="text-center py-12">
+                    <div class="bg-green-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-cat text-green-600 text-4xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">No Tasks Yet</h3>
-                    <p class="text-white/80">Add your first task above to get started!</p>
+                    <h3 class="text-xl font-bold text-green-800 mb-2">No Cats Yet</h3>
+                    <p class="text-green-600/80">Add your first cat above to get started!</p>
                 </div>
 
-                <!-- Task List Container -->
-                <ul id="taskList" class="space-y-3">
-                    <!-- Tasks will be added here dynamically -->
-                </ul>
+                <!-- Cat Grid Container -->
+                <div id="catGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Cats will be added here dynamically -->
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer p-4 bg-base-200 text-base-content mt-12">
+    <footer class="footer p-4 bg-green-100 text-green-900 mt-12">
         <div class="container mx-auto text-center">
             <p class="text-sm">
-                <i class="fas fa-copyright mr-2"></i> 2024 TaskMaster. Built with Vanilla JS, Tailwind CSS, and DaisyUI.
+                <i class="fas fa-copyright mr-2"></i> 2024 Purrfect Pets. Helping cats find their forever homes.
             </p>
         </div>
     </footer>

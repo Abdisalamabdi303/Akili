@@ -3,12 +3,18 @@
 import { useState, useRef, useEffect, use, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Code, Eye, Loader2, ArrowLeft, MoreVertical, StopCircle, Edit2, PanelLeftClose, PanelLeft } from "lucide-react";
+import { 
+    Send, Code, Eye, Loader2, ArrowLeft, MoreVertical, 
+    StopCircle, Edit2, PanelLeftClose, PanelLeft,
+    FileText, Terminal, Cpu, Layers, Sparkles, CheckCircle2,
+    Activity, Box, Zap
+} from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { FileExplorer } from "@/components/FileExplorer";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     SandpackProvider,
     SandpackLayout,
@@ -52,6 +58,112 @@ function SandpackAutoFixer({ onAutoFix }: { onAutoFix: (errorMsg: string) => voi
     return null;
 }
 
+// ── Premium UI Components ──
+
+function FileBadge({ filename, action }: { filename: string; action: string }) {
+    return (
+        <motion.div 
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="my-2 flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 p-2.5 backdrop-blur-md hover:bg-primary/10 transition-colors"
+        >
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary shadow-[0_0_10px_rgba(var(--primary),0.2)]">
+                <FileText size={16} />
+            </div>
+            <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-primary/80">{action}</span>
+                    <div className="h-0.5 w-0.5 rounded-full bg-primary/30" />
+                    <span className="text-[9px] font-medium text-muted-foreground/60">Success</span>
+                </div>
+                <div className="truncate text-xs font-bold text-foreground/90">{filename}</div>
+            </div>
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-500">
+                <CheckCircle2 size={12} />
+            </div>
+        </motion.div>
+    );
+}
+
+function BuildSequence({ loading }: { loading: boolean }) {
+    const steps = [
+        { icon: Cpu, label: "Initializing engine", duration: 1500 },
+        { icon: Terminal, label: "Resolving modules", duration: 2000 },
+        { icon: Layers, label: "Optimizing assets", duration: 1800 },
+        { icon: Activity, label: "Starting bundler", duration: 1200 },
+    ];
+
+    const [currentStep, setCurrentStep] = useState(0);
+
+    useEffect(() => {
+        if (!loading) {
+            setCurrentStep(0);
+            return;
+        }
+        const interval = setInterval(() => {
+            setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [loading, steps.length]);
+
+    return (
+        <div className="flex flex-col items-center gap-8">
+            <div className="relative">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="h-24 w-24 rounded-full border-t-2 border-primary/40 p-1"
+                />
+                <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 m-auto h-16 w-16 rounded-full border-b-2 border-primary/60 p-1"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <Sparkles className="h-8 w-8 text-primary animate-pulse" />
+                </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-4 min-w-[200px]">
+                <h3 className="text-lg font-bold tracking-tight text-foreground">
+                    Building your vision
+                </h3>
+                <div className="space-y-3 w-full">
+                    {steps.map((step, idx) => (
+                        <motion.div
+                            key={step.label}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ 
+                                opacity: idx <= currentStep ? 1 : 0.3,
+                                x: 0,
+                                scale: idx === currentStep ? 1.05 : 1
+                            }}
+                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
+                                idx === currentStep ? "bg-primary/10 border border-primary/20" : ""
+                            }`}
+                        >
+                            <step.icon size={14} className={idx === currentStep ? "text-primary" : "text-muted-foreground"} />
+                            <span className={`text-xs font-medium ${idx === currentStep ? "text-foreground" : "text-muted-foreground"}`}>
+                                {step.label}
+                            </span>
+                            {idx < currentStep && (
+                                <CheckCircle2 size={12} className="ml-auto text-emerald-500" />
+                            )}
+                            {idx === currentStep && (
+                                <div className="ml-auto flex gap-1">
+                                    <span className="h-1 w-1 rounded-full bg-primary animate-bounce" />
+                                    <span className="h-1 w-1 rounded-full bg-primary animate-bounce [animation-delay:150ms]" />
+                                    <span className="h-1 w-1 rounded-full bg-primary animate-bounce [animation-delay:300ms]" />
+                                </div>
+                            )}
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 interface Message {
     role: "user" | "assistant";
     content: string;
@@ -80,17 +192,10 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
     const [debouncedVirtualFiles, setDebouncedVirtualFiles] = useState<Record<string, string>>({});
 
     useEffect(() => {
+        // Atomic Update: Only push virtual files to Sandpack when generation finishes
         if (!loading) {
-            // Apply instantly on initial load or when inference finishes
             setDebouncedVirtualFiles(virtualFiles);
-            return;
         }
-
-        // Throttle updates to Sandpack so it doesn't crash when receiving tokens rapidly
-        const timer = setTimeout(() => {
-            setDebouncedVirtualFiles(virtualFiles);
-        }, 1500);
-        return () => clearTimeout(timer);
     }, [virtualFiles, loading]);
     const [projectTitle, setProjectTitle] = useState("Loading project...");
 
@@ -126,12 +231,12 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         let updated = false;
 
         // 1. Extract completely generated files (createFile AND updateFile)
-        const toolRegex = /<tool name="(?:createFile|updateFile)">([\s\S]*?)(?:<\/tool>|$)/g;
+        const toolRegex = /<tool name="(?:createFile|updateFile)">([\s\S]*?)(?=<\/tool>|<tool|$)/g;
         let m;
         while ((m = toolRegex.exec(allContent)) !== null) {
             const inner = m[1];
-            const pathMatch = /<filePath>([\s\S]*?)(?:<\/filePath>|$)/.exec(inner);
-            const contentMatch = /<content>([\s\S]*?)(?:<\/content>|$)/.exec(inner);
+            const pathMatch = /<filePath>([\s\S]*?)(?=<\/filePath>|<|$)/.exec(inner);
+            const contentMatch = /<content>([\s\S]*?)(?=<\/content>|<|$)/.exec(inner);
             if (pathMatch) {
                 let path = pathMatch[1].split('<')[0].trim();
                 const fileName = path.split('/').pop();
@@ -162,7 +267,11 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                     const contentMatch = /<content>([\s\S]*)$/.exec(inner);
                     if (contentMatch && path) {
                         let currentContent = contentMatch[1];
-                        currentContent = currentContent.replace(/<\/content>[\s\S]*$/, ""); // Strip if closing tags streamed
+                        // Cut off if the model starts writing a new tag or ends the current one
+                        const tagIndex = currentContent.search(/<\/content>|<\/tool>|<tool|<filePath/);
+                        if (tagIndex !== -1) {
+                            currentContent = currentContent.slice(0, tagIndex);
+                        }
                         files[path] = currentContent;
                         updated = true;
                     }
@@ -430,10 +539,42 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
     };
 
     // Filter <tool> tags out of the chat display so the user only sees conversation
-    const displayMessages = messages.map(msg => ({
-        ...msg,
-        content: msg.content.replace(/<tool name="(?:createFile|updateFile)">[\s\S]*?(?:<\/tool>|$)/g, '\n\n✅ *Generated File*\n\n')
-    }));
+    const displayMessages = useMemo(() => {
+        return messages
+            .filter(msg => {
+                // Hide internal system feedback from the user view
+                if (msg.role === "user") {
+                    return !msg.content.startsWith("[TOOL_RESULT:") && 
+                           !msg.content.startsWith("[TOOL_ERROR:") &&
+                           !msg.content.startsWith("[SYSTEM:");
+                }
+                return true;
+            })
+            .map(msg => {
+                let content = msg.content;
+                
+                // 0. Hide the internal thinking process from the UI
+                content = content.replace(/<thinking>[\s\S]*?<\/thinking>/g, "");
+                // If the thinking block is still open (streaming), hide everything from the start of it
+                content = content.replace(/<thinking>[\s\S]*$/g, "");
+
+                // 1. Replace completed tool tags with a stable marker
+                content = content.replace(/<tool name="(createFile|updateFile)">[\s\S]*?<filePath>([\s\S]*?)<\/filePath>[\s\S]*?<\/tool>/g, (match, action, path) => {
+                    const cleanPath = path.split('<')[0].trim();
+                    const actionType = action === "createFile" ? "CREATED" : "UPDATED";
+                    return `\n\n:::FILE_BADGE:${cleanPath}:${actionType}:::\n\n`;
+                });
+
+                // 2. Strip any in-progress tool tag (from the first <tool to the end of string)
+                // This prevents raw XML from "blinking" into view while streaming
+                content = content.replace(/<tool name="(?:createFile|updateFile|readFile|runCommand|deleteFile|pushToGitHub)">[\s\S]*$/g, "\n\n:::LOADING_FILE:::\n\n");
+
+                // 3. Final cleanup of any stray tags
+                content = content.replace(/<\/tool>/g, "");
+
+                return { ...msg, content };
+            });
+    }, [messages]);
 
     // Convert virtualFiles to Sandpack format (must start with /)
     const sandpackFiles = useMemo(() => {
@@ -561,8 +702,8 @@ console.log("App loaded");`,
     return (
         <div className="h-screen bg-background flex overflow-hidden font-sans">
             {/* Sidebar: Chat Panel */}
-            <div className={`border-r border-border bg-white flex flex-col h-[50vh] md:h-full shadow-[2px_0_20px_rgba(30,64,175,0.06)] z-20 transition-all duration-300 ease-in-out shrink-0 overflow-hidden ${isChatOpen ? "w-full md:w-[380px]" : "w-0 border-none opacity-0"}`}>
-                <div className="p-4 border-b border-border bg-secondary/40 flex items-center justify-between min-w-[300px]">
+            <div className={`border-r border-border/50 bg-card/30 backdrop-blur-3xl flex flex-col h-[50vh] md:h-full shadow-[20px_0_50px_rgba(0,0,0,0.3)] z-20 transition-all duration-300 ease-in-out shrink-0 overflow-hidden ${isChatOpen ? "w-full md:w-[400px]" : "w-0 border-none opacity-0"}`}>
+                <div className="p-5 border-b border-border/50 bg-white/5 flex items-center justify-between min-w-[300px]">
                     <div className="flex items-center gap-2">
                         <Button variant="ghost" size="icon" onClick={() => router.push('/')} className="mr-1 text-muted-foreground hover:text-primary hover:bg-primary/10">
                             <ArrowLeft size={18} />
@@ -582,7 +723,7 @@ console.log("App loaded");`,
                 </div>
 
                 {/* Messages */}
-                <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 min-w-[300px] space-y-4 bg-background/50">
+                <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 min-w-[300px] space-y-6 bg-transparent scroll-smooth">
                     {displayMessages.map((msg, idx) => (
                         <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                             {msg.role === "user" && (
@@ -593,9 +734,9 @@ console.log("App loaded");`,
                                 </div>
                             )}
                             <div
-                                className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm text-sm ${msg.role === "user"
-                                    ? "bg-primary text-white rounded-br-sm shadow-md"
-                                    : "bg-white text-foreground rounded-bl-sm border border-border shadow-sm"
+                                className={`max-w-[88%] rounded-[1.25rem] px-5 py-4 text-sm leading-relaxed transition-all ${msg.role === "user"
+                                    ? "bg-primary text-white rounded-tr-none shadow-[0_10px_30px_rgba(var(--primary),0.3)] ml-auto"
+                                    : "glass-card text-foreground rounded-tl-none border-white/10"
                                     }`}
                             >
                                 {msg.role === "assistant" && !msg.content.trim() && loading ? (
@@ -609,7 +750,23 @@ console.log("App loaded");`,
                                         <ReactMarkdown
                                             remarkPlugins={[remarkGfm]}
                                             components={{
-                                                p: ({ ...props }) => <p className="mb-0" {...props} />
+                                                p: ({ children, ...props }) => {
+                                                    // Check if this paragraph is our special marker
+                                                    const text = String(children);
+                                                    if (text.startsWith(":::FILE_BADGE:") && text.endsWith(":::")) {
+                                                        const [_, filename, action] = text.split(":");
+                                                        return <FileBadge filename={filename} action={action} />;
+                                                    }
+                                                    if (text === ":::LOADING_FILE:::") {
+                                                        return (
+                                                            <div className="flex items-center gap-2 py-2 text-primary animate-pulse">
+                                                                <Activity size={14} />
+                                                                <span className="text-xs font-bold uppercase tracking-widest">Generating file...</span>
+                                                            </div>
+                                                        );
+                                                    }
+                                                    return <p className="mb-0" {...props}>{children}</p>;
+                                                }
                                             }}
                                         >
                                             {msg.content}
@@ -622,34 +779,34 @@ console.log("App loaded");`,
                 </div>
 
                 {/* Input */}
-                <div className="p-4 border-t border-border bg-white min-w-[300px]">
-                    <div className="relative flex items-center shadow-sm">
+                <div className="p-6 border-t border-border/50 bg-white/5 backdrop-blur-xl min-w-[300px]">
+                    <div className="relative flex items-center shadow-2xl">
                         <Input
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Type a message..."
-                            className="pr-12 rounded-full border-border bg-secondary/50 focus:ring-2 focus:ring-primary/30 focus:border-primary text-sm"
+                            placeholder="What's next for your project?"
+                            className="h-14 pr-16 rounded-[1.25rem] border-white/5 bg-white/5 focus:ring-2 focus:ring-primary/40 focus:border-primary/40 text-[15px] placeholder:text-muted-foreground/30 transition-all shadow-inner"
                             disabled={loading}
                         />
                         {loading ? (
                             <Button
                                 onClick={handleInterrupt}
-                                className="absolute right-1.5 w-8 h-8 rounded-full p-0 transition-transform active:scale-95 bg-red-500 hover:bg-red-600 text-white shadow-sm"
+                                className="absolute right-1.5 w-9 h-9 rounded-xl p-0 transition-all active:scale-95 bg-red-500/20 border border-red-500/30 text-red-500 hover:bg-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.2)]"
                                 size="icon"
                                 title="Stop Generation"
                             >
-                                <StopCircle size={14} />
+                                <StopCircle size={16} />
                             </Button>
                         ) : (
                             <Button
                                 onClick={() => sendMessage()}
                                 disabled={!input.trim()}
-                                className="absolute right-1.5 w-8 h-8 rounded-full p-0 transition-transform active:scale-95 bg-primary hover:bg-primary/90 text-white shadow-sm disabled:opacity-40"
+                                className="absolute right-1.5 w-9 h-9 rounded-xl p-0 transition-all active:scale-90 bg-primary hover:bg-primary/90 text-white shadow-[0_0_15px_rgba(var(--primary),0.4)] disabled:opacity-40 btn-shine"
                                 size="icon"
                                 title="Send Message"
                             >
-                                <Send size={14} />
+                                <Send size={16} />
                             </Button>
                         )}
                     </div>
@@ -659,7 +816,7 @@ console.log("App loaded");`,
             {/* Main Area: Workspace */}
             <div className="flex-1 flex flex-col bg-background relative overflow-hidden min-w-0">
                 {/* Toolbar */}
-                <div className="h-13 border-b border-border flex items-center px-4 bg-white z-10 shrink-0 gap-3 shadow-sm">
+                <div className="h-14 border-b border-white/5 flex items-center px-4 bg-card/50 backdrop-blur-xl z-10 shrink-0 gap-3">
                     <Button
                         variant="ghost"
                         size="icon"
@@ -670,21 +827,21 @@ console.log("App loaded");`,
                         {isChatOpen ? <PanelLeftClose size={17} /> : <PanelLeft size={17} />}
                     </Button>
 
-                    <div className="flex bg-secondary border border-border p-1 rounded-lg">
+                    <div className="flex bg-white/5 border border-white/10 p-1 rounded-xl backdrop-blur-md">
                         <button
                             onClick={() => setActiveTab("preview")}
-                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all ${activeTab === "preview"
-                                ? "bg-white text-primary shadow-sm"
-                                : "text-muted-foreground hover:text-foreground"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === "preview"
+                                ? "bg-primary text-white shadow-[0_0_20px_rgba(var(--primary),0.3)]"
+                                : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                                 }`}
                         >
                             <Eye size={14} /> Preview
                         </button>
                         <button
                             onClick={() => setActiveTab("code")}
-                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all ${activeTab === "code"
-                                ? "bg-white text-primary shadow-sm"
-                                : "text-muted-foreground hover:text-foreground"
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === "code"
+                                ? "bg-primary text-white shadow-[0_0_20px_rgba(var(--primary),0.3)]"
+                                : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                                 }`}
                         >
                             <Code size={14} /> Code
@@ -700,7 +857,7 @@ console.log("App loaded");`,
                 {/* Content */}
                 <div className="flex-1 overflow-hidden bg-background relative flex">
                     {activeTab === "code" && (
-                        <div className="w-60 flex-shrink-0 border-r border-border bg-secondary/30">
+                        <div className="w-64 flex-shrink-0 border-r border-white/5 bg-card/20 backdrop-blur-xl">
                             <FileExplorer
                                 tree={fileTree}
                                 onFileSelect={handleFileSelect}
@@ -717,27 +874,34 @@ console.log("App loaded");`,
                                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
                                     </div>
                                 ) : (
-                                    <pre className="p-6 font-mono text-xs leading-relaxed text-foreground bg-white h-full overflow-auto">
+                                    <pre className="p-8 font-mono text-[13px] leading-relaxed text-foreground/90 bg-black/40 backdrop-blur-md h-full overflow-auto selection:bg-primary/30">
                                         <code>{code}</code>
                                     </pre>
                                 )}
                             </div>
                         ) : (
                             <div className="h-full w-full relative" style={{ height: '100%' }}>
-                                {(loading || Object.keys(virtualFiles).length === 0) && (
-                                    <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm animate-in fade-in duration-500">
+                                {((loading && messages[messages.length - 1]?.content.includes("<tool")) || Object.keys(virtualFiles).length === 0) && (
+                                    <div className="absolute inset-0 z-50 bg-background/80 backdrop-blur-xl animate-in fade-in duration-700">
                                         <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
-                                            <Loader2 className="mb-4 h-10 w-10 animate-spin text-primary" />
-                                            <h3 className="max-w-md text-sm font-medium tracking-wide text-foreground/90">
-                                                {Object.keys(virtualFiles).length === 0 && !loading
-                                                    ? "Preparing preview environment..."
-                                                    : "Compiling your generated app..."}
-                                            </h3>
+                                            <BuildSequence loading={loading} />
+                                            {Object.keys(virtualFiles).length === 0 && !loading && (
+                                                <p className="mt-4 text-sm text-muted-foreground animate-pulse">
+                                                    Waiting for first file generation...
+                                                </p>
+                                            )}
                                         </div>
                                         {loading && (
-                                            <div className="pointer-events-none absolute bottom-4 left-4 max-w-sm rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-xs text-muted-foreground backdrop-blur-sm transition-opacity duration-300">
-                                                {FUNNY_QUOTES[quoteIndex]}
-                                            </div>
+                                            <motion.div 
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 max-w-sm rounded-2xl border border-primary/20 bg-primary/5 px-6 py-3 text-xs font-medium text-primary backdrop-blur-xl shadow-[0_0_30px_rgba(var(--primary),0.1)]"
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <Zap size={14} className="animate-pulse" />
+                                                    {FUNNY_QUOTES[quoteIndex]}
+                                                </div>
+                                            </motion.div>
                                         )}
                                     </div>
                                 )}

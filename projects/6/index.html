@@ -3,127 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetParadise - Interactive To-Do List</title>
+    <title>Weather Dashboard - PetParadise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-base-200 min-h-screen">
-    <div class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
+    <!-- Navigation -->
+    <nav class="navbar sticky top-0 z-50 backdrop-blur-lg bg-base-100/80 border-b border-base-content/10">
         <div class="flex-1">
-            <a href="#" class="btn btn-ghost text-xl font-bold text-indigo-600">PetParadise</a>
+            <a href="#" class="btn btn-ghost text-xl font-bold text-indigo-600">Weather Dashboard</a>
         </div>
         <div class="flex-none gap-2">
             <div class="form-control">
-                <input type="text" placeholder="Search tasks..." class="input input-bordered w-24 md:w-auto" id="searchInput" />
+                <input type="text" placeholder="Search city..." class="input input-bordered w-24 md:w-auto" id="citySearch" />
+            </div>
+            <button class="btn btn-primary" id="searchBtn">
+                <i data-lucide="search" class="w-4 h-4 mr-2"></i> Search
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-2xl mb-8 overflow-hidden">
+        <div class="hero-content text-center flex flex-col items-center py-12 px-6">
+            <h1 class="text-5xl font-bold text-white mb-4">Weather Dashboard</h1>
+            <p class="text-lg text-white/90 mb-8 max-w-2xl">Real-time weather data, forecasts, and insights for your city</p>
+            <div class="flex gap-4">
+                <button class="btn btn-primary btn-lg" id="currentLocationBtn">
+                    <i data-lucide="map-pin" class="mr-2"></i> Use Current Location
+                </button>
+                <button class="btn btn-outline btn-white btn-lg" id="refreshBtn">
+                    <i data-lucide="refresh-cw" class="mr-2"></i> Refresh
+                </button>
             </div>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- Hero Section -->
-        <div class="hero bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl shadow-2xl mb-8 overflow-hidden">
-            <div class="hero-content text-center flex flex-col items-center py-12 px-6">
-                <h1 class="text-5xl font-bold text-white mb-4">Task Manager</h1>
-                <p class="text-lg text-white/90 mb-8 max-w-2xl">Stay organized with your pet care tasks, feeding schedules, vet appointments, and more!</p>
-                <div class="flex gap-4">
-                    <button class="btn btn-primary btn-lg" id="addTaskBtn">
-                        <i data-lucide="plus" class="mr-2"></i> Add New Task
-                    </button>
-                    <button class="btn btn-outline btn-white btn-lg" id="clearAllBtn">
-                        <i data-lucide="trash-2" class="mr-2"></i> Clear All
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div class="stat bg-base-100 rounded-box shadow">
-                <div class="stat-title">Total Tasks</div>
-                <div class="stat-value text-primary" id="totalTasks">0</div>
-            </div>
-            <div class="stat bg-base-100 rounded-box shadow">
-                <div class="stat-title">Completed</div>
-                <div class="stat-value text-success" id="completedTasks">0</div>
-            </div>
-            <div class="stat bg-base-100 rounded-box shadow">
-                <div class="stat-title">Pending</div>
-                <div class="stat-value text-warning" id="pendingTasks">0</div>
-            </div>
-        </div>
-
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap gap-2 mb-6" id="filterTabs">
-            <button class="btn btn-active btn-primary" data-filter="all">All</button>
-            <button class="btn" data-filter="pending">Pending</button>
-            <button class="btn" data-filter="completed">Completed</button>
-        </div>
-
-        <!-- Task Input Form -->
-        <div class="card bg-base-100 shadow-xl mb-8" id="addTaskForm" style="display: none;">
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Current Weather Section -->
+        <div class="card bg-base-100 shadow-xl mb-8" id="currentWeatherCard" style="display: none;">
             <div class="card-body">
-                <h2 class="card-title text-xl">Add New Task</h2>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Task Title</span>
-                    </label>
-                    <input type="text" id="taskTitle" placeholder="What needs to be done?" class="input input-bordered w-full" />
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Description</span>
-                    </label>
-                    <textarea id="taskDescription" placeholder="Additional details..." class="textarea textarea-bordered w-full" rows="3"></textarea>
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Due Date</span>
-                    </label>
-                    <input type="date" id="taskDate" class="input input-bordered w-full" />
-                </div>
-                <div class="card-actions justify-end mt-4">
-                    <button class="btn btn-secondary" id="cancelAddBtn">Cancel</button>
-                    <button class="btn btn-primary" id="saveTaskBtn">Add Task</button>
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div>
+                        <h2 class="text-4xl font-bold text-gray-800" id="cityName">New York</h2>
+                        <p class="text-gray-600" id="currentDate">Loading...</p>
+                    </div>
+                    <div class="text-center mt-4 md:mt-0">
+                        <div class="text-8xl mb-2" id="weatherIcon">☀️</div>
+                        <h3 class="text-5xl font-bold text-indigo-600" id="temperature">72°</h3>
+                        <p class="text-xl text-gray-600" id="weatherCondition">Clear Sky</p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4 md:mt-0">
+                        <div class="stat bg-base-200 rounded-box text-center">
+                            <div class="stat-title">Humidity</div>
+                            <div class="stat-value text-primary" id="humidity">50%</div>
+                        </div>
+                        <div class="stat bg-base-200 rounded-box text-center">
+                            <div class="stat-title">Wind</div>
+                            <div class="stat-value text-secondary" id="windSpeed">5 mph</div>
+                        </div>
+                        <div class="stat bg-base-200 rounded-box text-center">
+                            <div class="stat-title">Pressure</div>
+                            <div class="stat-value text-accent" id="pressure">1013 hPa</div>
+                        </div>
+                        <div class="stat bg-base-200 rounded-box text-center">
+                            <div class="stat-title">UV Index</div>
+                            <div class="stat-value text-warning" id="uvIndex">6</div>
+                        </div>
+                        <div class="stat bg-base-200 rounded-box text-center">
+                            <div class="stat-title">Visibility</div>
+                            <div class="stat-value text-info" id="visibility">10 km</div>
+                        </div>
+                        <div class="stat bg-base-200 rounded-box text-center">
+                            <div class="stat-title">Feels Like</div>
+                            <div class="stat-value text-success" id="feelsLike">74°</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Task List -->
+        <!-- Weather Forecast Section -->
+        <div class="card bg-base-100 shadow-xl mb-8">
+            <div class="card-body">
+                <h2 class="card-title text-2xl mb-6">5-Day Forecast</h2>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4" id="forecastContainer">
+                    <!-- Forecast items will be rendered here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Temperature Chart -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-xl mb-4">Temperature Trend</h2>
+                    <canvas id="temperatureChart" class="w-full h-64"></canvas>
+                </div>
+            </div>
+            
+            <!-- Humidity Chart -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-xl mb-4">Humidity Trend</h2>
+                    <canvas id="humidityChart" class="w-full h-64"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Details Section -->
         <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-                <h2 class="card-title text-2xl mb-6">Your Tasks</h2>
-                <div id="taskList" class="space-y-4">
-                    <!-- Tasks will be rendered here -->
-                </div>
-                <div id="emptyState" class="text-center py-12">
-                    <div class="text-6xl mb-4">🐾</div>
-                    <h3 class="text-xl font-bold text-gray-600">No tasks yet</h3>
-                    <p class="text-gray-500 mt-2">Add your first task to get started!</p>
+                <h2 class="card-title text-2xl mb-6">Weather Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="stat bg-base-200 rounded-box text-center p-6">
+                        <div class="stat-title">Sunrise</div>
+                        <div class="stat-value text-primary" id="sunrise">6:30 AM</div>
+                    </div>
+                    <div class="stat bg-base-200 rounded-box text-center p-6">
+                        <div class="stat-title">Sunset</div>
+                        <div class="stat-value text-secondary" id="sunset">7:45 PM</div>
+                    </div>
+                    <div class="stat bg-base-200 rounded-box text-center p-6">
+                        <div class="stat-title">Cloud Cover</div>
+                        <div class="stat-value text-accent" id="cloudCover">15%</div>
+                    </div>
+                    <div class="stat bg-base-200 rounded-box text-center p-6">
+                        <div class="stat-title">Precipitation</div>
+                        <div class="stat-value text-info" id="precipitation">10%</div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="text-center py-12">
+            <div class="text-6xl mb-4">🌤️</div>
+            <h3 class="text-xl font-bold text-gray-600">Search for a city to see weather data</h3>
+            <p class="text-gray-500 mt-2">Enter a city name or use your current location to get started</p>
         </div>
     </div>
 
     <footer class="footer p-10 bg-base-200 text-base-content mt-12">
         <div>
-            <span class="footer-title">PetParadise</span>
-            <p class="text-sm">Your trusted partner for pet care and management</p>
+            <span class="footer-title">Weather Dashboard</span>
+            <p class="text-sm">Real-time weather data powered by OpenWeatherMap</p>
         </div>
         <div>
             <span class="footer-title">Quick Links</span>
             <a href="#" class="link link-hover">Home</a>
-            <a href="#" class="link link-hover">Products</a>
-            <a href="#" class="link link-hover">Services</a>
+            <a href="#" class="link link-hover">About</a>
+            <a href="#" class="link link-hover">Contact</a>
         </div>
         <div>
             <span class="footer-title">Contact</span>
-            <p>support@petparadise.com</p>
-            <p>(555) PET-LOVE</p>
+            <p>weather@petparadise.com</p>
+            <p>(555) WEATHER</p>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
