@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import CryptoPolyfill from "@/components/CryptoPolyfill";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700", "800"],
@@ -31,6 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${jetBrainsMono.variable} font-sans antialiased`}>
+        <CryptoPolyfill />
+        <div className="fixed inset-0 -z-50 bg-background" />
         {children}
       </body>
     </html>

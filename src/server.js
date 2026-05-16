@@ -4,6 +4,8 @@ import { pool } from './db.js';
 import { inferQwen } from "./llm.js";
 import { tools, toolDefinitions } from "./tools/index.js";
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
@@ -151,11 +153,11 @@ FULL_FILE_CONTENT
 
 ## CRITICAL WORKFLOW RULES
 1. **Plan First**: Always provide your <thinking> block first.
-2. **Read Before Edit**: If modifying existing code, you MUST use readFile first.
-3. **Atomic Updates**: Only update files that need changes.
-4. **No Placeholders**: Never use "TODO" or placeholder comments. Implement the full feature.
-5. **No Explanations during Tool Output**: Keep your technical summary brief and place it AFTER all tool calls are finished.
-
+2. **Incremental Fixes**: If the user asks for a fix (e.g., "button doesn't work"), DO NOT recreate the entire project. ONLY update the specific file and specific lines that are broken. Use updateFile for this.
+3. **Read Before Edit**: If modifying existing code, you MUST use readFile first to understand the current state.
+4. **Atomic Updates**: Only update files that need changes. 
+5. **Pure Content**: The <content> tag MUST contain ONLY the source code. DO NOT include summaries, markdown, or chat text inside the <content> tag.
+6. **Post-Tool Summary**: Provide your brief plain-text summary ONLY after all tool calls are closed (after the final </tool>).
 Available Tools:
 ${JSON.stringify(toolDefinitions, null, 2)} `;
 
@@ -191,6 +193,16 @@ async function executeToolCall(toolCall) {
     }
 }
 
+// Strip <thinking> blocks that may have leaked into generated file content
+function sanitizeContent(content) {
+    if (!content) return content;
+    // Remove complete <thinking>...</thinking> blocks
+    let cleaned = content.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '');
+    // Remove any dangling open <thinking> block (mid-stream leak)
+    cleaned = cleaned.replace(/<thinking>[\s\S]*$/gi, '');
+    return cleaned;
+}
+
 function parseToolCalls(text) {
     const regex = /<tool name="(\w+)">([\s\S]*?)(?=<\/tool>|<tool|$)/g;
     const found = [];
@@ -198,13 +210,17 @@ function parseToolCalls(text) {
     while ((match = regex.exec(text)) !== null) {
         const [, name, content] = match;
         const args = {};
-        const paramRegex = /<(\w+)>([\s\S]*?)(?=<\/\1>|<[a-zA-Z]+|$)/g;
+        const paramRegex = /<(\w+)>([\s\S]*?)<\/\1>/g;
         let paramMatch;
         while ((paramMatch = paramRegex.exec(content)) !== null) {
             args[paramMatch[1]] = paramMatch[2].trim();
         }
         if (name === 'createFile' && args.content === undefined) {
             args.content = "";
+        }
+        // Sanitize file content — strip any leaked <thinking> blocks
+        if ((name === 'createFile' || name === 'updateFile') && args.content) {
+            args.content = sanitizeContent(args.content);
         }
         // Tool Validation & Auto-Correction for missing extensions
         if ((name === 'createFile' || name === 'updateFile') && args.filePath) {
@@ -347,17 +363,33 @@ app.post("/api/chats/:id/messages", async (req, res) => {
     const { id } = req.params;
     const { prompt } = req.body;
 
+    console.log(`📩 Received message for chat ${id}: "${prompt.slice(0, 50)}..."`);
+
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
     res.setHeader('Cache-Control', 'no-cache, no-transform');
     res.setHeader('Connection', 'keep-alive');
-    res.flushHeaders();
-
+    
     try {
+        if (typeof res.flushHeaders === 'function') {
+            res.flushHeaders();
+        } else if (typeof res.flush === 'function') {
+            res.flush();
+        }
+
         await pool.query("INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)", [id, 'user', prompt]);
 
         const countRes = await pool.query("SELECT COUNT(*) FROM messages WHERE chat_id = $1", [id]);
         const isFirstUserMessage = parseInt(countRes.rows[0].count) === 1;
+
+        // NEW: Clear project directory if this is a brand new chat to prevent ID collisions from old runs
+        if (isFirstUserMessage) {
+            console.log(`🧹 New chat detected (ID: ${id}). Clearing project directory...`);
+            const projectRoot = path.join(process.cwd(), "projects", id.toString());
+            if (fs.existsSync(projectRoot)) {
+                fs.rmSync(projectRoot, { recursive: true, force: true });
+            }
+        }
 
         let loopCount = 0;
         const MAX_LOOPS = 5;
@@ -414,16 +446,19 @@ app.post("/api/chats/:id/messages", async (req, res) => {
                 let strippedContent = msg.content;
                 // Drastically reduce Token Payload by stripping old code file outputs
                 if (msg.role === 'assistant') {
-                    strippedContent = strippedContent.replace(/<content>[\s\S]*?<\/content>/g, "<content>... [Code omitted from memory to increase generation speed. You already saved this.] ...</content>");
+                    strippedContent = strippedContent.replace(/<content>[\s\S]*?<\/content>/g, "<content>... [omitted] ...</content>");
                 }
-                fullPrompt += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${strippedContent}\n`;
+                fullPrompt += `### ${msg.role === 'user' ? 'User' : 'Assistant'}:\n${strippedContent}\n\n`;
             });
-            fullPrompt += "Assistant: ";
+            fullPrompt += "### Assistant:\n";
 
-            const jobEndpoint = process.env.JOB_ENDPOINT || "localhost";
-            const llmModel = process.env.LLM_MODEL;
+            const jobEndpoint = process.env.JOB_ENDPOINT || "127.0.0.1";
+            const llmModel = process.env.LLM_MODEL || "qwen3-coder-next:cloud";
 
             console.log(`🤖 [Loop ${loopCount}] Autonomous Product Manager Phase, model: ${llmModel}`);
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 600000); // 10 minute timeout for code gen
 
             const response = await fetch(`http://${jobEndpoint}:11434/api/generate`, {
                 method: "POST",
@@ -437,13 +472,20 @@ app.post("/api/chats/:id/messages", async (req, res) => {
                     keep_alive: "30m",
                     options: {
                         num_predict: 8192,
-                        temperature: 0.1
+                        temperature: 0.1,
+                        stop: ["### User:", "### Assistant:"]
                     }
-                })
+                }),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
-            if (!response.ok) throw new Error(`LLM API Error: ${response.status}`);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`LLM API Error (${response.status}): ${errorText}`);
+            }
 
+            console.log("📡 LLM Response received, starting stream...");
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
             let accumulatedResponse = "";
@@ -451,7 +493,11 @@ app.post("/api/chats/:id/messages", async (req, res) => {
 
             while (true) {
                 const { done, value } = await reader.read();
-                if (done) break;
+                if (done) {
+                    console.log("🏁 Stream finished.");
+                    break;
+                }
+                // console.log(`📦 Received chunk (${value.length} bytes)`);
 
                 buffer += decoder.decode(value, { stream: true });
                 const lines = buffer.split('\n');
@@ -523,26 +569,16 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                 console.log(`🗂️ Tool results:\n${allResults}`);
 
                 // Check if the model has created all expected files (index.html + script.js)
-                const fileTreeAfter = tools.getFileTree(id);
-                const createdFiles = [];
-                if (!fileTreeAfter.error && fileTreeAfter.tree) {
-                    const extractPaths = (nodes) => {
-                        let paths = [];
-                        nodes.forEach(node => {
-                            if (node.type === "file") paths.push(node.name);
-                            else if (node.children) paths = paths.concat(extractPaths(node.children));
-                        });
-                        return paths;
-                    };
-                    createdFiles.push(...extractPaths(fileTreeAfter.tree));
-                }
-
-                const hasIndex = createdFiles.includes('index.html');
-                const hasScript = createdFiles.includes('script.js');
+                // We check the chat history for tool calls to ensure they were created IN THIS CHAT
+                const sessionHistory = await pool.query("SELECT content FROM messages WHERE chat_id = $1 AND role = 'assistant'", [id]);
+                const allAssistantContent = sessionHistory.rows.map(r => r.content).join("\n");
+                
+                const hasIndex = allAssistantContent.includes('<filePath>index.html</filePath>');
+                const hasScript = allAssistantContent.includes('<filePath>script.js</filePath>');
 
                 if (allSucceeded && hasIndex && hasScript) {
                     // All required files are in place — signal completion and break
-                    console.log(`✅ All files created for chat ${id}. Stopping loop.`);
+                    console.log(`✅ All files created for chat ${id} in this session. Stopping loop.`);
                     await pool.query(
                         "INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)",
                         [id, 'user', '[SYSTEM: All files saved successfully. Your task is complete. Do not create any more files. IMPORTANT: You now have the ability to push this code to GitHub for the user. Mention this to the user and ask if they want you to push it. If they say yes, use the pushToGitHub tool. Your GitHub username is abdisalamabdi303. Write a brief plain-text summary of what you built and offer the GitHub push.]']
@@ -551,12 +587,16 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                     const finalResponse = await (async () => {
                         const finalHistory = await pool.query("SELECT role, content FROM messages WHERE chat_id = $1 ORDER BY created_at ASC", [id]);
                         let finalPrompt = "";
-                        finalHistory.rows.slice(-3).forEach(msg => {
+                        finalHistory.rows.forEach(msg => {
+                            // Filter out tool results and system messages for the summary phase
+                            if (msg.role === 'user' && (msg.content.startsWith('[TOOL_RESULT') || msg.content.startsWith('[SYSTEM:'))) {
+                                return;
+                            }
                             let c = msg.content;
                             if (msg.role === 'assistant') c = c.replace(/<content>[\s\S]*?<\/content>/g, '<content>... [omitted] ...</content>');
-                            finalPrompt += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${c}\n`;
+                            finalPrompt += `### ${msg.role === 'user' ? 'User' : 'Assistant'}:\n${c}\n\n`;
                         });
-                        finalPrompt += "Assistant: ";
+                        finalPrompt += "### Assistant:\n";
                         const fr = await fetch(`http://${process.env.JOB_ENDPOINT || 'localhost'}:11434/api/generate`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -566,7 +606,11 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                                 system: SYSTEM_PROMPT,
                                 stream: true,
                                 keep_alive: "30m",
-                                options: { num_predict: 512, temperature: 0.3 }
+                                options: { 
+                                    num_predict: 512, 
+                                    temperature: 0.3,
+                                    stop: ["### User:", "### Assistant:"]
+                                }
                             })
                         });
                         if (!fr.ok) return '';
@@ -602,12 +646,17 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
 
         res.end();
     } catch (err) {
-        console.error("LLM Handler Error:", err);
-        if (!res.headersSent) res.status(500).json({ error: err.message });
-        else res.end();
+        console.error("❌ CRITICAL LLM Handler Error:", err);
+        if (!res.headersSent) {
+            res.status(500).json({ error: err.message, stack: err.stack });
+        } else {
+            res.end();
+        }
     }
 });
 
-app.listen(4000, () => {
-    console.log("Orchestrator running on port 4000");
+const PORT = process.env.PORT || 4001;
+app.listen(PORT, () => {
+    console.log(`Orchestrator running on port ${PORT}`);
 });
+

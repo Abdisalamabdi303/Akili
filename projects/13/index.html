@@ -15,26 +15,25 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-base-200 min-h-screen font-sans selection:bg-primary selection:text-primary-content">
+<body class="min-h-screen selection:bg-wood-medium selection:text-cream">
 
-    <!-- Navbar -->
-    <div class="navbar sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-content/10 shadow-sm">
+    <div class="navbar sticky top-0 z-50">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl gap-2 text-primary">
+            <a class="btn btn-ghost text-xl gap-2">
                 <i data-lucide="check-circle-2" class="w-8 h-8"></i>
                 <span class="hidden sm:inline">TaskFlow</span>
             </a>
         </div>
         <div class="flex-none gap-2">
             <div class="form-control">
-                <input type="text" placeholder="Quick add..." class="input input-bordered w-24 md:w-auto h-10 rounded-full" id="quickAddInput" />
+                <input type="text" placeholder="Quick add..." class="input w-24 md:w-auto h-10 rounded-full" id="quickAddInput" />
             </div>
             <button class="btn btn-square btn-ghost" id="themeToggle">
                 <i data-lucide="moon" class="w-5 h-5"></i>
             </button>
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                    <div class="w-10 rounded-full bg-primary text-primary-content flex items-center justify-center font-bold">
+                    <div class="w-10 rounded-full bg-wood-medium text-cream flex items-center justify-center font-bold">
                         U
                     </div>
                 </div>
@@ -46,21 +45,12 @@
     <main class="container mx-auto px-4 py-8 max-w-5xl">
         
         <!-- Hero / Stats Section -->
-        <div class="hero min-h-[300px] rounded-3xl bg-base-100 shadow-xl mb-8 overflow-hidden relative">
-            <!-- Background Image with Gradient Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="https://image.pollinations.ai/prompt/organized-modern-desk-workspace-minimalist?width=1200&height=400&nologo=true" 
-                     alt="Workspace" 
-                     class="w-full h-full object-cover opacity-20"
-                     onerror="this.style.display='none'">
-                <div class="absolute inset-0 bg-gradient-to-r from-base-100 via-base-100/90 to-transparent"></div>
-            </div>
-            
+        <div class="hero min-h-[300px] rounded-3xl shadow-xl mb-8 overflow-hidden relative">
             <div class="hero-content text-left z-10 w-full">
                 <div class="max-w-md">
-                    <h1 class="mb-5 text-5xl font-bold text-base-content">Focus on what matters.</h1>
-                    <p class="mb-5 text-lg text-base-content/70">Organize your life, track your progress, and achieve your goals with TaskFlow. You have <span id="pendingCount" class="font-bold text-primary">0</span> tasks pending today.</p>
-                    <button class="btn btn-primary btn-lg shadow-lg shadow-primary/30" onclick="document.getElementById('taskInput').focus()">
+                    <h1 class="mb-5 text-5xl font-bold">Focus on what matters.</h1>
+                    <p class="mb-5 text-lg opacity-80">Organize your life, track your progress, and achieve your goals with TaskFlow. You have <span id="pendingCount" class="font-bold">0</span> tasks pending today.</p>
+                    <button class="btn btn-primary btn-lg shadow-lg" onclick="document.getElementById('taskInput').focus()">
                         Create New Task
                         <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
                     </button>
@@ -90,13 +80,13 @@
         </div>
 
         <!-- Task Input Area -->
-        <div class="card bg-base-100 shadow-lg mb-8 border border-base-content/5">
+        <div class="card shadow-lg mb-8">
             <div class="card-body">
                 <div class="flex flex-col md:flex-row gap-4">
-                    <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-lg input-bordered flex-grow bg-base-200/50" />
+                    <input type="text" id="taskInput" placeholder="What needs to be done?" class="input input-lg flex-grow" />
                     
                     <div class="flex gap-2">
-                        <select id="priorityInput" class="select select-bordered select-lg w-full md:w-40">
+                        <select id="priorityInput" class="select input-lg w-full md:w-40 bg-cream">
                             <option value="low">Low Priority</option>
                             <option value="medium" selected>Medium</option>
                             <option value="high">High Priority</option>

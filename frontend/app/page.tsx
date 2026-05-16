@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import ParticleBackground from "@/components/ParticleBackground";
 
 interface Project {
   id: number;
@@ -38,6 +39,7 @@ const FEATURES = [
 ];
 
 export default function LandingPage() {
+  console.log("🏠 LandingPage rendering with Friday theme...");
   const [input, setInput] = useState("");
   const [projects, setProjects] = useState<Project[]>([]);
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
@@ -52,7 +54,7 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/chats")
+    fetch("http://localhost:4001/api/chats")
       .then((r) => r.json())
       .then((d) => setProjects(Array.isArray(d) ? d : []))
       .catch(() => {});
@@ -61,7 +63,7 @@ export default function LandingPage() {
   const handleStartProject = async () => {
     if (!input.trim()) return;
     try {
-      const chatRes = await fetch("http://localhost:4000/api/chats", { method: "POST" });
+      const chatRes = await fetch("http://localhost:4001/api/chats", { method: "POST" });
       if (!chatRes.ok) return;
       const chat = await chatRes.json();
       router.push(`/project/${chat.id}?prompt=${encodeURIComponent(input)}`);
@@ -70,7 +72,7 @@ export default function LandingPage() {
 
   const handleCreateEmptyProject = async () => {
     try {
-      const chatRes = await fetch("http://localhost:4000/api/chats", { method: "POST" });
+      const chatRes = await fetch("http://localhost:4001/api/chats", { method: "POST" });
       if (!chatRes.ok) return;
       const chat = await chatRes.json();
       router.push(`/project/${chat.id}`);
@@ -85,7 +87,8 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col selection:bg-primary/30">
+    <div className="min-h-screen text-foreground font-sans flex flex-col selection:bg-primary/30">
+      <ParticleBackground />
 
       {/* ── Navbar ── */}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-background/60 backdrop-blur-2xl">
@@ -118,30 +121,59 @@ export default function LandingPage() {
       <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-24">
 
         {/* ── Hero ── */}
-        <section className="py-24 md:py-32 text-center relative overflow-hidden">
+        <section className="py-24 md:py-32 text-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary mb-8 shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-              <Zap size={14} />
-              AI-Powered Product Studio
+            <div className="flex flex-col lg:flex-row items-center gap-12 text-left">
+              <div className="flex-1">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary mb-8 shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                  <Zap size={14} />
+                  AI-Powered Product Studio
+                </div>
+
+                <h1 className="text-5xl font-black leading-[1.1] tracking-tighter text-foreground md:text-7xl lg:text-8xl mb-8">
+                  Describe your idea. <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
+                    Akili builds it.
+                  </span>
+                </h1>
+
+                <p className="max-w-xl text-lg text-muted-foreground md:text-xl font-medium leading-relaxed mb-10">
+                  The ultimate playground for creators. Instantly generate full web applications, 
+                  complete with clean code and live previews, all from a simple prompt.
+                </p>
+              </div>
+
+              {/* Status HUD / Terminal */}
+              <div className="w-full lg:w-[400px] glass-card rounded-[2rem] p-6 font-mono text-[10px] relative hidden md:block">
+                <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-4">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                  </div>
+                  <span className="text-muted-foreground opacity-50 uppercase tracking-widest">Neural_Orchestrator_v1.0</span>
+                </div>
+                <div className="space-y-3 opacity-70">
+                  <p className="text-emerald-400">[SYSTEM] Initialization complete...</p>
+                  <p className="text-primary">[MODEL] Connecting to high-order reasoning core...</p>
+                  <p className="text-white">{">> "}Project_Request: "A Task Manager with Bento Grid UI"</p>
+                  <p className="text-muted-foreground">{">> "}Analyzing structural requirements...</p>
+                  <p className="text-muted-foreground">{">> "}Generating semantic HTML5 skeleton...</p>
+                  <div className="flex gap-2 items-center text-primary animate-pulse">
+                    <div className="w-1 h-3 bg-primary" />
+                    <span>Orchestrating architectural patterns...</span>
+                  </div>
+                </div>
+                <div className="absolute -right-4 -bottom-4 bg-primary text-white p-3 rounded-2xl shadow-2xl rotate-3">
+                  <Sparkles size={20} />
+                </div>
+              </div>
             </div>
-
-            {/* Headline */}
-            <h1 className="mx-auto max-w-4xl text-5xl font-black leading-[1.1] tracking-tighter text-foreground md:text-7xl lg:text-8xl">
-              Describe your idea. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
-                Akili builds it.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl font-medium leading-relaxed">
-              The ultimate playground for creators. Instantly generate full web applications, 
-              complete with clean code and live previews, all from a simple prompt.
-            </p>
           </motion.div>
 
           {/* Input Area */}
@@ -195,26 +227,87 @@ export default function LandingPage() {
           </motion.div>
         </section>
 
-        {/* ── Feature Grid ── */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-20">
-          {FEATURES.map(({ icon: Icon, label, desc }, idx) => (
+        {/* ── Feature Bento Grid ── */}
+        <section className="py-20">
+          <div className="flex flex-col gap-2 mb-12">
+            <h2 className="text-sm font-mono font-bold tracking-[0.3em] text-primary uppercase">Core_Modules</h2>
+            <div className="h-px w-20 bg-primary/30" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-full md:h-[600px]">
+            {/* Main Feature - Large */}
             <motion.div
-              key={label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.2 }}
-              className="glass-card flex flex-col gap-4 p-8 rounded-3xl"
+              className="md:col-span-2 md:row-span-2 glass-card rounded-[2rem] p-10 flex flex-col justify-between border-primary/20 relative overflow-hidden group"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                <Icon size={28} />
+              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Zap size={120} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{label}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground font-medium">{desc}</p>
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-8">
+                  <Zap size={32} />
+                </div>
+                <h3 className="text-3xl font-black mb-4">Autonomous Generation</h3>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
+                  Leverage high-order reasoning models to transform complex requirements into production-ready web applications in a single pass.
+                </p>
+              </div>
+              <div className="mt-8 flex items-center gap-4 text-[10px] font-mono tracking-widest text-primary/60">
+                <span>LATENCY: 142ms</span>
+                <span>•</span>
+                <span>ENGINE: LLM_ORCHESTRATOR_V2</span>
               </div>
             </motion.div>
-          ))}
+
+            {/* Feature 2 */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="md:col-span-2 glass-card rounded-[2rem] p-8 flex items-center gap-6 group"
+            >
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
+                <Code2 size={32} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-2">Semantic Architecture</h3>
+                <p className="text-sm text-muted-foreground">Standardized output featuring semantic HTML5 and modular logic.</p>
+              </div>
+            </motion.div>
+
+            {/* Feature 3 */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="glass-card rounded-[2rem] p-8 group"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 mb-4 group-hover:rotate-12 transition-transform">
+                <Globe size={24} />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Instant Preview</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">Integrated Sandpack environment for real-time validation.</p>
+            </motion.div>
+
+            {/* Feature 4 */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="glass-card rounded-[2rem] p-8 group border-dashed border-white/5"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 mb-4 group-hover:scale-90 transition-transform">
+                <Sparkles size={24} />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Neural Polishing</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">AI-driven design refinement for elite aesthetics.</p>
+            </motion.div>
+          </div>
         </section>
 
         {/* ── Recent Projects Section ── */}

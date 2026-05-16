@@ -4,7 +4,7 @@
 
 :root {
   --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
+  --foreground: 0 0% 100%;
 
   --card: 240 10% 3.9%;
   --card-foreground: 0 0% 98%;
@@ -12,16 +12,16 @@
   --popover: 240 10% 3.9%;
   --popover-foreground: 0 0% 98%;
 
-  --primary: 263.4 70% 50.4%;
-  --primary-foreground: 210 20% 98%;
+  --primary: 185 80% 40%;
+  --primary-foreground: 185 100% 5%;
 
   --secondary: 240 3.7% 15.9%;
   --secondary-foreground: 0 0% 98%;
 
   --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
+  --muted-foreground: 240 5% 85%;
 
-  --accent: 240 3.7% 15.9%;
+  --accent: 185 80% 40%;
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 62.8% 30.6%;
@@ -29,7 +29,7 @@
 
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --ring: 263.4 70% 50.4%;
+  --ring: 185 80% 40%;
 
   --radius: 1rem;
 }
@@ -62,7 +62,7 @@
 }
 
 body {
-  background-color: hsl(var(--background));
+  background-color: transparent;
   color: hsl(var(--foreground));
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -81,10 +81,10 @@ body::before {
   height: 100%;
   z-index: -1;
   background: 
-    radial-gradient(at 0% 0%, hsla(263, 70%, 50%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(210, 100%, 50%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(280, 100%, 50%, 0.05) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(220, 100%, 50%, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, hsla(180, 100%, 50%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(190, 100%, 50%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(180, 100%, 50%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(200, 100%, 50%, 0.08) 0px, transparent 50%);
   filter: blur(100px);
   animation: mesh-move 20s ease-in-out infinite alternate;
 }
@@ -93,6 +93,7 @@ body::before {
   0% { transform: scale(1); }
   100% { transform: scale(1.1) translate(2%, 2%); }
 }
+
 
 .glass {
   background: hsla(240, 10%, 3.9%, 0.7);

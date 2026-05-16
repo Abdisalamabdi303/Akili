@@ -226,28 +226,35 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 
     // Live parsing of messages to extract files token-by-token
     useEffect(() => {
+        // Strip <thinking> blocks that leaked mid-generation into file content
+        const sanitizeFileContent = (raw: string): string => {
+            let s = raw.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '');
+            s = s.replace(/<thinking>[\s\S]*$/gi, '');
+            return s;
+        };
+
         const allContent = messages.map(m => m.content).join("\n");
         const files: Record<string, string> = {};
         let updated = false;
 
         // 1. Extract completely generated files (createFile AND updateFile)
+        // We use a more restrictive regex that REQUIRES </content> to be considered a complete match for content
         const toolRegex = /<tool name="(?:createFile|updateFile)">([\s\S]*?)(?=<\/tool>|<tool|$)/g;
         let m;
         while ((m = toolRegex.exec(allContent)) !== null) {
             const inner = m[1];
-            const pathMatch = /<filePath>([\s\S]*?)(?=<\/filePath>|<|$)/.exec(inner);
-            const contentMatch = /<content>([\s\S]*?)(?=<\/content>|<|$)/.exec(inner);
-            if (pathMatch) {
-                let path = pathMatch[1].split('<')[0].trim();
+            const pathMatch = /<filePath>([\s\S]*?)<\/filePath>/.exec(inner);
+            const contentMatch = /<content>([\s\S]*?)<\/content>/.exec(inner);
+            
+            if (pathMatch && contentMatch) {
+                let path = pathMatch[1].trim();
                 const fileName = path.split('/').pop();
                 if (fileName && !fileName.includes('.')) {
                     path += '.js';
                 }
-                const content = contentMatch ? contentMatch[1].trim() : "";
-                if (path) {
-                    files[path] = content;
-                    updated = true;
-                }
+                const content = sanitizeFileContent(contentMatch[1].trim());
+                files[path] = content;
+                updated = true;
             }
         }
 
@@ -272,7 +279,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                         if (tagIndex !== -1) {
                             currentContent = currentContent.slice(0, tagIndex);
                         }
-                        files[path] = currentContent;
+                        files[path] = sanitizeFileContent(currentContent);
                         updated = true;
                     }
                 }
@@ -325,7 +332,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 
     const fetchProjectInfo = async () => {
         try {
-            const res = await fetch(`http://localhost:4000/api/chats/${id}/info`);
+            const res = await fetch(`http://localhost:4001/api/chats/${id}/info`);
             if (res.ok) {
                 const data = await res.json();
                 setProjectTitle(data.title || `Project #${id}`);
@@ -337,7 +344,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 
     const fetchChatHistory = async () => {
         try {
-            const res = await fetch(`http://localhost:4000/api/chats/${id}`);
+            const res = await fetch(`http://localhost:4001/api/chats/${id}`);
             if (res.ok) {
                 const data = await res.json();
                 if (data.length > 0) {
@@ -371,7 +378,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 
     const fetchFileTree = async () => {
         try {
-            const res = await fetch(`http://localhost:4000/api/projects/${id}/files`);
+            const res = await fetch(`http://localhost:4001/api/projects/${id}/files`);
             if (res.ok) {
                 const data = await res.json();
                 // Merge backend file tree with virtual files and base Sandpack files
@@ -416,7 +423,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         setLoadingFile(true);
         try {
             const cleanPath = path.replace(/^\/+/, '');
-            const res = await fetch(`http://localhost:4000/api/projects/${id}/files/${cleanPath}`);
+            const res = await fetch(`http://localhost:4001/api/projects/${id}/files/${cleanPath}`);
             if (res.ok) {
                 const data = await res.json();
                 setCode(data.content || "// File is empty");
@@ -467,7 +474,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
         try {
-            const res = await fetch(`http://localhost:4000/api/chats/${id}/messages`, {
+            const res = await fetch(`http://localhost:4001/api/chats/${id}/messages`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ prompt }),
@@ -566,8 +573,15 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                 });
 
                 // 2. Strip any in-progress tool tag (from the first <tool to the end of string)
-                // This prevents raw XML from "blinking" into view while streaming
-                content = content.replace(/<tool name="(?:createFile|updateFile|readFile|runCommand|deleteFile|pushToGitHub)">[\s\S]*$/g, "\n\n:::LOADING_FILE:::\n\n");
+                // We try to extract the filePath if it exists to show a better loading state
+                content = content.replace(/<tool name="(createFile|updateFile|readFile|runCommand|deleteFile|pushToGitHub)">([\s\S]*?)$/g, (match, action, inner) => {
+                    const pathMatch = /<filePath>([\s\S]*?)(?:<\/filePath>|$)/.exec(inner);
+                    const path = pathMatch ? pathMatch[1].split('<')[0].trim() : "";
+                    if (path) {
+                        return `\n\n:::LOADING_FILE:${path}:::\n\n`;
+                    }
+                    return `\n\n:::LOADING_FILE:::\n\n`;
+                });
 
                 // 3. Final cleanup of any stray tags
                 content = content.replace(/<\/tool>/g, "");
@@ -757,11 +771,21 @@ console.log("App loaded");`,
                                                         const [_, filename, action] = text.split(":");
                                                         return <FileBadge filename={filename} action={action} />;
                                                     }
-                                                    if (text === ":::LOADING_FILE:::") {
+                                                    if (text.startsWith(":::LOADING_FILE") && text.endsWith(":::")) {
+                                                        const parts = text.split(":");
+                                                        const filename = parts.length > 3 ? parts[2] : "";
                                                         return (
-                                                            <div className="flex items-center gap-2 py-2 text-primary animate-pulse">
-                                                                <Activity size={14} />
-                                                                <span className="text-xs font-bold uppercase tracking-widest">Generating file...</span>
+                                                            <div className="flex items-center gap-2 py-3 px-4 rounded-xl bg-primary/5 border border-primary/10 text-primary animate-pulse my-4">
+                                                                <div className="relative">
+                                                                    <Activity size={16} />
+                                                                    <div className="absolute inset-0 bg-primary/20 blur-sm rounded-full animate-ping" />
+                                                                </div>
+                                                                <div className="flex flex-col">
+                                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Processing_Data</span>
+                                                                    <span className="text-xs font-bold truncate max-w-[200px]">
+                                                                        {filename ? `Building ${filename}...` : "Generating architectural patterns..."}
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         );
                                                     }
@@ -802,7 +826,7 @@ console.log("App loaded");`,
                             <Button
                                 onClick={() => sendMessage()}
                                 disabled={!input.trim()}
-                                className="absolute right-1.5 w-9 h-9 rounded-xl p-0 transition-all active:scale-90 bg-primary hover:bg-primary/90 text-white shadow-[0_0_15px_rgba(var(--primary),0.4)] disabled:opacity-40 btn-shine"
+                                className="absolute right-1.5 w-9 h-9 rounded-xl p-0 transition-all active:scale-90 bg-primary hover:bg-primary/90 text-white shadow-[0_0_15px_rgba(0,255,255,0.4)] disabled:opacity-40 btn-shine"
                                 size="icon"
                                 title="Send Message"
                             >
