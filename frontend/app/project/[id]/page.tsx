@@ -239,22 +239,27 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 
         // 1. Extract completely generated files (createFile AND updateFile)
         // We use a more restrictive regex that REQUIRES </content> to be considered a complete match for content
+        // 1. Extract files from all messages
         const toolRegex = /<tool name="(?:createFile|updateFile)">([\s\S]*?)(?=<\/tool>|<tool|$)/g;
         let m;
         while ((m = toolRegex.exec(allContent)) !== null) {
             const inner = m[1];
-            const pathMatch = /<filePath>([\s\S]*?)<\/filePath>/.exec(inner);
-            const contentMatch = /<content>([\s\S]*?)<\/content>/.exec(inner);
+            const pathMatch = /<filePath>([\s\S]*?)(?:<\/filePath>|<content>|$)/.exec(inner);
             
-            if (pathMatch && contentMatch) {
+            if (pathMatch) {
                 let path = pathMatch[1].trim();
                 const fileName = path.split('/').pop();
                 if (fileName && !fileName.includes('.')) {
                     path += '.js';
                 }
-                const content = sanitizeFileContent(contentMatch[1].trim());
-                files[path] = content;
-                updated = true;
+
+                // Try to find content - either closed or open-ended
+                const contentMatch = /<content>([\s\S]*?)(?:<\/content>|$)/.exec(inner);
+                if (contentMatch) {
+                    const content = sanitizeFileContent(contentMatch[1].trim());
+                    files[path] = content;
+                    updated = true;
+                }
             }
         }
 
@@ -350,6 +355,11 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                 if (data.length > 0) {
                     setMessages(data);
                     initialPromptRan.current = true; // Block initial prompt if history exists
+                    
+                    // Auto-select index.html after history loads
+                    setTimeout(() => {
+                        handleFileSelect("/index.html");
+                    }, 500);
                 }
             }
         } catch (err) {
@@ -382,13 +392,14 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
             if (res.ok) {
                 const data = await res.json();
                 // Merge backend file tree with virtual files and base Sandpack files
-                const allFiles = { ...virtualFiles };
+                // We use a fresh map to ensure we don't lose files that are on disk but not in messages
+                const diskFiles: Record<string, string> = {};
                 if (data.tree) {
                     const extractFiles = (nodes: FileNode[], currentPath = '') => {
                         nodes.forEach((node) => {
                             const nodePath = currentPath ? `${currentPath}/${node.name}` : node.name;
                             if (node.type === 'file') {
-                                allFiles[nodePath] = ''; // Content will be fetched on demand
+                                diskFiles[nodePath] = ''; // Placeholder
                             } else if (node.type === 'directory' && node.children) {
                                 extractFiles(node.children, nodePath);
                             }
@@ -396,7 +407,12 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                     };
                     extractFiles(data.tree);
                 }
-                setFileTree(buildFileTree(allFiles));
+
+                setFileTree(prev => {
+                    const merged = { ...diskFiles, ...virtualFiles };
+                    const newTree = buildFileTree(merged);
+                    return JSON.stringify(prev) === JSON.stringify(newTree) ? prev : newTree;
+                });
             }
         } catch (err) {
             console.error("Failed to fetch file tree:", err);

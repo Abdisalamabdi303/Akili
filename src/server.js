@@ -138,6 +138,9 @@ Before writing any code or tool calls, you MUST wrap your initial reasoning in a
 - **Icons**: Lucide-icons.
 - **Images**: Pollinations.ai (Use descriptive prompts, hyphens for spaces).
 - **Rule**: NO frameworks (React/Vue). Pure Vanilla JS only.
+- **JS Execution**: ALL logic and data (like arrays/constants) MUST go in `script.js`. You MUST link it in `index.html` using `<script src="script.js" defer></script>` inside the `<head>` section.
+- **Rule**: NEVER use `<script>` tags in `index.html` unless they have a `src` attribute (e.g., for external CDNs or your own `script.js`).
+- **Sandpack Constraint**: NEVER use `window.onload` or `document.addEventListener("DOMContentLoaded")`. These events already fired. Write your code to execute immediately.
 
 ## FILE OUTPUT FORMAT
 Output each file using this EXACT XML format. 
@@ -204,17 +207,26 @@ function sanitizeContent(content) {
 }
 
 function parseToolCalls(text) {
-    const regex = /<tool name="(\w+)">([\s\S]*?)(?=<\/tool>|<tool|$)/g;
+    const regex = /<tool name="(\w+)">([\s\S]*?)(?:<\/tool>|<tool|$)/g;
     const found = [];
     let match;
     while ((match = regex.exec(text)) !== null) {
         const [, name, content] = match;
+        const isTruncated = !text.includes(`</tool>`, match.index);
+        
         const args = {};
         const paramRegex = /<(\w+)>([\s\S]*?)<\/\1>/g;
         let paramMatch;
         while ((paramMatch = paramRegex.exec(content)) !== null) {
             args[paramMatch[1]] = paramMatch[2].trim();
         }
+
+        // If content is truncated, the closing </content> might be missing
+        if (isTruncated && args.content === undefined) {
+             const partialContentMatch = /<content>([\s\S]*)$/.exec(content);
+             if (partialContentMatch) args.content = partialContentMatch[1];
+        }
+
         if (name === 'createFile' && args.content === undefined) {
             args.content = "";
         }
@@ -230,7 +242,7 @@ function parseToolCalls(text) {
                 args.filePath += '.js';
             }
         }
-        found.push({ name, args });
+        found.push({ name, args, isTruncated });
     }
     return found;
 }
@@ -544,8 +556,8 @@ app.post("/api/chats/:id/messages", async (req, res) => {
 Your index.html has issues that must be fixed:
 ${uniqueIssues.map(issue => `- ${issue}`).join("\n")}
 
-Fix only the listed issues. Output the corrected index.html once using createFile or updateFile.
-Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
+Fix the listed issues and any other inconsistencies caused by the fix. Output the corrected files using createFile or updateFile.
+Do NOT add explanation outside the tool tags.`;
                     await pool.query("INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)", [id, "user", feedback]);
                     continue;
                 }
@@ -577,6 +589,16 @@ Do NOT rewrite any other file. Do NOT add explanation outside the tool tag.`;
                 const hasScript = allAssistantContent.includes('<filePath>script.js</filePath>');
 
                 if (allSucceeded && hasIndex && hasScript) {
+                    const anyTruncated = toolCalls.some(tc => tc.isTruncated);
+                    if (anyTruncated) {
+                        console.log(`⚠️ Files were truncated. Asking model to continue...`);
+                        await pool.query(
+                            "INSERT INTO messages (chat_id, role, content) VALUES ($1, $2, $3)",
+                            [id, 'user', '[SYSTEM: Your last output was truncated due to length. Please continue from where you left off. Specifically, ensure the files are properly closed and any missing logic is provided. If index.html was incomplete, provide the full version again but keep it more concise if possible.]']
+                        );
+                        continue;
+                    }
+
                     // All required files are in place — signal completion and break
                     console.log(`✅ All files created for chat ${id} in this session. Stopping loop.`);
                     await pool.query(
